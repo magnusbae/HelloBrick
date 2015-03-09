@@ -9,31 +9,57 @@
         </fileset>
     </path>
 
+    <condition property="isUnixOrMac">
+        <or>
+            <os family="unix" />
+            <os family="mac" />
+        </or>
+    </condition>
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
     <target name="clean" description="delete old files">
         <delete dir="${build.dir}"/>
     </target>
 
-	<target name="compile" depends="clean" description="compile the source ">
-		<!-- Compile the java code from ${source.dir} to ${classes.dir}  -->
-		<mkdir dir="${classes.dir}" />
-		<javac
-			srcdir="${source.dir}"
-			includes="${source.include}"
-			excludes="${source.exclude}"
-			encoding="${source.encoding}"
-			source="${source.version}"
-			target="${target.version}"
-			destdir="${classes.dir}"
-			debug="true"
-			includeAntRuntime="false"
-			includeJavaRuntime="false"
-			verbose="false"
-		>
-			<classpath refid="libraries.path" />
-			<!-- enable warnings -->
-			<compilerarg value="-Xlint:${source.warn}" />
-		</javac>
-	</target>
+    <target name="install-unixmac" if="isUnixOrMac">
+        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
+        <untar src="leJOS_EV3_0.9.0-beta.tar.gz" dest="." compression="gzip"/>
+    </target>
+
+    <target name="install-windows" if="isWindows">
+        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
+        <unzip src="leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
+        <move file="leJOS_EV3_0.9.0-beta_win32" toFile="leJOS_EV3_0.9.0-beta"/>
+    </target>
+
+    <target name="install" depends="install-unixmac, install-windows" description="install dependencies">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get src="http://sourceforge.net/projects/jsch/files/jsch.jar/0.1.51/jsch-0.1.51.jar" dest="${user.home}/.ant/lib"/>
+    </target>
+
+    <target name="compile" depends="clean" description="compile the source ">
+        <!-- Compile the java code from ${source.dir} to ${classes.dir}  -->
+        <mkdir dir="${classes.dir}" />
+        <javac
+            srcdir="${source.dir}"
+            includes="${source.include}"
+            excludes="${source.exclude}"
+            encoding="${source.encoding}"
+            source="${source.version}"
+            target="${target.version}"
+            destdir="${classes.dir}"
+            debug="true"
+            includeAntRuntime="false"
+            includeJavaRuntime="false"
+            verbose="false"
+        >
+            <classpath refid="libraries.path" />
+            <!-- enable warnings -->
+            <compilerarg value="-Xlint:${source.warn}" />
+        </javac>
+    </target>
 
     <target name="jar" depends="compile">
         <jar destfile="${output.jar}" basedir="${classes.dir}">
@@ -45,42 +71,62 @@
     </target>
 
     <target name="upload" depends="jar">
-    	<scp todir="${credentials}@${ev3.host}:${programs.dir}" trust="true" password="">
-    	    <fileset file="${output.jar}"/>
-    	</scp>
+        <scp todir="${credentials}@${ev3.host}:${programs.dir}" trust="true" password="">
+            <fileset file="${output.jar}"/>
+        </scp>
     </target>
-    
+
+    <target name="run">
+        <sshexec
+            host="${ev3.host}"
+            username="${credentials}"
+            password=""
+            trust="true"
+            command="jrun -cp ${programs.dir}/${output.jar} lejos.internal.ev3.EV3Wrapper ${main.class}"
+        />
+    </target>
+
+    <target name="stop">
+        <sshexec
+            host="${ev3.host}"
+            username="${credentials}"
+            password=""
+            trust="true"
+            command="kill $(ps -w | grep '[j]ava.*${output.jar}' | awk '{print $1}')"
+        />
+    </target>
+
     <!-- generate javadocs -->
-	<target name="docs" description="generate javadocs">
-		<delete dir="${docs.dir}" />
-    	<mkdir dir="${docs.dir}" />
-		<javadoc
-			destdir="${docs.dir}"
-			source="${source.version}"
-			encoding="${source.encoding}"
-			charset="utf-8"
-			locale="en_US"
-			author="true"
-			access="protected"
-			windowtitle="Project documentation"
-			verbose="false"
-		>
-			<classpath refid="libraries.path" />
-			
-			<packageset	dir="${source.dir}"
-				includes="${source.include}"
-				excludes="${source.exclude}"
-			/>
-		</javadoc>
-	</target>
-	
-		<!-- zip the project -->
-	<target name="dist.zip" description="generate zip of sources">
-    	<zip
-    		destfile="${dist.zip}"
-    		basedir="${basedir}"
-    		includes="${dist.include}"
-    		excludes="${dist.exclude}"
-    	/>
-	</target>
+    <target name="docs" description="generate javadocs">
+        <delete dir="${docs.dir}" />
+        <mkdir dir="${docs.dir}" />
+        <javadoc
+            destdir="${docs.dir}"
+            source="${source.version}"
+            encoding="${source.encoding}"
+            charset="utf-8"
+            locale="en_US"
+            author="true"
+            access="protected"
+            windowtitle="Project documentation"
+            verbose="false"
+        >
+            <classpath refid="libraries.path" />
+
+            <packageset dir="${source.dir}"
+                includes="${source.include}"
+                excludes="${source.exclude}"
+            />
+        </javadoc>
+    </target>
+
+    <!-- zip the project -->
+    <target name="dist.zip" description="generate zip of sources">
+        <zip
+            destfile="${dist.zip}"
+            basedir="${basedir}"
+            includes="${dist.include}"
+            excludes="${dist.exclude}"
+        />
+    </target>
 </project>
