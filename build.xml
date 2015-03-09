@@ -3,14 +3,40 @@
     <!-- <property file="local.properties" /> -->
     <property file="build.properties" />
 
-    <path id="libraries.path">
+    <path id="libraries.path">    
         <fileset dir="${ev3.home}/lib">
             <include name="**/*.jar"/>
         </fileset>
     </path>
 
+    <condition property="isUnixOrMac">
+        <or>
+            <os family="unix" />
+            <os family="mac" />
+        </or>
+    </condition>
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
     <target name="clean" description="delete old files">
         <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="install-unixmac" if="isUnixOrMac">
+        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
+        <untar src="leJOS_EV3_0.9.0-beta.tar.gz" dest="." compression="gzip"/>
+    </target>
+
+    <target name="install-windows" if="isWindows">
+        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
+        <unzip src="leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
+        <move file="leJOS_EV3_0.9.0-beta_win32" toFile="leJOS_EV3_0.9.0-beta"/>
+    </target>
+
+    <target name="install" depends="install-unixmac, install-windows" description="install dependencies">
+        <mkdir dir="${user.home}/.ant/lib"/>
+        <get src="http://sourceforge.net/projects/jsch/files/jsch.jar/0.1.51/jsch-0.1.51.jar" dest="${user.home}/.ant/lib"/>
     </target>
 
     <target name="compile" depends="clean" description="compile the source ">
@@ -41,7 +67,7 @@
                 <attribute name="Main-Class" value="${main.class}"/>
                 <attribute name="Class-Path" value="${class.path}"/>
             </manifest>
-        </jar>
+        </jar>  
     </target>
 
     <target name="upload" depends="jar">
@@ -49,7 +75,7 @@
             <fileset file="${output.jar}"/>
         </scp>
     </target>
-
+    
     <!-- generate javadocs -->
     <target name="docs" description="generate javadocs">
         <delete dir="${docs.dir}" />
