@@ -75,7 +75,27 @@
             <fileset file="${output.jar}"/>
         </scp>
     </target>
-    
+
+    <target name="run">
+        <sshexec
+            host="${ev3.host}"
+            username="${credentials}"
+            password=""
+            trust="true"
+            command="jrun -cp ${programs.dir}/${output.jar} lejos.internal.ev3.EV3Wrapper ${main.class}"
+        />
+    </target>
+
+    <target name="stop">
+        <sshexec
+            host="${ev3.host}"
+            username="${credentials}"
+            password=""
+            trust="true"
+            command="kill $(ps -w | grep '[j]ava.*${output.jar}' | awk '{print $1}')"
+        />
+    </target>
+
     <!-- generate javadocs -->
     <target name="docs" description="generate javadocs">
         <delete dir="${docs.dir}" />
