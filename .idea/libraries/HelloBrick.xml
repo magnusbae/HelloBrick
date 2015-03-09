@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="HelloBrick">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/HelloWorld.jar!/" />
+      <root url="jar://$PROJECT_DIR$/leJOS_EV3_0.9.0-beta_win32.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

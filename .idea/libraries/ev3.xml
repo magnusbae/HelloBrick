@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="ev3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/leJOS_EV3_0.9.0-beta/lib/ev3/dbusjava-src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/leJOS_EV3_0.9.0-beta/lib/ev3/ev3classes-src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/leJOS_EV3_0.9.0-beta/lib/ev3/ev3classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/leJOS_EV3_0.9.0-beta/lib/ev3/dbusjava.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
