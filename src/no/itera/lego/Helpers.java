@@ -14,7 +14,7 @@ import lejos.robotics.SampleProvider;
 
 public class Helpers {
 
-  private static final int DEGREES_PER_CENTIMETER = 36;
+  private static final int DISTANCE_DEGREES_FACTOR = 36;
   private static final double ROTATE_DEGREES_FACTOR = 11.3;
 
   private RegulatedMotor motorRight;
@@ -99,8 +99,8 @@ public class Helpers {
     if(direction == Direction.BACKWARD){
       cm *= -1;
     }
-    motorLeft.rotate(cm * DEGREES_PER_CENTIMETER, true);
-    motorRight.rotate(cm * DEGREES_PER_CENTIMETER);
+    motorLeft.rotate(cm * DISTANCE_DEGREES_FACTOR, true);
+    motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR);
   }
 
   public void turnLeft(int degrees) {
