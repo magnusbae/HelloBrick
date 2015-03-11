@@ -35,9 +35,13 @@ public class Helpers {
   }
 
   public Helpers() {
+    this(false);
+  }
+
+  public Helpers(boolean skipMotorCannonCalibration) {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
-    motorCannon = instantiateMotorCannon();
+    motorCannon = instantiateMotorCannon(skipMotorCannonCalibration);
     irSensor = new EV3IRSensor(SensorPort.S1);
     colorSensor = new EV3ColorSensor(SensorPort.S4);
 
@@ -115,10 +119,14 @@ public class Helpers {
     motorLeft.rotate((int)(ROTATE_DEGREES_FACTOR * degrees));
   }
 
-  private EV3MediumRegulatedMotor instantiateMotorCannon() {
-    calibrateMotorCannon();
+  private EV3MediumRegulatedMotor instantiateMotorCannon(boolean skipMotorCannonCalibration) {
+    if (!skipMotorCannonCalibration) {
+      calibrateMotorCannon();
+    }
     EV3MediumRegulatedMotor motor = new EV3MediumRegulatedMotor(MotorPort.C);
-    motor.rotate(-360);
+    if (!skipMotorCannonCalibration) {
+      motor.rotate(-360);
+    }
     return motor;
   }
 
