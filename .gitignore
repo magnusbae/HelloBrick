@@ -1,4 +1,6 @@
-*.jar
+# Downloaded libraries
+/leJOS*
 
-leJOS*
-build/
+# Generated files
+/build
+*.jar
