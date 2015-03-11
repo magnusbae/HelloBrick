@@ -1,5 +1,6 @@
 package no.itera.lego;
 
+import lejos.hardware.Button;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.*;
 import lejos.hardware.sensor.EV3IRSensor;
@@ -10,56 +11,18 @@ public class HelloWorld {
   public static final int SPEED = 300;
 
   public static void main(String[] args) {
-    System.out.println("LoopBot reporting for duty");
+    System.out.println("IteraBot reporting for duty");
 
-    long start = System.currentTimeMillis();
+    Helpers helper = new Helpers();
 
-    EV3IRSensor rangeSensor = new EV3IRSensor(SensorPort.S1);
-    SampleProvider rangeSampler = rangeSensor.getDistanceMode();
-    float[] lastRange = new float[rangeSampler.sampleSize()];
+    helper.forward(13);
+    helper.backward(10);
+    helper.forward(10);
+    helper.backward(13);
 
-    int count = 1;
     boolean run = true;
-
-    long stop = System.currentTimeMillis();
-
-    System.out.println("Setup took " + (stop - start) + " ms");
-
-    Motor.A.setSpeed(SPEED);
-    Motor.B.setSpeed(SPEED);
-    Motor.A.forward();
-    Motor.B.forward();
-
-    while (run) {
-      rangeSampler.fetchSample(lastRange, 0);
-
-      if (lastRange[0] <= 5) {
-        run = false;
-      } else if (lastRange[0] < 40) {
-        if (count % 4 != 0) {
-          count++;
-          Motor.A.stop();
-        } else {
-          count = 1;
-          Motor.B.stop();
-        }
-        try {
-          Thread.sleep(150);
-        } catch (Exception e) {
-          run = false;
-          System.out.println("Stopping due to exception");
-        }
-        Motor.A.forward();
-        Motor.B.forward();
-      }
-    }
-
-    Motor.A.stop(true);
-    Motor.B.stop();
-
-    try {
-      Thread.sleep(1200);
-    } catch (Exception e) {
+    while(run){
+      Button.waitForAnyPress();
     }
   }
 }

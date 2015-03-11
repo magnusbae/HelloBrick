@@ -13,6 +13,8 @@ import lejos.robotics.SampleProvider;
 
 public class Helpers {
 
+  private static final int DEGREES_PER_CENTIMETER = 36;
+
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
   private RegulatedMotor motorCanon;
@@ -23,6 +25,10 @@ public class Helpers {
   private float[] lastRange;
 
   private String[] colors;
+
+  private enum Direction{
+    FORWARD, BACKWARD;
+  }
 
   public Helpers() {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -77,5 +83,21 @@ public class Helpers {
       list[i] = names[i].getName();
     }
     return list;
+  }
+
+  public void forward(int cm){
+    drive(cm, Direction.FORWARD);
+  }
+
+  public void backward(int cm){
+    drive(cm, Direction.BACKWARD);
+  }
+
+  private void drive(int cm, Direction direction){
+    if(direction == Direction.BACKWARD){
+      cm *= -1;
+    }
+    motorLeft.rotate(cm * DEGREES_PER_CENTIMETER, true);
+    motorRight.rotate(cm * DEGREES_PER_CENTIMETER);
   }
 }
