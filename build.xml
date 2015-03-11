@@ -4,7 +4,7 @@
     <property file="build.properties"/>
 
     <path id="libraries.path">
-        <fileset dir="${ev3.home}/lib">
+        <fileset dir="${lejos.dir}/lib">
             <include name="**/*.jar"/>
         </fileset>
     </path>
@@ -71,25 +71,25 @@
     </target>
 
     <target name="upload" depends="jar">
-        <scp todir="${credentials}@${ev3.host}:${programs.dir}" trust="true" password="">
+        <scp todir="${device.user}@${device.host}:${device.dir}" trust="true" password="">
             <fileset file="${output.jar}"/>
         </scp>
     </target>
 
     <target name="run">
         <sshexec
-            host="${ev3.host}"
-            username="${credentials}"
+            host="${device.host}"
+            username="${device.user}"
             password=""
             trust="true"
-            command="jrun -cp ${programs.dir}/${output.jar} lejos.internal.ev3.EV3Wrapper ${main.class}"
+            command="jrun -cp ${device.dir}/${output.jar} lejos.internal.ev3.EV3Wrapper ${main.class}"
         />
     </target>
 
     <target name="stop">
         <sshexec
-            host="${ev3.host}"
-            username="${credentials}"
+            host="${device.host}"
+            username="${device.user}"
             password=""
             trust="true"
             command="kill $(ps -w | grep '[j]ava.*${output.jar}' | awk '{print $1}')"
@@ -98,10 +98,10 @@
 
     <!-- generate javadocs -->
     <target name="docs" description="generate javadocs">
-        <delete dir="${docs.dir}"/>
-        <mkdir dir="${docs.dir}"/>
+        <delete dir="${javadoc.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
         <javadoc
-            destdir="${docs.dir}"
+            destdir="${javadoc.dir}"
             source="${source.version}"
             encoding="${source.encoding}"
             charset="utf-8"
