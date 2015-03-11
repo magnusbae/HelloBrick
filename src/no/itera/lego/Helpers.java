@@ -17,7 +17,7 @@ public class Helpers {
 
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
-  private RegulatedMotor motorCanon;
+  private RegulatedMotor motorCannon;
   private EV3IRSensor irSensor;
   private EV3ColorSensor colorSensor;
 
@@ -33,7 +33,7 @@ public class Helpers {
   public Helpers() {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
-    motorCanon = new EV3LargeRegulatedMotor(MotorPort.C);
+    motorCannon = new EV3LargeRegulatedMotor(MotorPort.C);
     irSensor = new EV3IRSensor(SensorPort.S1);
     colorSensor = new EV3ColorSensor(SensorPort.S4);
 
@@ -51,8 +51,8 @@ public class Helpers {
     return motorLeft;
   }
 
-  public RegulatedMotor getMotorCanon() {
-    return motorCanon;
+  public RegulatedMotor getMotorCannon() {
+    return motorCannon;
   }
 
   public EV3IRSensor getIrSensor() {
