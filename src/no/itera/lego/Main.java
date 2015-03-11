@@ -11,17 +11,16 @@ public class Main {
 
     Button.waitForAnyPress();
 
-//    helper.forward(13);
-//    helper.backward(10);
-//    helper.forward(10);
-//    helper.backward(13);
+    helper.forward(70);
+    helper.turnLeft(90);
+    helper.forward(20);
+    helper.turnRight(90);
+    helper.forward(40);
+    helper.turnRight(90);
+    helper.forward(20);
+    helper.turnLeft(90);
+    helper.forward(40);
 
-    boolean run = true;
-    while(run){
-      helper.forward(13);
-      helper.backward(10);
-      helper.forward(10);
-      helper.backward(13);
-    }
+    helper.fireCannon();
   }
 }
