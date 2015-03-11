@@ -1,6 +1,6 @@
 # HelloBrick
 
-Lejos + Ant + HelloWorld
+[Lejos](http://www.lejos.org/ev3/docs/) + Ant + HelloWorld
 
 # Requirements
 

@@ -6,7 +6,7 @@ import lejos.hardware.port.*;
 import lejos.hardware.sensor.EV3IRSensor;
 import lejos.robotics.SampleProvider;
 
-public class HelloWorld {
+public class Main {
 
   public static final int SPEED = 300;
 
@@ -15,14 +15,17 @@ public class HelloWorld {
 
     Helpers helper = new Helpers();
 
-    helper.forward(13);
-    helper.backward(10);
-    helper.forward(10);
-    helper.backward(13);
+//    helper.forward(13);
+//    helper.backward(10);
+//    helper.forward(10);
+//    helper.backward(13);
 
     boolean run = true;
     while(run){
-      Button.waitForAnyPress();
+      helper.forward(13);
+      helper.backward(10);
+      helper.forward(10);
+      helper.backward(13);
     }
   }
 }
