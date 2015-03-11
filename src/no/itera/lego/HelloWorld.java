@@ -33,16 +33,8 @@ public class HelloWorld {
     Motor.B.forward();
 
     while (run) {
-      try {
-        Thread.sleep(20);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-//      start = System.currentTimeMillis();
       rangeSampler.fetchSample(lastRange, 0);
-//      stop = System.currentTimeMillis();
 
-      // System.out.println("Sampling took " + (stop - start) + " ms");
 
       if (lastRange[0] <= 5) {
         run = false;
