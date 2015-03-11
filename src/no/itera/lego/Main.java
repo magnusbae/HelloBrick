@@ -5,7 +5,7 @@ import lejos.hardware.Button;
 public class Main {
 
   public static void main(String[] args) {
-    Helpers helper = new Helpers();
+    EV3Helper helper = new EV3Helper();
 
     System.out.println("IteraBot reporting for duty");
 

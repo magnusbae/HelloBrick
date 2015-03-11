@@ -14,7 +14,7 @@ import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
-public class Helpers {
+public class EV3Helper {
 
   private static final int DISTANCE_DEGREES_FACTOR = 36;
   private static final double ROTATE_DEGREES_FACTOR = 11.3;
@@ -35,11 +35,11 @@ public class Helpers {
     FORWARD, BACKWARD;
   }
 
-  public Helpers() {
+  public EV3Helper() {
     this(false);
   }
 
-  public Helpers(boolean skipMotorCannonCalibration) {
+  public EV3Helper(boolean skipMotorCannonCalibration) {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
     motorCannon = instantiateMotorCannon(skipMotorCannonCalibration);
