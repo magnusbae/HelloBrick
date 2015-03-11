@@ -9,6 +9,7 @@ public class Main {
 
     System.out.println("IteraBot reporting for duty");
 
+    Button.waitForAnyPress();
 
 //    helper.forward(13);
 //    helper.backward(10);
