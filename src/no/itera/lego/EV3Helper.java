@@ -31,7 +31,7 @@ public class EV3Helper {
 
   private String[] colors;
 
-  private enum Direction{
+  private enum Direction {
     FORWARD, BACKWARD;
   }
 
@@ -94,16 +94,16 @@ public class EV3Helper {
     return list;
   }
 
-  public void forward(int cm){
+  public void forward(int cm) {
     drive(cm, Direction.FORWARD);
   }
 
-  public void backward(int cm){
+  public void backward(int cm) {
     drive(cm, Direction.BACKWARD);
   }
 
-  private void drive(int cm, Direction direction){
-    if(direction == Direction.BACKWARD){
+  private void drive(int cm, Direction direction) {
+    if (direction == Direction.BACKWARD) {
       cm *= -1;
     }
     motorLeft.rotate(cm * DISTANCE_DEGREES_FACTOR, true);
@@ -112,19 +112,20 @@ public class EV3Helper {
 
   public void turnLeft(int degrees) {
     motorLeft.stop(true);
-    motorRight.rotate((int)(ROTATE_DEGREES_FACTOR * degrees));
+    motorRight.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
 
   public void turnRight(int degrees) {
     motorRight.stop(true);
-    motorLeft.rotate((int)(ROTATE_DEGREES_FACTOR * degrees));
+    motorLeft.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
 
   public void fireCannon() {
     motorCannon.rotate(CANON_MOTOR_ROUND_DEGREES);
   }
 
-  private EV3MediumRegulatedMotor instantiateMotorCannon(boolean skipMotorCannonCalibration) {
+  private EV3MediumRegulatedMotor instantiateMotorCannon(
+      boolean skipMotorCannonCalibration) {
     if (!skipMotorCannonCalibration) {
       calibrateMotorCannon();
     }

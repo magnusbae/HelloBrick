@@ -3,7 +3,7 @@
     <!-- <property file="local.properties" /> -->
     <property file="build.properties" />
 
-    <path id="libraries.path">    
+    <path id="libraries.path">
         <fileset dir="${ev3.home}/lib">
             <include name="**/*.jar"/>
         </fileset>
@@ -11,12 +11,12 @@
 
     <condition property="isUnixOrMac">
         <or>
-            <os family="unix" />
-            <os family="mac" />
+            <os family="unix"/>
+            <os family="mac"/>
         </or>
     </condition>
     <condition property="isWindows">
-        <os family="windows" />
+        <os family="windows"/>
     </condition>
 
     <target name="clean" description="delete old files">
@@ -41,7 +41,7 @@
 
     <target name="compile" depends="clean" description="compile the source ">
         <!-- Compile the java code from ${source.dir} to ${classes.dir}  -->
-        <mkdir dir="${classes.dir}" />
+        <mkdir dir="${classes.dir}"/>
         <javac
             srcdir="${source.dir}"
             includes="${source.include}"
@@ -55,9 +55,9 @@
             includeJavaRuntime="false"
             verbose="false"
         >
-            <classpath refid="libraries.path" />
+            <classpath refid="libraries.path"/>
             <!-- enable warnings -->
-            <compilerarg value="-Xlint:${source.warn}" />
+            <compilerarg value="-Xlint:${source.warn}"/>
         </javac>
     </target>
 
@@ -67,7 +67,7 @@
                 <attribute name="Main-Class" value="${main.class}"/>
                 <attribute name="Class-Path" value="${class.path}"/>
             </manifest>
-        </jar>  
+        </jar>
     </target>
 
     <target name="upload" depends="jar">
@@ -98,8 +98,8 @@
 
     <!-- generate javadocs -->
     <target name="docs" description="generate javadocs">
-        <delete dir="${docs.dir}" />
-        <mkdir dir="${docs.dir}" />
+        <delete dir="${docs.dir}"/>
+        <mkdir dir="${docs.dir}"/>
         <javadoc
             destdir="${docs.dir}"
             source="${source.version}"
@@ -111,7 +111,7 @@
             windowtitle="Project documentation"
             verbose="false"
         >
-            <classpath refid="libraries.path" />
+            <classpath refid="libraries.path"/>
 
             <packageset dir="${source.dir}"
                 includes="${source.include}"
