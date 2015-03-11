@@ -18,6 +18,7 @@ public class Helpers {
 
   private static final int DISTANCE_DEGREES_FACTOR = 36;
   private static final double ROTATE_DEGREES_FACTOR = 11.3;
+  private static final int CANON_MOTOR_ROUND_DEGREES = 1080;
 
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
@@ -117,6 +118,10 @@ public class Helpers {
   public void turnRight(int degrees) {
     motorRight.stop(true);
     motorLeft.rotate((int)(ROTATE_DEGREES_FACTOR * degrees));
+  }
+
+  public void fireCannon() {
+    motorCannon.rotate(CANON_MOTOR_ROUND_DEGREES);
   }
 
   private EV3MediumRegulatedMotor instantiateMotorCannon(boolean skipMotorCannonCalibration) {
