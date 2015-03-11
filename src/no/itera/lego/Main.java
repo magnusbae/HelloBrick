@@ -5,9 +5,10 @@ import lejos.hardware.Button;
 public class Main {
 
   public static void main(String[] args) {
+    Helpers helper = new Helpers();
+
     System.out.println("IteraBot reporting for duty");
 
-    Helpers helper = new Helpers();
 
 //    helper.forward(13);
 //    helper.backward(10);
