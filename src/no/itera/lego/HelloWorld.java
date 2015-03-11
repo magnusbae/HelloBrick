@@ -7,13 +7,12 @@ import lejos.robotics.SampleProvider;
 
 public class HelloWorld {
 
-  public static final int SPEED = 720;
+  public static final int SPEED = 300;
 
   public static void main(String[] args) {
     System.out.println("LoopBot reporting for duty");
 
     long start = System.currentTimeMillis();
-
 
     EV3IRSensor rangeSensor = new EV3IRSensor(SensorPort.S1);
     SampleProvider rangeSampler = rangeSensor.getDistanceMode();
@@ -21,7 +20,6 @@ public class HelloWorld {
 
     int count = 1;
     boolean run = true;
-
 
     long stop = System.currentTimeMillis();
 
@@ -35,11 +33,9 @@ public class HelloWorld {
     while (run) {
       rangeSampler.fetchSample(lastRange, 0);
 
-
       if (lastRange[0] <= 5) {
         run = false;
-      } else if (lastRange[0]
-          < 40) {
+      } else if (lastRange[0] < 40) {
         if (count % 4 != 0) {
           count++;
           Motor.A.stop();
@@ -48,7 +44,7 @@ public class HelloWorld {
           Motor.B.stop();
         }
         try {
-          Thread.sleep(500);
+          Thread.sleep(150);
         } catch (Exception e) {
           run = false;
           System.out.println("Stopping due to exception");
