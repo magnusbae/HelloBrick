@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
+import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
@@ -11,6 +12,7 @@ import lejos.hardware.sensor.EV3IRSensor;
 import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
+import lejos.utility.Delay;
 
 public class Helpers {
 
@@ -35,7 +37,7 @@ public class Helpers {
   public Helpers() {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
-    motorCannon = new EV3MediumRegulatedMotor(MotorPort.C);
+    motorCannon = instantiateMotorCannon();
     irSensor = new EV3IRSensor(SensorPort.S1);
     colorSensor = new EV3ColorSensor(SensorPort.S4);
 
@@ -111,5 +113,30 @@ public class Helpers {
   public void turnRight(int degrees) {
     motorRight.stop(true);
     motorLeft.rotate((int)(ROTATE_DEGREES_FACTOR * degrees));
+  }
+
+  private EV3MediumRegulatedMotor instantiateMotorCannon() {
+    calibrateMotorCannon();
+    EV3MediumRegulatedMotor motor = new EV3MediumRegulatedMotor(MotorPort.C);
+    motor.rotate(-360);
+    return motor;
+  }
+
+  private void calibrateMotorCannon() {
+    UnregulatedMotor motor = new UnregulatedMotor(MotorPort.C);
+    motor.setPower(50);
+
+    int maxIterations = 40;
+    int lastTachoCount = 0;
+    while (maxIterations-- > 0) {
+      Delay.msDelay(100);
+      int newTachoCount = motor.getTachoCount();
+      if (newTachoCount == lastTachoCount) {
+        break;
+      }
+      lastTachoCount = newTachoCount;
+    }
+
+    motor.close();
   }
 }
