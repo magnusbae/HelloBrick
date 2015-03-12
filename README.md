@@ -112,3 +112,9 @@ To add your code as a project in Eclipse select `New -> Project -> LeJOS EV3 ->
 LeJOS EV3 Project`. In the next dialog, uncheck `Use default location` and
 select the location of your project. Select finish, and you should be ready to
 go.
+
+Note that if you create the project before specifying `EV3_HOME` as described
+in the previous section, the project will be created as a normal Java project,
+and the leJOS library will not be available. In this case, set the `EV3_HOME`,
+then right click on the project and select `leJOS EV3 -> Convert to leJOS EV3
+project`.
