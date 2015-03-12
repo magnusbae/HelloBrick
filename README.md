@@ -12,8 +12,11 @@ helper methods for some simple movement.
 
 # Requirements
 
-This requires that you have [Apache Ant][ant] installed on your system.
+This project requires that you have [Java Development Kit 7][jdk7] and
+[Apache Ant][ant-download] installed on your system.
 
+[jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+[ant-download]: http://ant.apache.org/bindownload.cgi
 
 # Installing dependencies
 
