@@ -98,14 +98,19 @@ public class EV3Helper {
     return colorSensor;
   }
 
+  /**
+   * Fetches a distance sample from the EV3 infrared sensor.
+   * Close to centimeters.
+   * @return Distance from sensor in something that's quite close to centimeters
+   */
   public float getDistance() {
     rangeSampler.fetchSample(lastRange, 0);
     return lastRange[0];
   }
 
   /**
-   * Returns the currently measured color of the color sensor.
-   * @return name of measured color.
+   * Fetches a color sample from the EV3 color sensor.
+   * @return name of measured color
    */
   public String getColorName() {
     int color = colorSensor.getColorID();
@@ -186,11 +191,19 @@ public class EV3Helper {
     motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR); //Waits for method to complete
   }
 
+  /**
+   * Turns left the given number of degrees
+   * @param degrees
+   */
   public void turnLeft(int degrees) {
     motorLeft.stop(true);
     motorRight.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
 
+  /**
+   * Turns right the given number of degrees
+   * @param degrees
+   */
   public void turnRight(int degrees) {
     motorRight.stop(true);
     motorLeft.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
