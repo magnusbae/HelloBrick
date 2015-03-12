@@ -113,20 +113,34 @@ public class EV3Helper {
     return list;
   }
 
+  /**
+   * Drives forward the given centimeters and stops when complete
+   * @param cm
+   */
   public void forward(int cm) {
     drive(cm, Direction.FORWARD);
   }
 
+
+  /**
+   * Drives forward the given centimeters and stops when complete
+   * @param cm
+   */
   public void backward(int cm) {
     drive(cm, Direction.BACKWARD);
   }
 
+  /**
+   * Drives in the given direction (forward/backward)
+   * @param cm How many centimeters to drive
+   * @param direction Which direction to drive in
+   */
   private void drive(int cm, Direction direction) {
     if (direction == Direction.BACKWARD) {
       cm *= -1;
     }
-    motorLeft.rotate(cm * DISTANCE_DEGREES_FACTOR, true);
-    motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR);
+    motorLeft.rotate(cm * DISTANCE_DEGREES_FACTOR, true); //true = immediate return
+    motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR); //Waits for method to complete
   }
 
   public void turnLeft(int degrees) {
@@ -139,10 +153,21 @@ public class EV3Helper {
     motorLeft.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
 
+
+  /**
+   * Fire one bullet from the cannon.
+   * This method blocks until completed
+   */
   public void fireCannon() {
     motorCannon.rotate(CANNON_MOTOR_ROUND_DEGREES);
   }
 
+
+  /**
+   * Instantiates the cannon-motor, optionally skips calibration
+   * @param skipMotorCannonCalibration
+   * @return
+   */
   private EV3MediumRegulatedMotor instantiateMotorCannon(
       boolean skipMotorCannonCalibration) {
     if (!skipMotorCannonCalibration) {
@@ -155,6 +180,10 @@ public class EV3Helper {
     return motor;
   }
 
+
+  /**
+   * Calibrates the cannon and puts in a read-to-fire state.
+   */
   private void calibrateMotorCannon() {
     UnregulatedMotor motor = new UnregulatedMotor(MotorPort.C);
     motor.setPower(50);
