@@ -10,7 +10,7 @@ helper methods for some simple movement.
 [lejos]: http://www.lejos.org/ev3/docs/
 [ant]: http://ant.apache.org/
 
-# Requirements
+## Requirements
 
 This project requires that you have [Java Development Kit 7][jdk7] and
 [Apache Ant][ant-download] installed on your system.
@@ -18,7 +18,7 @@ This project requires that you have [Java Development Kit 7][jdk7] and
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [ant-download]: http://ant.apache.org/bindownload.cgi
 
-# Installing dependencies
+## Installing other dependencies
 
 The necessary dependencies can be downloaded and installed by running:
 
@@ -32,7 +32,7 @@ useful. You can run it with:
 
     ./leJOS_EV3_0.9.0-beta/bin/ev3control
 
-# Compiling and uploading
+## Compiling and uploading
 
 You may compile your program by running:
 
@@ -42,7 +42,7 @@ Or compile and upload to the unit by running:
 
     ant upload
 
-# Running
+## Running
 
 You may run the uploaded program by running:
 
@@ -52,13 +52,13 @@ If you want to compile, upload and run:
 
     ant upload run
 
-# Stopping
+## Stopping
 
 You may stop the program you started with `ant run` by running:
 
     ant stop
 
-# Configuration
+## Configuration
 
 The configuration is defined in `build.properties`. If you want to change e.g.
 the class name or the filename of the jar, you may change it there.
