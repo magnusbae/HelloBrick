@@ -14,11 +14,19 @@ import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
+
+/**
+ * Helper functions for basic operation of our pre-configured robot.
+ * This class provides useful wrappers around Lejos code and examples for you to build on.
+ *
+ * For the complete Lejos API take a look at:
+ * http://www.lejos.org/ev3/docs/
+ */
 public class EV3Helper {
 
-  private static final int DISTANCE_DEGREES_FACTOR = 36;
-  private static final double ROTATE_DEGREES_FACTOR = 11.3;
-  private static final int CANON_MOTOR_ROUND_DEGREES = 1080;
+  private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate to travel 1cm
+  private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate to rotate the robot 1 degree (while the other is stopped)
+  private static final int CANNON_MOTOR_ROUND_DEGREES = 1080; //How many degrees of rotation needed for the cannon to fire one bullet.
 
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
@@ -35,10 +43,21 @@ public class EV3Helper {
     FORWARD, BACKWARD;
   }
 
+  /**
+   * Instantiates a new helper class and calibrates the cannon.
+   * Robot is ready for operation after completion.
+   * If you're not going to use the cannon, you can skip calibration using
+   * {@link #EV3Helper#EV3Helper(boolean)}
+   */
   public EV3Helper() {
     this(false);
   }
 
+  /**
+   * Instantiates a new helper class and optionally calibrates the cannon.
+   * Robot is ready for operation after completion.
+   * @param skipMotorCannonCalibration Set to true if you don't want to calibrate the cannon
+   */
   public EV3Helper(boolean skipMotorCannonCalibration) {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
@@ -121,7 +140,7 @@ public class EV3Helper {
   }
 
   public void fireCannon() {
-    motorCannon.rotate(CANON_MOTOR_ROUND_DEGREES);
+    motorCannon.rotate(CANNON_MOTOR_ROUND_DEGREES);
   }
 
   private EV3MediumRegulatedMotor instantiateMotorCannon(
