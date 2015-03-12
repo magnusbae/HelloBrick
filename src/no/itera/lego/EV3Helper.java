@@ -28,6 +28,8 @@ public class EV3Helper {
   private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate to rotate the robot 1 degree (while the other is stopped)
   private static final int CANNON_MOTOR_ROUND_DEGREES = 1080; //How many degrees of rotation needed for the cannon to fire one bullet.
 
+  private static final int DEFAULT_MOTOR_SPEED = 350;
+
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
   private RegulatedMotor motorCannon;
@@ -61,6 +63,11 @@ public class EV3Helper {
   public EV3Helper(boolean skipMotorCannonCalibration) {
     motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
     motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
+
+    //Sets default motor speed for driving motors
+    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+
     motorCannon = instantiateMotorCannon(skipMotorCannonCalibration);
     irSensor = new EV3IRSensor(SensorPort.S1);
     colorSensor = new EV3ColorSensor(SensorPort.S4);
@@ -96,6 +103,10 @@ public class EV3Helper {
     return lastRange[0];
   }
 
+  /**
+   * Returns the currently measured color of the color sensor.
+   * @return name of measured color.
+   */
   public String getColorName() {
     int color = colorSensor.getColorID();
     if (color < 0 || color >= colors.length) {
@@ -104,6 +115,10 @@ public class EV3Helper {
     return colors[color];
   }
 
+  /**
+   * Get a list of all supported colors for the Mindstorms EV3 Color Sensor
+   * @return
+   */
   private String[] getColors() {
     Field[] names = Color.class.getFields();
     String[] list = new String[names.length];
@@ -112,6 +127,34 @@ public class EV3Helper {
     }
     return list;
   }
+
+  /**
+   * Drives forward until stop is called.
+   * Returns immediately
+   */
+  public void forward(){
+    motorLeft.forward();
+    motorRight.forward();
+  }
+
+  /**
+   * Drives backward until stop is called.
+   * Returns immediately
+   */
+  public void backward(){
+    motorLeft.backward();
+    motorRight.backward();
+  }
+
+
+  /**
+   * Stops both motors immediately
+   */
+  public void stop(){
+    motorLeft.stop(true);
+    motorRight.stop(true);
+  }
+
 
   /**
    * Drives forward the given centimeters and stops when complete
