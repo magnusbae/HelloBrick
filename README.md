@@ -65,6 +65,13 @@ the class name or the filename of the jar, you may change it there.
 
 ## IDE configuration
 
+### IntelliJ
+
+If you want, you may develop this project using IntelliJ. This will give you
+code completion and documentation, but you will still need to build and deploy using Ant. 
+To facilitate IntelliJ we have created a separate branch that contains an IntelliJ project. 
+To use IntelliJ just type ```git checkout intellij-project``` and open the repository from IntelliJ's open dialog.
+
 ### Eclipse
 
 If you want, you may develop this project using Eclipse. This will give you
