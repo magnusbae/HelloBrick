@@ -1,12 +1,19 @@
 # HelloBrick
 
-[Lejos](http://www.lejos.org/ev3/docs/) + Ant + HelloWorld
+This is a simple project for running code on Lego Mindstorms EV3, using
+[leJOS][lejos]. It contains a build script for [Apache Ant][ant], which can
+download the leJOS library, compile the code and run it on the device. The
+project also contains a class with helper methods, EV3Helper. This may make it
+easier to use the device. At last, it contains a main class which utilizes the
+helper methods for some simple movement.
+
+[lejos]: http://www.lejos.org/ev3/docs/
+[ant]: http://ant.apache.org/
 
 # Requirements
 
 This requires that you have [Apache Ant][ant] installed on your system.
 
-[ant]: http://ant.apache.org/
 
 # Installing dependencies
 
