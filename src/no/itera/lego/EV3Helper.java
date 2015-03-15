@@ -18,14 +18,15 @@ import lejos.utility.Delay;
 /**
  * Helper functions for basic operation of our pre-configured robot.
  * This class provides useful wrappers around Lejos code and examples for you to build on.
+ * This code is by design not optimized. You will have to figure out where to improve this code, and how.
  *
  * For the complete Lejos API take a look at:
  * http://www.lejos.org/ev3/docs/
  */
 public class EV3Helper {
 
-  private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate to travel 1cm
-  private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate to rotate the robot 1 degree (while the other is stopped)
+  private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate for the robot to travel 1cm
+  private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate for the robot to rotate 1 degree (while the other motor is stopped)
   private static final int CANNON_MOTOR_ROUND_DEGREES = 1080; //How many degrees of rotation needed for the cannon to fire one bullet.
 
   private static final int DEFAULT_MOTOR_SPEED = 350;
@@ -42,7 +43,7 @@ public class EV3Helper {
   private String[] colors;
 
   private enum Direction {
-    FORWARD, BACKWARD;
+    FORWARD, BACKWARD
   }
 
   /**
@@ -98,6 +99,7 @@ public class EV3Helper {
     return colorSensor;
   }
 
+
   /**
    * Fetches a distance sample from the EV3 infrared sensor.
    * Close to centimeters.
@@ -107,6 +109,7 @@ public class EV3Helper {
     rangeSampler.fetchSample(lastRange, 0);
     return lastRange[0];
   }
+
 
   /**
    * Fetches a color sample from the EV3 color sensor.
@@ -119,6 +122,7 @@ public class EV3Helper {
     }
     return colors[color];
   }
+
 
   /**
    * Get a list of all supported colors for the Mindstorms EV3 Color Sensor
@@ -133,6 +137,7 @@ public class EV3Helper {
     return list;
   }
 
+
   /**
    * Drives forward until stop is called.
    * Returns immediately
@@ -141,6 +146,7 @@ public class EV3Helper {
     motorLeft.forward();
     motorRight.forward();
   }
+
 
   /**
    * Drives backward until stop is called.
@@ -178,6 +184,7 @@ public class EV3Helper {
     drive(cm, Direction.BACKWARD);
   }
 
+
   /**
    * Drives in the given direction (forward/backward)
    * @param cm How many centimeters to drive
@@ -191,6 +198,7 @@ public class EV3Helper {
     motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR); //Waits for method to complete
   }
 
+
   /**
    * Turns left the given number of degrees
    * @param degrees
@@ -199,6 +207,7 @@ public class EV3Helper {
     motorLeft.stop(true);
     motorRight.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
+
 
   /**
    * Turns right the given number of degrees
@@ -238,7 +247,7 @@ public class EV3Helper {
 
 
   /**
-   * Calibrates the cannon and puts in a read-to-fire state.
+   * Calibrates the cannon and puts it in a read-to-fire state.
    */
   private void calibrateMotorCannon() {
     UnregulatedMotor motor = new UnregulatedMotor(MotorPort.C);
