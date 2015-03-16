@@ -4,6 +4,7 @@ If you want, you may develop this project using IntelliJ. This will give you
 code completion and documentation, but you will still need to build and deploy using Ant. 
 
 ## Import project
+
 In IntelliJ choose 
 
 1. File 
@@ -19,6 +20,4 @@ In IntelliJ choose
 
 ## Compiling code and EV3 communication
 
-To compile code when using IntelliJ, we suggest using the included ant script. See README-ANT.md
-
-
+To compile code when using IntelliJ, we suggest using the included Ant-script. See `README-ANT.md`.

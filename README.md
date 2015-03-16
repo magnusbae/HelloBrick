@@ -1,14 +1,20 @@
 # HelloBrick
 
 This is a simple project for running code on Lego Mindstorms EV3, using
-[leJOS][lejos]. 
-The project also contains a class with helper methods, EV3Helper. This may make it
-easier to use the device. At last, it contains a main class which utilizes the
-helper methods for some simple movement.
+[leJOS][lejos]. The project contains a class with helper methods, EV3Helper,
+which may make it easier to use the device. It also contains a main class and
+some examples which utilizes the helper methods for some simple movement.
 
 For convenience we are distributing an Eclipse version bundled with the Lejos EV3 plugin. If however you want to setup your computer without using our version you can follow the guide below.
 
 [lejos]: http://www.lejos.org/ev3/docs/
+
+## Requirements
+
+This project requires that you have [Java Development Kit 7][jdk7] installed on
+your system.
+
+[jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 
 ## IDE/Eclipse install and configuration
 

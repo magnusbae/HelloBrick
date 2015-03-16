@@ -5,8 +5,8 @@ download the leJOS library, compile the code, upload, and run it on the device.
 
 ## Requirements
 
-To build with ant you need to have a version of [Java Development Kit][jdk] and
-[Apache Ant][ant-download] installed on your system. You
+To build with Ant you need to have [Java Development Kit 7][jdk] and
+[Apache Ant][ant-download] installed on your system.
 
 [ant]: http://ant.apache.org/
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
