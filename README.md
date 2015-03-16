@@ -5,8 +5,6 @@ This is a simple project for running code on Lego Mindstorms EV3, using
 which may make it easier to use the device. It also contains a main class and
 some examples which utilizes the helper methods for some simple movement.
 
-For convenience we are distributing an Eclipse version bundled with the Lejos EV3 plugin. If however you want to setup your computer without using our version you can follow the guide below.
-
 [lejos]: http://www.lejos.org/ev3/docs/
 
 ## Requirements
@@ -15,6 +13,26 @@ This project requires that you have [Java Development Kit 7][jdk7] installed on
 your system.
 
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+
+## Development
+
+There exists a plugin for leJOS to Eclipse, which makes development easy. For
+convenience we are distributing Eclipse bundled with the Lejos EV3 plugin.
+
+- [Eclipse for Windows 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-win32-x86_64.zip)
+- [Eclipse for Windows 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-win32.zip)
+- [Eclipse for OS X 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-macosx-cocoa-x86_64.zip)
+- [Eclipse for OS X 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-macosx-cocoa.zip)
+- [Eclipse for Linux 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-linux-gtk-x86_64.tar.gz)
+- [Eclipse for Linux 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-linux-gtk.tar.gz)
+
+After launching Eclipse, you may have to set `EV3_HOME`, if it is not set. You
+can do this by selecting `Window -> Preferences -> leJOS EV3`. Set `EV3_HOME`
+to the `leJOS_EV3_0.9.0-beta` directory inside the `eclipse` directory you
+unpacked.
+
+After creating a leJOS-project, if the leJOS-libraries can't be found, right
+click on your project and select `leJOS EV3 -> Convert to leJOS EV3 project`.
 
 ## IDE/Eclipse install and configuration
 
