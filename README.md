@@ -14,7 +14,7 @@ your system.
 
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 
-## Development
+## Getting Eclipse
 
 There exists a plugin for leJOS to Eclipse, which makes development easy. For
 convenience we are distributing Eclipse bundled with the Lejos EV3 plugin.
@@ -30,6 +30,12 @@ After launching Eclipse, you may have to set `EV3_HOME`, if it is not set. You
 can do this by selecting `Window -> Preferences -> leJOS EV3`. Set `EV3_HOME`
 to the `leJOS_EV3_0.9.0-beta` directory inside the `eclipse` directory you
 unpacked.
+
+## Creating a project
+
+To create a project select `File -> New -> LeJOS EV3 Project`. Uncheck `Use
+default location` and select the location you placed this project. Make sure
+the selected JRE environment is `JavaSE-1.7`. Finally, press Finish.
 
 After creating a leJOS-project, if the leJOS-libraries can't be found, right
 click on your project and select `leJOS EV3 -> Convert to leJOS EV3 project`.
