@@ -125,8 +125,10 @@ public class EV3Helper {
 
 
   /**
-   * Get a list of all supported colors for the Mindstorms EV3 Color Sensor
-   * @return
+   * Get a array of the colors in the Color class. Note that the EV3 does not
+   * support all of these colors. The colors it supports are: NONE, BLACK,
+   * BLUE, GREEN, YELLOW, RED, WHITE and BROWN.
+   * @return array of the colors
    */
   private String[] getColors() {
     Field[] names = Color.class.getFields();
