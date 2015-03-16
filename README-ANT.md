@@ -12,6 +12,12 @@ To build with Ant you need to have [Java Development Kit 7][jdk] and
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 [ant-download]: http://ant.apache.org/bindownload.cgi
 
+## TL;DR
+
+First time, run: `ant install`
+To compile and run: `ant upload run`
+To stop: `ant stop`
+
 ## Installing other dependencies
 
 The necessary dependencies can be downloaded and installed by running:
