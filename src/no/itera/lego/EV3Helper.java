@@ -2,6 +2,7 @@ package no.itera.lego;
 
 import java.lang.reflect.Field;
 
+import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.motor.UnregulatedMotor;
@@ -97,6 +98,14 @@ public class EV3Helper {
 
   public EV3ColorSensor getColorSensor() {
     return colorSensor;
+  }
+
+
+  /**
+   * Plays a beep with the speaker.
+   */
+  public void playBeep() {
+    Sound.beep();
   }
 
 
