@@ -112,7 +112,16 @@ public class EV3Helper {
 
 
   /**
-   * Fetches a color sample from the EV3 color sensor.
+   * Fetches the color id from the EV3 color sensor.
+   * @return id of measured color
+   */
+  public int getColorId() {
+    return colorSensor.getColorID();
+  }
+
+
+  /**
+   * Fetches the color name from the EV3 color sensor.
    * @return name of measured color
    */
   public String getColorName() {
