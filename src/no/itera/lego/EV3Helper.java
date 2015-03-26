@@ -118,7 +118,7 @@ public class EV3Helper {
   public String getColorName() {
     int color = colorSensor.getColorID();
     if (color < 0 || color >= colors.length) {
-      return "NO_COLOR";
+      return "NONE";
     }
     return colors[color];
   }
