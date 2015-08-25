@@ -47,3 +47,11 @@ If you rather want to set up Eclipse with the leJOS-plugin yourself, you may fol
 If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
 
 If you want to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
+
+## Motors and Sensors connections
+
+When seeing the robot from the back, the rightmost motor should be connected to port A, and the left motor should be connected to port B. The wires do not have to cross. 
+
+The color sensor should be connected to port 1, and the IR sensor should be connected to port 4.
+
+This is defined in src/no/itera/lego/EV3Helper.java, lines 65, 66, 73, 74, and can be changed.
