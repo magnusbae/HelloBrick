@@ -48,6 +48,10 @@ If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
 
 If you want to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
 
++## Running a program
++
++To run a program, right click a file containing a main method, `Run As -> LeJos EV3 Program`.
+
 ## Motors and Sensors connections
 
 When seeing the robot from the back, the rightmost motor should be connected to port A, and the left motor should be connected to port B. The wires do not have to cross. 
