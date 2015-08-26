@@ -27,7 +27,8 @@ public class EV3Helper {
   private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate for the robot to travel 1cm
   private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate for the robot to rotate 1 degree (while the other motor is stopped)
 
-  private static final int DEFAULT_MOTOR_SPEED = 350;
+  private static final int DEFAULT_MOTOR_SPEED = 900;
+  private static final int SLOW_MOTOR_SPEED = 300;
 
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
@@ -66,8 +67,8 @@ public class EV3Helper {
     motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
 
-    irSensor = new EV3IRSensor(SensorPort.S1);
-    colorSensor = new EV3ColorSensor(SensorPort.S4);
+    irSensor = new EV3IRSensor(SensorPort.S2);
+    colorSensor = new EV3ColorSensor(SensorPort.S1);
 
     rangeSampler = irSensor.getDistanceMode();
     lastRange = new float[rangeSampler.sampleSize()];
@@ -154,8 +155,37 @@ public class EV3Helper {
   public void forward(){
     motorLeft.forward();
     motorRight.forward();
+    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
   }
 
+  public void rotateLeft() {
+    motorLeft.backward();
+    motorRight.forward();
+    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+  }
+
+  public void rotateRight(){
+    motorLeft.forward();
+    motorRight.backward();
+    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+  }
+
+  public void leftForward() {
+    motorLeft.forward();
+    motorRight.forward();
+    motorLeft.setSpeed(SLOW_MOTOR_SPEED);
+    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+  }
+
+  public void rightForward() {
+    motorLeft.forward();
+    motorRight.forward();
+    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorRight.setSpeed(SLOW_MOTOR_SPEED);
+  }
 
   /**
    * Drives backward until stop is called.
