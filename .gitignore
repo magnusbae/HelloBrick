@@ -11,3 +11,4 @@
 # Generated files
 /build
 *.jar
+/bin/
