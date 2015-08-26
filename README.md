@@ -56,6 +56,6 @@ To run a program, right click a file containing a main method, `Run As -> LeJos 
 
 When seeing the robot from the back, the rightmost motor should be connected to port A, and the left motor should be connected to port B. The wires do not have to cross. 
 
-The color sensor should be connected to port 1, and the IR sensor should be connected to port 4.
+The IR sensor should be connected to port 1, and the color sensor should be connected to port 4.
 
 This is defined in src/no/itera/lego/EV3Helper.java, lines 65, 66, 73, 74, and can be changed.
