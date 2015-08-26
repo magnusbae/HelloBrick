@@ -1,4 +1,4 @@
-package no.itera.lego.example;
+package no.itera.lego;
 
 import no.itera.lego.EV3Helper;
 
