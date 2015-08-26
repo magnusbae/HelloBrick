@@ -23,29 +23,15 @@ public class SumoMain {
 	
 	private void drive() {
 		boolean run = true;
-		//boolean turning = true;
 		ev3Helper.tankTurn();
 		while(run) {
 			lastSampleSet.takeSamples();
-			//System.out.println(lastSampleSet.getLastColor());
-			if (lastSampleSet.getLastColor().equals("BROWN")) {
-			//	ev3Helper.stop();
-			//	Sound.beep();
-			//	Button.waitForAnyPress();
+			if (lastSampleSet.getLastColor().equals("BROWN")) { //edge of the ring
 				ev3Helper.backward(5);
-				//ev3Helper.backward(5); 
-				ev3Helper.tankTurn(100);
 			}  
-			System.out.println(lastSampleSet.getLastDistance());
 			if (lastSampleSet.getLastDistance() < 100) { //see opponent	
-				ev3Helper.backward();
-				//ev3Helper.forward();
-			} else {
-				ev3Helper.tankTurn();
-			}
-			
-			
-			
+				Sound.beep();
+			}	
 		}
 	}
 	
@@ -54,7 +40,7 @@ public class SumoMain {
 		System.out.println("startup complete.\nClick any button to drive");
 		Button.waitForAnyPress();
 		try {
-			Thread.sleep(5);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
