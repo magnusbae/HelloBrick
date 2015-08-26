@@ -36,6 +36,8 @@ public class MightyMain {
 
 		ev3Helper.playBeep();
 
+		System.out.println("\nPress any key to stop motors and finish program");
+
 		while (robotState.shouldRun) {
 			Button.waitForAnyPress();
 			ev3Helper.playBeep();
