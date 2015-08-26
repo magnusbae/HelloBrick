@@ -2,18 +2,16 @@ package no.itera.lego;
 
 import java.lang.reflect.Field;
 
-import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.motor.EV3MediumRegulatedMotor;
-import lejos.hardware.motor.UnregulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3IRSensor;
+import lejos.hardware.Sound;
 import lejos.robotics.Color;
 import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
-import lejos.utility.Delay;
+
 
 
 /**
@@ -28,7 +26,6 @@ public class EV3Helper {
 
   private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate for the robot to travel 1cm
   private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate for the robot to rotate 1 degree (while the other motor is stopped)
-  private static final int CANNON_MOTOR_ROUND_DEGREES = 1080; //How many degrees of rotation needed for the cannon to fire one bullet.
 
   private static final int DEFAULT_MOTOR_SPEED = 350;
 
@@ -70,7 +67,6 @@ public class EV3Helper {
     motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
 
-    motorCannon = instantiateMotorCannon(skipMotorCannonCalibration);
     irSensor = new EV3IRSensor(SensorPort.S1);
     colorSensor = new EV3ColorSensor(SensorPort.S4);
 
@@ -107,8 +103,7 @@ public class EV3Helper {
   public void playBeep() {
     Sound.beep();
   }
-
-
+  
   /**
    * Fetches a distance sample from the EV3 infrared sensor.
    * Close to centimeters.
@@ -119,7 +114,6 @@ public class EV3Helper {
     return lastRange[0];
   }
 
-
   /**
    * Fetches the color id from the EV3 color sensor.
    * @return id of measured color
@@ -127,10 +121,9 @@ public class EV3Helper {
   public int getColorId() {
     return colorSensor.getColorID();
   }
-
-
+  
   /**
-   * Fetches the color name from the EV3 color sensor.
+   * Fetches a color sample from the EV3 color sensor.
    * @return name of measured color
    */
   public String getColorName() {
@@ -237,53 +230,5 @@ public class EV3Helper {
     motorRight.stop(true);
     motorLeft.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
   }
-
-
-  /**
-   * Fire one bullet from the cannon.
-   * This method blocks until completed
-   */
-  public void fireCannon() {
-    motorCannon.rotate(CANNON_MOTOR_ROUND_DEGREES);
-  }
-
-
-  /**
-   * Instantiates the cannon-motor, optionally skips calibration
-   * @param skipMotorCannonCalibration
-   * @return
-   */
-  private EV3MediumRegulatedMotor instantiateMotorCannon(
-      boolean skipMotorCannonCalibration) {
-    if (!skipMotorCannonCalibration) {
-      calibrateMotorCannon();
-    }
-    EV3MediumRegulatedMotor motor = new EV3MediumRegulatedMotor(MotorPort.C);
-    if (!skipMotorCannonCalibration) {
-      motor.rotate(-360);
-    }
-    return motor;
-  }
-
-
-  /**
-   * Calibrates the cannon and puts it in a read-to-fire state.
-   */
-  private void calibrateMotorCannon() {
-    UnregulatedMotor motor = new UnregulatedMotor(MotorPort.C);
-    motor.setPower(50);
-
-    int maxIterations = 40;
-    int lastTachoCount = 0;
-    while (maxIterations-- > 0) {
-      Delay.msDelay(100);
-      int newTachoCount = motor.getTachoCount();
-      if (newTachoCount == lastTachoCount) {
-        break;
-      }
-      lastTachoCount = newTachoCount;
-    }
-
-    motor.close();
-  }
+  
 }
