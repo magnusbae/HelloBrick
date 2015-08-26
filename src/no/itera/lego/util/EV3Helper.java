@@ -1,4 +1,4 @@
-package no.itera.lego;
+package no.itera.lego.util;
 
 import java.lang.reflect.Field;
 
@@ -31,7 +31,6 @@ public class EV3Helper {
 
   private RegulatedMotor motorRight;
   private RegulatedMotor motorLeft;
-  private RegulatedMotor motorCannon;
   private EV3IRSensor irSensor;
   private EV3ColorSensor colorSensor;
 
@@ -84,9 +83,6 @@ public class EV3Helper {
     return motorLeft;
   }
 
-  public RegulatedMotor getMotorCannon() {
-    return motorCannon;
-  }
 
   public EV3IRSensor getIrSensor() {
     return irSensor;

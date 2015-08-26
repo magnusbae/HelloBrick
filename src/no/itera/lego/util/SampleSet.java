@@ -1,6 +1,4 @@
-package no.itera.lego;
-
-import no.itera.lego.EV3Helper;
+package no.itera.lego.util;
 
 public class SampleSet {
     private float lastDistance;
