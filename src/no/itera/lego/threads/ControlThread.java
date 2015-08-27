@@ -37,13 +37,7 @@ public class ControlThread implements Runnable {
 					reverseTimer = new Stopwatch();
 					robotState.direction = BACKWARDS;
 				} else if (reverseTimer.elapsed() > REVERSE_TIME) {
-					if (timesRight < MAX_TIMES_RIGHT) {
-						robotState.direction = RIGHT;
-						timesRight++;
-					} else {
-						robotState.direction = LEFT;
-						timesRight = 0;
-					}
+					robotState.direction = RIGHT;
 				} else if (reverseTimer.elapsed() > MIN_REVERSE_TIME) {
 					robotState.direction = FORWARD;
 					reverseTimer = null;
