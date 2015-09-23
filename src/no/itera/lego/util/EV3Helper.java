@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3IRSensor;
 import lejos.hardware.Sound;
@@ -27,7 +26,7 @@ public class EV3Helper {
   private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate for the robot to travel 1cm
   private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate for the robot to rotate 1 degree (while the other motor is stopped)
 
-  private static final int DEFAULT_MOTOR_SPEED = 900;
+  public static final int MAX_MOTOR_SPEED = 900;
   private static final int SLOW_MOTOR_SPEED = 300;
 
   private RegulatedMotor motorRight;
@@ -44,36 +43,19 @@ public class EV3Helper {
     FORWARD, BACKWARD
   }
 
-  /**
-   * Instantiates a new helper class and calibrates the cannon.
-   * Robot is ready for operation after completion.
-   * If you're not going to use the cannon, you can skip calibration using
-   * {@link #EV3Helper#EV3Helper(boolean)}
-   */
-  public EV3Helper() {
-    this(false);
-  }
 
   /**
    * Instantiates a new helper class and optionally calibrates the cannon.
    * Robot is ready for operation after completion.
-   * @param skipMotorCannonCalibration Set to true if you don't want to calibrate the cannon
    */
-  public EV3Helper(boolean skipMotorCannonCalibration) {
-    motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
-    motorLeft = new EV3LargeRegulatedMotor(MotorPort.B);
+  public EV3Helper() {
+    motorRight = new EV3LargeRegulatedMotor(MotorPort.D);
+    motorLeft = new EV3LargeRegulatedMotor(MotorPort.A);
 
     //Sets default motor speed for driving motors
-    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
-    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorRight.setSpeed(MAX_MOTOR_SPEED);
+    motorLeft.setSpeed(MAX_MOTOR_SPEED);
 
-    irSensor = new EV3IRSensor(SensorPort.S2);
-    colorSensor = new EV3ColorSensor(SensorPort.S1);
-
-    rangeSampler = irSensor.getDistanceMode();
-    lastRange = new float[rangeSampler.sampleSize()];
-
-    colors = getColors();
   }
 
   public RegulatedMotor getMotorRight() {
@@ -152,48 +134,64 @@ public class EV3Helper {
    * Drives forward until stop is called.
    * Returns immediately
    */
-  public void forward(){
+  public void forward(int speed){
     motorLeft.forward();
     motorRight.forward();
-    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
-    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorLeft.setSpeed(speed);
+    motorRight.setSpeed(speed);
   }
 
   public void rotateLeft() {
     motorLeft.backward();
     motorRight.forward();
-    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
-    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorLeft.setSpeed(MAX_MOTOR_SPEED/2);
+    motorRight.setSpeed(MAX_MOTOR_SPEED/2);
   }
 
   public void rotateRight(){
     motorLeft.forward();
     motorRight.backward();
-    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
-    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorLeft.setSpeed(MAX_MOTOR_SPEED/2);
+    motorRight.setSpeed(MAX_MOTOR_SPEED/2);
   }
 
-  public void leftForward() {
+  public void leftForward(int speed) {
     motorLeft.forward();
     motorRight.forward();
-    motorLeft.setSpeed(SLOW_MOTOR_SPEED);
-    motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
+    motorLeft.setSpeed(speed/3);
+    motorRight.setSpeed(speed);
   }
 
-  public void rightForward() {
+  public void rightForward(int speed) {
     motorLeft.forward();
     motorRight.forward();
-    motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
-    motorRight.setSpeed(SLOW_MOTOR_SPEED);
+    motorLeft.setSpeed(speed);
+    motorRight.setSpeed(speed/3);
+  }
+
+  public void leftBackward(int speed) {
+    motorLeft.backward();
+    motorRight.backward();
+    motorLeft.setSpeed(speed/3);
+    motorRight.setSpeed(speed);
+  }
+
+  public void rightBackward(int speed) {
+    motorLeft.backward();
+    motorRight.backward();
+    motorLeft.setSpeed(speed);
+    motorRight.setSpeed(speed/3);
   }
 
   /**
    * Drives backward until stop is called.
    * Returns immediately
    */
-  public void backward(){
+  public void backward(int speed){
     motorLeft.backward();
     motorRight.backward();
+    motorLeft.setSpeed(speed);
+    motorRight.setSpeed(speed);
   }
 
 
@@ -203,24 +201,6 @@ public class EV3Helper {
   public void stop(){
     motorLeft.stop(true);
     motorRight.stop(true);
-  }
-
-
-  /**
-   * Drives forward the given centimeters and stops when complete
-   * @param cm
-   */
-  public void forward(int cm) {
-    drive(cm, Direction.FORWARD);
-  }
-
-
-  /**
-   * Drives forward the given centimeters and stops when complete
-   * @param cm
-   */
-  public void backward(int cm) {
-    drive(cm, Direction.BACKWARD);
   }
 
 

@@ -18,28 +18,28 @@ public class MotorThread implements Runnable {
 		while (robotState.shouldRun){
 			if(robotState.direction != null) {
 				switch (robotState.direction) {
-					case FORWARD:
-						ev3Helper.forward();
-						break;
-					case LEFT_FORWARD:
-						ev3Helper.leftForward();
-						break;
-					case LEFT:
-						ev3Helper.rotateLeft();
-						break;
-					case RIGHT:
-						ev3Helper.rotateRight();
-						break;
-					case RIGHT_FORWARD:
-						ev3Helper.rightForward();
-						break;
-					case BACKWARDS:
-						ev3Helper.backward();
-						break;
-					case LEFT_BACKWARD:
-						break;
-					case RIGHT_BACKWARD:
-						break;
+//					case FORWARD:
+//						ev3Helper.forward();
+//						break;
+//					case LEFT_FORWARD:
+//						ev3Helper.leftForward();
+//						break;
+//					case LEFT:
+//						ev3Helper.rotateLeft();
+//						break;
+//					case RIGHT:
+//						ev3Helper.rotateRight();
+//						break;
+//					case RIGHT_FORWARD:
+//						ev3Helper.rightForward();
+//						break;
+//					case BACKWARDS:
+//						ev3Helper.backward();
+//						break;
+//					case LEFT_BACKWARD:
+//						break;
+//					case RIGHT_BACKWARD:
+//						break;
 					case STOP:
 						ev3Helper.stop();
 						break;
