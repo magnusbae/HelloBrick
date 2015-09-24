@@ -1,55 +1,65 @@
 package no.itera.lego;
 
+import lejos.hardware.Brick;
 import lejos.hardware.Button;
+import lejos.hardware.ev3.LocalEV3;
 import no.itera.lego.model.RobotState;
 import no.itera.lego.threads.ControlThread;
-import no.itera.lego.threads.MotorThread;
-import no.itera.lego.threads.SensorThread;
+import no.itera.lego.threads.JoystickThread;
+import no.itera.lego.threads.MasterEv3Thread;
+import no.itera.lego.threads.ServerSocketThread;
 import no.itera.lego.util.EV3Helper;
-import no.itera.lego.util.SampleSet;
+import no.itera.lego.util.LastState;
 
 import java.util.concurrent.CountDownLatch;
 
 public class MightyMain {
 
 	private static EV3Helper ev3Helper = new EV3Helper();
-	private static SampleSet sampleSet = new SampleSet(ev3Helper);
+	private static LastState lastState = new LastState();
 	private static RobotState robotState = new RobotState();
 
 	public static void main(String[] args) throws InterruptedException {
-		ev3Helper.playBeep();
-		System.out.println("startup complete.\n\nClick any button to fight");
-		Button.waitForAnyPress();
-		ev3Helper.playBeep();
 
-		Thread.sleep(3000);
+		Thread t1;
+		Thread t2;
 
-		Thread mt = new Thread(new MotorThread(robotState, ev3Helper));
-		Thread st = new Thread(new SensorThread(robotState, ev3Helper, sampleSet));
-		Thread ct = new Thread(new ControlThread(robotState, sampleSet));
+		Brick brick = LocalEV3.ev3;
+		String name = brick.getName();
 
-		mt.start();
-		st.start();
-		ct.start();
+		if (name.startsWith("R")) {
+			t1 = new Thread(new ControlThread(robotState, lastState, ev3Helper));
+			t2 = new Thread(new ServerSocketThread(robotState, lastState));
+		} else {
+			t1 = new Thread(new JoystickThread(robotState, ev3Helper, lastState));
+			t2 = new Thread(new MasterEv3Thread(robotState, ev3Helper, lastState));
+		}
 
-		robotState.latch = new CountDownLatch(3);
+		robotState.latch = new CountDownLatch(2);
 
-		ev3Helper.playBeep();
+		t1.start();
+		t2.start();
 
-		System.out.println("\nPress any key to stop motors and finish program");
+
+		System.out.println("\nPress enter to exit program");
 
 		while (robotState.shouldRun) {
-			Button.waitForAnyPress();
-			ev3Helper.playBeep();
-			robotState.shouldRun = false;
+			if (Button.ENTER.isDown()) {
+				ev3Helper.playBeep();
+				robotState.shouldRun = false;
+			} else {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		robotState.latch.await();
 
 		ev3Helper.playBeep();
 		System.out.println("Bye!");
-
-		System.exit(0);
 
 	}
 }

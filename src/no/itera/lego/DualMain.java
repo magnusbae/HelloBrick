@@ -5,7 +5,6 @@ import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.GraphicsLCD;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.remote.ev3.Menu;
