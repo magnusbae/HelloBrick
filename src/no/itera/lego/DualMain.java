@@ -26,6 +26,9 @@ public class DualMain {
 
 	static final int PORT = 5678;
 	static final long DELAY = 10;
+public static final double JOYSTICK_DOWNSCALING_FACTOR = 8.5;
+	public static final int DEADZONE = 6;
+
 
 	public static void runSecondary() {
 		EV3Helper ev3Helper = new EV3Helper();
@@ -36,39 +39,30 @@ public class DualMain {
 			ServerSocket cmdSock = new ServerSocket(PORT);
 			Socket s = cmdSock.accept();
 
+			RegulatedMotor motorLeft = ev3Helper.getMotorLeft();
+			RegulatedMotor motorRight = ev3Helper.getMotorRight();
+
 			int pos = s.getInputStream().read();
 			while (pos > 0) {
 				pos = s.getInputStream().read();
 				TwoAxisInputModel inputModel = BinaryHelper.decodeByte(pos);
-				if(inputModel.getSpeed() == 1 && inputModel.isTurn()){
-					if(inputModel.isLeft()){
-						ev3Helper.rotateLeft();
-					}else{
-						ev3Helper.rotateRight();
-					}
-				}else if(inputModel.getSpeed() > 1){
-					int speed = inputModel.getSpeed() * SPEED_FACTOR;
-					if(inputModel.isTurn()){
-						if(inputModel.isForward() && inputModel.isLeft()){
-							ev3Helper.leftForward(speed);
-						}else if(inputModel.isForward()){
-							ev3Helper.rightForward(speed);
-						}else if(inputModel.isLeft()){
-							ev3Helper.leftBackward(speed);
-						}else{
-							ev3Helper.rightBackward(speed);
-						}
-					}else{
-						if(inputModel.isForward()){
-							ev3Helper.forward(speed);
-						}else{
-							ev3Helper.backward(speed);
-						}
-					}
-				}else {
-					ev3Helper.stop();
+
+				if(inputModel.isMotorLeftDirectionForwards()){
+					motorLeft.forward();
+				}else{
+					motorLeft.backward();
 				}
+				if(inputModel.isMotorRightDirectionForwards()){
+					motorRight.forward();
+				}else{
+					motorRight.backward();
+				}
+
+				motorLeft.setSpeed(inputModel.getMotorLeftSpeed());
+				motorRight.setSpeed(inputModel.getMotorRightSpeed());
+
 			}
+			ev3Helper.stop();
 			s.close();
 			cmdSock.close();
 		} catch (IOException e) {
@@ -142,18 +136,16 @@ public class DualMain {
 				int tachoY = ev3Helper.getMotorLeft().getTachoCount();
 				int tachoX = ev3Helper.getMotorRight().getTachoCount();
 
-				boolean forward = false;
+				boolean forward = tachoY < 0 ? true : false;
+				boolean left = tachoX < 0 ? true : false;
 
-				if(tachoY < 0){
+				int turn = Math.abs(tachoX) < DEADZONE ? 0 : (int) (tachoX / JOYSTICK_DOWNSCALING_FACTOR);
+				int	speed = Math.abs(tachoY) < DEADZONE ? 0 : (int) (tachoY / JOYSTICK_DOWNSCALING_FACTOR);
+
+				if(speed == 0) {
 					forward = true;
 				}
-				int speed = (int) Math.abs(tachoY/2.1);
-				boolean turn = Math.abs(tachoX) > 6;
-				boolean left = tachoX < 0;
-				if(speed < 6){
-					speed = 1;
-				}
-				inputModelByte = BinaryHelper.encodeByte(forward, turn, left, speed);
+				inputModelByte = BinaryHelper.encodeByte(forward, left, turn, speed);
 
 			} while (Button.ENTER.isUp());
 

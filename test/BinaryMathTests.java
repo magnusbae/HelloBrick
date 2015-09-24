@@ -1,9 +1,17 @@
 import org.junit.Test;
 
-import static no.itera.lego.util.BinaryHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class BinaryMathTests {
+	public static final int SEVEN = 1 << 7;
+	public static final int SIX = 1 << 6;
+	public static final int FIVE = 1 << 5;
+	public static final int FIVE_LSB_BITMASK = 31;
+	public static final int BIT_SEVEN_BITMASK = 128;
+	public static final int BIT_SIX_BITMASK = 64;
+	public static final int BIT_FIVE_BITMASK = 32;
+	public static final int THREE_LSB_BITMASK = 7;
+	public static final int BIT_FOUR_THROUGH_SIX_BITMASK = THREE_LSB_BITMASK << 3;
 
 	@Test
 	public void setBitSevenToOne(){
@@ -107,5 +115,15 @@ public class BinaryMathTests {
 
 		int bitFive = binary & BIT_FIVE_BITMASK;
 		assertEquals(0, bitFive);
+	}
+
+	@Test
+	public void bitMaskThreeLsbHasCorrectPattern(){
+		assertEquals("111", Integer.toBinaryString(THREE_LSB_BITMASK));
+	}
+
+	@Test
+	public void bitMaskBit4to7HasCorrectPattern(){
+		assertEquals("111000", Integer.toBinaryString(BIT_FOUR_THROUGH_SIX_BITMASK));
 	}
 }

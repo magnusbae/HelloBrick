@@ -8,55 +8,75 @@ import static org.junit.Assert.*;
 
 public class BinaryHelperTest {
 
-
 	@Test
-	public void encodeByteGives204(){
-		int aByte = BinaryHelper.encodeByte(true, true, false, 12);
+	public void ZeroSteeringFullForwardGivesByte11000111(){
+		int aByte = BinaryHelper.encodeByte(true, true, 0, 7);
 
-		assertEquals(204, aByte);
-		assertEquals("11001100", Integer.toBinaryString(aByte));
+		assertEquals("11000111", Integer.toBinaryString(aByte));
 	}
 
 	@Test
-	public void encodeWithHigherSpeedThan31GivesNoSideEffects(){
-		int aByte = BinaryHelper.encodeByte(false, false, false, 255);
+	public void ZeroSteeringOverflowingForwardGivesByte11000111(){
+		int aByte = BinaryHelper.encodeByte(true, true, 0, 12);
 
-		assertEquals(31, aByte);
-		assertEquals("11111", Integer.toBinaryString(aByte));
+		assertEquals("11000111", Integer.toBinaryString(aByte));
 	}
 
 	@Test
-	public void encodeWithSpeed32GivesMaxSpeed(){
-		int aByte = BinaryHelper.encodeByte(false, false, false, 32);
+	public void SteeringOverflowAndNoSpeedGivesFullSteeringAndNoSpeedBits(){
+		int aByte = BinaryHelper.encodeByte(true, true, 9, 0);
 
-		assertEquals(31, aByte);
-		assertEquals("11111", Integer.toBinaryString(aByte));
+		assertEquals("11111000", Integer.toBinaryString(aByte));
 	}
 
 	@Test
-	public void decodeByte204GivesCorrectValues(){
-		TwoAxisInputModel decoded = BinaryHelper.decodeByte(204);
-		assertTrue(decoded.isForward());
-		assertTrue(decoded.isTurn());
-		assertFalse(decoded.isLeft());
-		assertEquals(12, decoded.getSpeed());
+	public void ZeroSteeringFullForwardGivesEqualWheelSpeedsAndMaxSpeed(){
+		int aByte = BinaryHelper.encodeByte(true, true, 0, 7);
+
+		TwoAxisInputModel decoded = BinaryHelper.decodeByte(aByte);
+
+		assertTrue(decoded.isMotorLeftDirectionForwards());
+		assertTrue(decoded.isMotorRightDirectionForwards());
+		assertEquals(decoded.getMotorLeftSpeed(), decoded.getMotorRightSpeed());
+		assertEquals(896, decoded.getMotorRightSpeed());
 	}
 
 	@Test
-	public void decodeByte31GivesCorrectValues(){
-		TwoAxisInputModel decoded = BinaryHelper.decodeByte(31);
-		assertFalse(decoded.isForward());
-		assertFalse(decoded.isTurn());
-		assertFalse(decoded.isLeft());
-		assertEquals(31, decoded.getSpeed());
+	public void ZeroSteeringFullBackwardsGivesEqualWheelSpeedsAndMaxSpeedAndMotorDirectionBackwards(){
+		int aByte = BinaryHelper.encodeByte(false, true, 0, 7);
+
+		TwoAxisInputModel decoded = BinaryHelper.decodeByte(aByte);
+
+		assertFalse(decoded.isMotorLeftDirectionForwards());
+		assertFalse(decoded.isMotorRightDirectionForwards());
+		assertEquals(decoded.getMotorLeftSpeed(), decoded.getMotorRightSpeed());
+		assertEquals(896, decoded.getMotorRightSpeed());
 	}
 
 	@Test
-	public void decodeByte0GivesCorrectValues(){
-		TwoAxisInputModel decoded = BinaryHelper.decodeByte(0);
-		assertFalse(decoded.isForward());
-		assertFalse(decoded.isTurn());
-		assertFalse(decoded.isLeft());
-		assertEquals(0, decoded.getSpeed());
+	public void FullSteeringLeftAndFullForwardGivesLeftWheelReverseAndRightWheelMaxSpeed(){
+		int aByte = BinaryHelper.encodeByte(true, true, 7, 7);
+
+		TwoAxisInputModel decoded = BinaryHelper.decodeByte(aByte);
+
+		assertFalse(decoded.isMotorLeftDirectionForwards());
+		assertTrue(decoded.isMotorRightDirectionForwards());
+		assertNotEquals(decoded.getMotorLeftSpeed(), decoded.getMotorRightSpeed());
+		assertEquals(896, decoded.getMotorRightSpeed());
+		assertEquals(700, decoded.getMotorLeftSpeed());
 	}
+
+	@Test
+	public void FullSteeringRightAndFullForwardGivesRightWheelReverseAndLeftWheelMaxSpeed(){
+		int aByte = BinaryHelper.encodeByte(true, false, 7, 7);
+
+		TwoAxisInputModel decoded = BinaryHelper.decodeByte(aByte);
+
+		assertTrue(decoded.isMotorLeftDirectionForwards());
+		assertFalse(decoded.isMotorRightDirectionForwards());
+		assertNotEquals(decoded.getMotorLeftSpeed(), decoded.getMotorRightSpeed());
+		assertEquals(896, decoded.getMotorLeftSpeed());
+		assertEquals(700, decoded.getMotorRightSpeed());
+	}
+
 }
