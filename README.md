@@ -1,63 +1,32 @@
-Forked from: https://github.com/follan/HelloBrick
+# EV3 to EV3 Remote
 
-# HelloBrick
+This [leJOS][lejos] application allows one EV3 to control another EV3 via bluetooth (or other networking).
+To use Bluetooth PAN you need LeJOS post the 0.9.0-beta. At the time of writing (09/2015) you need to pull the LeJOS git-repository.
+The repository contains a snapshot that can be used to install lejos on an SD card, and pre-built libraries that can be used for building.
 
-This is a simple project for running code on Lego Mindstorms EV3, using
-[leJOS][lejos]. The project contains a class with helper methods, EV3Helper,
-which may make it easier to use the device. It also contains a main class and
-some examples which utilizes the helper methods for some simple movement.
+This project requires two EV3 boxes, one built as a robot, one as a joystick.
 
 [lejos]: http://www.lejos.org/ev3/docs/
 
 ## Requirements
 
-This project requires that you have [Java Development Kit 7][jdk7] installed on
+You need to have [Java Development Kit 7][jdk7] and [Ant][ant]installed on
 your system.
 
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
-
-## Getting Eclipse
-
-There exists a plugin for leJOS to Eclipse, which makes development easy. For
-convenience we are distributing Eclipse bundled with the Lejos EV3 plugin.
-
-- [Eclipse for Windows 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-win32-x86_64.zip)
-- [Eclipse for Windows 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-win32.zip)
-- [Eclipse for OS X 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-macosx-cocoa-x86_64.zip)
-- [Eclipse for OS X 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-macosx-cocoa.zip)
-- [Eclipse for Linux 64-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-linux-gtk-x86_64.tar.gz)
-- [Eclipse for Linux 32-bit](http://www.aaberge.net/stuff/eclipse/eclipse-java-luna-SR2-linux-gtk.tar.gz)
-
-After launching Eclipse, you may have to set `EV3_HOME`, if it is not set. You
-can do this by selecting `Window -> Preferences -> leJOS EV3`. Set `EV3_HOME`
-to the `leJOS_EV3_0.9.0-beta` directory inside the `eclipse` directory you
-unpacked.
-
-## Creating a project
-
-To create a project select `File -> New -> LeJOS EV3 Project`. Uncheck `Use
-default location` and select the location you placed this project. Make sure
-the selected JRE environment is `JavaSE-1.7`. Finally, press Finish.
-
-After creating a leJOS-project, if the leJOS-libraries can't be found, right
-click on your project and select `leJOS EV3 -> Convert to leJOS EV3 project`.
-
-## Other development methods
-
-If you rather want to set up Eclipse with the leJOS-plugin yourself, you may follow the guide in `README-ECLIPSE.md`.
+[ant]: http://ant.apache.org/
 
 If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
 
-If you want to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
+##Building
 
-## Running a program
+It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
 
-To run a program, right click a file containing a main method, `Run As -> LeJos EV3 Program`.
 
 ## Motors and Sensors connections
 
-When seeing the robot from the back, the rightmost motor should be connected to port A, and the left motor should be connected to port B. The wires do not have to cross. 
+When seeing the robot from the back, the leftmost motor should be connected to port A, and the right motor should be connected to port D.
 
-The IR sensor should be connected to port 1, and the color sensor should be connected to port 4.
+On the joystick, connect Y-axis to port A, X to port D. Touch sensor to S1.
 
-This is defined in src/no/itera/lego/EV3Helper.java, lines 65, 66, 73, 74, and can be changed.
+This is defined in src/no/itera/lego/EV3Helper.java.
