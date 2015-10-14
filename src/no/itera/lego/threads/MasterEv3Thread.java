@@ -5,6 +5,7 @@ import lejos.hardware.BrickInfo;
 import lejos.remote.ev3.Menu;
 import lejos.remote.ev3.RemoteRequestMenu;
 import lejos.utility.Delay;
+import lejos.hardware.ev3.LocalEV3;
 import no.itera.lego.model.RobotState;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.LastState;
