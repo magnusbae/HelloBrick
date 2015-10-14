@@ -38,7 +38,12 @@ public class MasterEv3Thread implements Runnable {
 			byte[] data = new byte[(int) jarFile.length()];
 			in.read(data);
 			in.close();
-			String[] names = {"R1"};
+			
+			Brick brick = LocalEV3.ev3;
+			String localName = brick.getName();
+			String remoteName = localName.equals("C2") ? "R2D2" : localName.replace("C", "R");
+			String[] names = {remoteName};
+			
 			BrickInfo[] bricks = new BrickInfo[names.length];
 			Menu[] menus = new Menu[names.length];
 			for (int i = 0; i < bricks.length; i++) {
