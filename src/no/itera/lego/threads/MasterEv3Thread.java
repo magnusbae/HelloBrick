@@ -2,6 +2,7 @@ package no.itera.lego.threads;
 
 import lejos.hardware.BrickFinder;
 import lejos.hardware.BrickInfo;
+import lejos.hardware.Brick;
 import lejos.remote.ev3.Menu;
 import lejos.remote.ev3.RemoteRequestMenu;
 import lejos.utility.Delay;
