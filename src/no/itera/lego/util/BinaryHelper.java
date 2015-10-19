@@ -6,8 +6,8 @@ public class BinaryHelper {
 	public static final int THREE_BIT_MAX_VALUE = 7;
 	public static final int SEVEN = 1 << 7;
 	public static final int SIX = 1 << 6;
-	public static final int THREE_LSB_BITMASK = THREE_BIT_MAX_VALUE;
-	public static final int BIT_FOUR_THROUGH_SIX_BITMASK = THREE_LSB_BITMASK << 3;
+	public static final int THREE_LSB_BITMASK = 7;
+	public static final int BIT_FOUR_THROUGH_SIX_BITMASK = 7 << 3;
 	public static final int BIT_SEVEN_BITMASK = 128;
 	public static final int BIT_SIX_BITMASK = 64;
 
