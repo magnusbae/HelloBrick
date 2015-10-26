@@ -15,6 +15,7 @@ public class JoystickThread implements Runnable {
 	private RobotState robotState;
 	private EV3Helper ev3Helper;
 	private LastState lastState;
+	private boolean shouldPause = false;
 
 	public JoystickThread(RobotState robotState, EV3Helper ev3Helper, LastState lastState) {
 		this.robotState = robotState;
@@ -51,19 +52,34 @@ public class JoystickThread implements Runnable {
 			ev3Helper.playBeep();
 
 			do {
+				trigger.fetchSample(triggerState, 0);
 				int tachoY = ev3Helper.getMotorLeft().getTachoCount();
 				int tachoX = ev3Helper.getMotorRight().getTachoCount();
 
-				boolean forward = tachoY < 0 ? true : false;
-				boolean left = tachoX < 0 ? true : false;
-
-				int turn = Math.abs(tachoX) < DEADZONE ? 0 : (int) (tachoX / JOYSTICK_DOWNSCALING_FACTOR);
-				int speed = Math.abs(tachoY) < DEADZONE ? 0 : (int) (tachoY / JOYSTICK_DOWNSCALING_FACTOR);
-
-				if (speed == 0) {
-					forward = true;
+				if(triggerState[0] == 1){
+					shouldPause = !shouldPause;
+					if(shouldPause){
+						lastState.setLastByte(BinaryHelper.encodeByte(true, true, 0, 0));
+					}
+					ev3Helper.playBeep();
+					System.out.println(shouldPause ? "Paused!" : "Fight!!");
+					if(shouldPause) {
+						Thread.sleep(1000);
+					}
 				}
-				lastState.setLastByte(BinaryHelper.encodeByte(forward, left, turn, speed));
+
+				if(!shouldPause) {
+					boolean forward = tachoY < 0;
+					boolean left = tachoX < 0;
+
+					int turn = Math.abs(tachoX) < DEADZONE ? 0 : (int) (tachoX / JOYSTICK_DOWNSCALING_FACTOR);
+					int speed = Math.abs(tachoY) < DEADZONE ? 0 : (int) (tachoY / JOYSTICK_DOWNSCALING_FACTOR);
+
+					if (speed == 0) {
+						forward = true;
+					}
+					lastState.setLastByte(BinaryHelper.encodeByte(forward, left, turn, speed));
+				}
 
 			} while (robotState.shouldRun);
 
