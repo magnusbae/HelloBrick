@@ -32,8 +32,10 @@ public class ServerSocketThread implements Runnable {
 			int pos = s.getInputStream().read();
 			while (robotState.shouldRun && pos > 0) {
 				pos = s.getInputStream().read();
-				TwoAxisInputModel inputModel = BinaryHelper.decodeByte(pos);
-				LastState.setLastInputModel(inputModel);
+				if(pos != -1){
+					TwoAxisInputModel inputModel = BinaryHelper.decodeByte(pos);
+					LastState.setLastInputModel(inputModel);
+				}
 			}
 			robotState.shouldRun = false;
 			s.close();
