@@ -7,6 +7,9 @@
         <fileset dir="${lejos.dir}/lib">
             <include name="**/*.jar"/>
         </fileset>
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
     </path>
 
     <condition property="isUnixOrMac">
@@ -24,12 +27,12 @@
     </target>
 
     <target name="install-unixmac" if="isUnixOrMac">
-        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
+        <get src="https://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
         <untar src="leJOS_EV3_0.9.0-beta.tar.gz" dest="." compression="gzip"/>
     </target>
 
     <target name="install-windows" if="isWindows">
-        <get src="http://downloads.sourceforge.net/project/lejos/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
+        <get src="https://downloads.sourceforge.net/project/lejos/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
         <unzip src="leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
         <move file="leJOS_EV3_0.9.0-beta_win32" toFile="leJOS_EV3_0.9.0-beta"/>
     </target>
@@ -55,7 +58,8 @@
             includeJavaRuntime="false"
             verbose="false"
         >
-            <classpath refid="libraries.path"/>
+            <classpath refid="libraries.path" />
+
             <!-- enable warnings -->
             <compilerarg value="-Xlint:${source.warn}"/>
         </javac>
@@ -65,14 +69,33 @@
         <jar destfile="${output.jar}" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
-                <attribute name="Class-Path" value="${class.path}"/>
+                <attribute name="Class-Path" value="lib/java_websocket.jar"/>
             </manifest>
         </jar>
+
+        <echo message="Packaging dependencies (classpath)." />
+        <copy todir="${classes.lib}">
+            <fileset dir="${class.path}" />
+        </copy>
     </target>
 
     <target name="upload" depends="jar">
+        <tstamp />
+        <echo message="Deploying software onto EV3 Brick."/>
         <scp todir="${device.user}@${device.host}:${device.dir}" trust="true" password="">
             <fileset file="${output.jar}"/>
+        </scp>
+
+        <echo message="Deploying software dependencies onto EV3 Brick." />
+        <!--Make sure lib directory exists-->
+        <sshexec host="${device.host}"
+                 username="${device.user}"
+                 trust="yes"
+                 password=""
+                 command="mkdir -p ${device.dir}/lib"
+        />
+        <scp todir="${device.user}@${device.host}:${device.dir}/lib/" trust="true" password="">
+            <fileset dir="${classes.lib}"/>
         </scp>
     </target>
 
