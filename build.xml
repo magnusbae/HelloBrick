@@ -27,14 +27,14 @@
     </target>
 
     <target name="install-unixmac" if="isUnixOrMac">
-        <get src="https://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
-        <untar src="leJOS_EV3_0.9.0-beta.tar.gz" dest="." compression="gzip"/>
+        <get src="http://netcologne.dl.sourceforge.net/project/ev3.lejos.p/0.9.1-beta/leJOS_EV3_0.9.1-beta.tar.gz" dest="."/>
+        <untar src="leJOS_EV3_0.9.1-beta.tar.gz" dest="." compression="gzip"/>
     </target>
 
     <target name="install-windows" if="isWindows">
-        <get src="https://downloads.sourceforge.net/project/lejos/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
-        <unzip src="leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
-        <move file="leJOS_EV3_0.9.0-beta_win32" toFile="leJOS_EV3_0.9.0-beta"/>
+        <get src="http://netcologne.dl.sourceforge.net/project/ev3.lejos.p/0.9.1-beta/leJOS_EV3_0.9.1-beta_win32.zip" dest="."/>
+        <unzip src="leJOS_EV3_0.9.1-beta_win32.zip" dest="."/>
+        <move file="leJOS_EV3_0.9.1-beta_win32" toFile="leJOS_EV3_0.9.1-beta"/>
     </target>
 
     <target name="install" depends="install-unixmac, install-windows" description="install dependencies">

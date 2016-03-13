@@ -1,16 +1,17 @@
 # EV3 to EV3 Remote
 
-This [leJOS][lejos] application allows one EV3 to control another EV3 via bluetooth (or other networking).
-To use Bluetooth PAN you need LeJOS post the 0.9.0-beta. At the time of writing (09/2015) you need to pull the LeJOS git-repository.
-The repository contains a snapshot that can be used to install lejos on an SD card, and pre-built libraries that can be used for building.
+This [leJOS][lejos] application allows one EV3 to talk to a WebSocket server using the [Java-WebSocket][java-websocket]
+library.
 
-This project requires two EV3 boxes, one built as a robot, one as a joystick.
+Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server is configured in the file
+`RobotState.java`.
 
 [lejos]: http://www.lejos.org/ev3/docs/
+[java-websocket]: http://java-websocket.org/
 
 ## Requirements
 
-You need to have [Java Development Kit 7][jdk7] and [Ant][ant]installed on
+You need to have [Java Development Kit 7][jdk7] (or higher) and [Ant][ant]installed on
 your system.
 
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
@@ -25,8 +26,4 @@ It is recommended to build using Apache Ant instead of Eclipse, you may follow t
 
 ## Motors and Sensors connections
 
-When seeing the robot from the back, the leftmost motor should be connected to port A, and the right motor should be connected to port D.
-
-On the joystick, connect Y-axis to port A, X to port D. Touch sensor to S1.
-
-This is defined in src/no/itera/lego/EV3Helper.java.
+EV3 Color Sensor connected to `S1`
