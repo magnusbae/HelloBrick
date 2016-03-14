@@ -1,21 +1,25 @@
 package no.itera.lego.websocket;
 
+import static no.itera.lego.util.EV3Helper.getColorName;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
-import no.itera.lego.util.RobotState;
-import no.itera.lego.websocket.BrickSocket;
 
-import static no.itera.lego.util.EV3Helper.getColorName;
+import no.itera.lego.StateReceiver;
+import no.itera.lego.util.RobotState;
 
 public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
     private BrickSocket socket;
+    private List<StateReceiver> eventListeners = new ArrayList<>();
 
     public WebSocketThread(RobotState robotState) {
         this.robotState = robotState;
     }
-
 
     @Override
     public void run() {
@@ -54,5 +58,13 @@ public class WebSocketThread implements Runnable {
         }
         socket.close();
         robotState.latch.countDown();
+    }
+
+    public void addEventListener(StateReceiver eventListener) {
+        eventListeners.add(eventListener);
+    }
+
+    public void removeEventListener(StateReceiver eventListener) {
+        eventListeners.remove(eventListener);
     }
 }

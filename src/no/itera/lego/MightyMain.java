@@ -11,12 +11,15 @@ public class MightyMain {
 
     private static EV3Helper ev3Helper = new EV3Helper();
     private static RobotState robotState = new RobotState();
+    private static StandardStateReceiver standardStateReceiver = new StandardStateReceiver();
 
     public static void main(String[] args) throws InterruptedException {
+        WebSocketThread webSocketThread = new WebSocketThread(robotState);
+        webSocketThread.addEventListener(standardStateReceiver);
 
-        Thread wsThread;
-        wsThread = new Thread(new WebSocketThread(robotState));
-        wsThread.start();
+        Thread wsThreadRunner;
+        wsThreadRunner = new Thread(webSocketThread);
+        wsThreadRunner.start();
         robotState.latch = new CountDownLatch(1);
 
         System.out.println("\nPress enter to exit program");
