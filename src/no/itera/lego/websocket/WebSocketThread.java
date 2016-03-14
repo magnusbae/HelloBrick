@@ -34,7 +34,6 @@ public class WebSocketThread implements Runnable {
                 //FIXME Examplecode, robot should send more info than this:
                 //FIXME (And preferably in a better format)
                 String colorName = getColorName(cs.getColorID());
-                socket.send(colorName);
                 receiveColor(colorName);
 
                 try {
@@ -73,6 +72,7 @@ public class WebSocketThread implements Runnable {
         if (color.equals(robotState.lastColor)) {
           return;
         }
+        socket.send(color);
         callEventListeners(color);
         robotState.lastColor = color;
     }
