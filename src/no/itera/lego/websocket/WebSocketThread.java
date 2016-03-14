@@ -30,11 +30,12 @@ public class WebSocketThread implements Runnable {
         EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S1);
 
         while (robotState.shouldRun){
-            while (robotState.shouldRun && robotState.webSocketOpen){
+            while (robotState.shouldRun && robotState.webSocketOpen) {
                 //FIXME Examplecode, robot should send more info than this:
                 //FIXME (And preferably in a better format)
                 String colorName = getColorName(cs.getColorID());
                 socket.send(colorName);
+                receiveColor(colorName);
 
                 try {
                     Thread.sleep(1000);
@@ -66,5 +67,23 @@ public class WebSocketThread implements Runnable {
 
     public void removeEventListener(StateReceiver eventListener) {
         eventListeners.remove(eventListener);
+    }
+
+    private void receiveColor(String color) {
+        if (color.equals(robotState.lastColor)) {
+          return;
+        }
+        callEventListeners(color);
+        robotState.lastColor = color;
+    }
+
+    private void callEventListeners(String color) {
+        System.out.println("Got color: " + color);
+
+        if ("BLACK".equals(color)) {
+            for (StateReceiver eventListener : eventListeners) {
+                eventListener.avoidEdge();
+            }
+        }
     }
 }

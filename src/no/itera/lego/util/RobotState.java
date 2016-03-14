@@ -8,6 +8,7 @@ public class RobotState {
 	public boolean shouldRun;
 	public CountDownLatch latch;
 	public String lastMessage;
+	public String lastColor;
 	public boolean webSocketOpen;
 	public boolean webSocketConnecting;
 
