@@ -42,10 +42,6 @@ public class WebSocketThread implements Runnable {
                     System.out.println("Last message was: " + message);
                 }
             }
-            if(!robotState.webSocketOpen && !robotState.webSocketConnecting){
-                System.out.println("Lost connection, reconnecting");
-                socket.connect();
-            }
         }
         socket.close();
         robotState.latch.countDown();

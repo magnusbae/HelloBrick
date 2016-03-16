@@ -40,6 +40,11 @@ public class BrickSocket extends WebSocketClient {
     public void onClose(int i, String s, boolean b) {
         System.out.println("Disconnected");
         state.webSocketOpen = false;
+
+        if (state.shouldRun) {
+            System.out.println("Lost connection, reconnecting");
+            connect();
+        }
     }
 
     @Override
