@@ -25,7 +25,7 @@ public class ColorLoggerThread implements Runnable {
         try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("colors-" + currentTimeMillis + ".csv", true)))) {
             while(robotState.shouldRun){
                 int[] sample = colorSensor.readSensorRgb();
-                out.println(format("%d;%d;%d", sample[1], sample[2], sample[3]));
+                out.println(format("%d;%d;%d", sample[0], sample[1], sample[2]));
             }
         }catch (IOException e) {
             System.out.println(e);
