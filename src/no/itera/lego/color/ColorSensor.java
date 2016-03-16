@@ -8,6 +8,7 @@ import static no.itera.lego.color.Color.*;
 
 public class ColorSensor {
 
+    public static final int RGB_FLOAT_TO_INT_RATIO = 1000;
     private final EV3ColorSensor ev3ColorSensor;
     private final SensorMode rgbMode;
     private final int sampleSize;
@@ -36,7 +37,7 @@ public class ColorSensor {
         int[] intSample = new int[sample.length];
 
         for (int i = 0; i < sample.length; i++) {
-            intSample[i] = (int) (sample[i] * 100);
+            intSample[i] = (int) (sample[i] * RGB_FLOAT_TO_INT_RATIO);
         }
         return intSample;
     }
