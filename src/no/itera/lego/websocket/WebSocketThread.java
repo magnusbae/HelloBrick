@@ -1,16 +1,10 @@
 package no.itera.lego.websocket;
 
-import java.lang.Thread;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
-import no.itera.lego.color.Color;
-import no.itera.lego.message.MessageReader;
 import no.itera.lego.message.Message;
-import no.itera.lego.message.Update;
+import no.itera.lego.message.MessageReader;
 import no.itera.lego.message.MessageReceiver;
 import no.itera.lego.message.Register;
 import no.itera.lego.util.RobotState;
@@ -27,17 +21,7 @@ public class WebSocketThread implements Runnable {
 
     @Override
     public void run() {
-        String url = String.format("ws://%s:%s", RobotState.HOST, RobotState.PORT);
-        socket = new BrickSocket(url, robotState, this);
-        System.out.println(String.format("Connecting to: %s:%s", RobotState.HOST, RobotState.PORT));
-        socket.connect();
-        System.out.println("Connected");
-
-        while(!robotState.webSocketOpen) {
-        }
-
-        Register register = new Register("Robot 1");
-        sendMessage(register);
+        connectToSocket();
 
         while (robotState.shouldRun) {
             try {
@@ -59,6 +43,13 @@ public class WebSocketThread implements Runnable {
         eventListeners.remove(eventListener);
     }
 
+    public void onSocketClose() {
+        if (robotState.shouldRun) {
+            System.out.println("Lost connection, reconnecting");
+            connectToSocket();
+        }
+    }
+
     public void onSocketMessage(String message) {
         System.out.println(String.format("Received: %s", message));
         for (MessageReceiver eventListener : eventListeners) {
@@ -71,5 +62,21 @@ public class WebSocketThread implements Runnable {
             System.out.println(String.format("Sending: %s", message));
             socket.send(message.toJson());
         }
+    }
+
+    private void connectToSocket() {
+        String url = String.format("ws://%s:%s", RobotState.HOST, RobotState.PORT);
+        System.out.println("Connecting to: " + url);
+
+        socket = new BrickSocket(url, robotState, this);
+        socket.connect();
+
+        System.out.println("Connected");
+
+        while(!robotState.webSocketOpen) {
+        }
+
+        Register register = new Register("Robot 1");
+        sendMessage(register);
     }
 }
