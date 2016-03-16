@@ -4,7 +4,6 @@ import java.util.concurrent.CountDownLatch;
 
 import lejos.hardware.Button;
 
-import no.itera.lego.color.ColorLoggerThread;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.RobotState;
 import no.itera.lego.websocket.WebSocketThread;
@@ -19,7 +18,6 @@ public class MightyMain {
         robotState.latch = new CountDownLatch(2);
 
         WebSocketThread webSocketThread = new WebSocketThread(robotState);
-        ColorLoggerThread colorLoggerThread = new ColorLoggerThread(robotState);
         SensorThread sensorThread = new SensorThread(robotState);
         ControlThread controlThread = new ControlThread(robotState, webSocketThread);
 
@@ -27,12 +25,10 @@ public class MightyMain {
         webSocketThread.addEventListener(controlThread);
 
         Thread webSocketThreadRunner = new Thread(webSocketThread);
-        Thread colorLoggerThreadRunner = new Thread(colorLoggerThread);
         Thread sensorThreadRunner = new Thread(sensorThread);
         Thread controlThreadRunner = new Thread(controlThread);
 
         webSocketThreadRunner.start();
-        colorLoggerThreadRunner.start();
         sensorThreadRunner.start();
         controlThreadRunner.start();
 
