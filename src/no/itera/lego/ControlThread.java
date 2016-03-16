@@ -2,7 +2,7 @@ package no.itera.lego;
 
 import no.itera.lego.util.RobotState;
 
-public class ControlThread implements Runnable {
+public class ControlThread implements Runnable, MessageReceiver, SensorReceiver {
 
     private RobotState robotState;
 
@@ -15,5 +15,14 @@ public class ControlThread implements Runnable {
         while (robotState.shouldRun) {
         }
         robotState.latch.countDown();
+    }
+
+    public void receiveMessage(String message) {
+    }
+
+    public void receiveColor(String color) {
+    }
+
+    public void receiveDistance(float distance) {
     }
 }
