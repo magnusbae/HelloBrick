@@ -48,11 +48,11 @@ public class SensorThread implements Runnable {
         String color = getColorName(colorSensor.getColorID());
 
         if (color.equals(robotState.lastColor)) {
-          return;
+            return;
         }
 
         for (SensorReceiver eventListener : eventListeners) {
-          eventListener.receiveColor(color);
+            eventListener.receiveColor(color);
         }
 
         robotState.lastColor = color;
