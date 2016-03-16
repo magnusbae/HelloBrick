@@ -25,10 +25,12 @@ public class MightyMain {
 
         Thread wsThreadRunner = new Thread(webSocketThread);
         Thread cltThreadRunner = new Thread(colorLoggerThread);
+        Thread sensorThread = new Thread(new SensorThread(robotState));
         Thread controlThread = new Thread(new ControlThread(robotState));
 
         wsThreadRunner.start();
         cltThreadRunner.start();
+        sensorThread.start();
         controlThread.start();
 
         System.out.println("\nPress enter to exit program");
