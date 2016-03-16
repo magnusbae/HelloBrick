@@ -19,7 +19,7 @@ public class WebSocketThread implements Runnable {
     @Override
     public void run() {
         String url = String.format("ws://%s:%s", RobotState.HOST, RobotState.PORT);
-        socket = new BrickSocket(url, robotState);
+        socket = new BrickSocket(url, robotState, this);
         socket.connect();
 
         while (robotState.shouldRun){
@@ -57,6 +57,12 @@ public class WebSocketThread implements Runnable {
 
     public void removeEventListener(MessageReceiver eventListener) {
         eventListeners.remove(eventListener);
+    }
+
+    public void onSocketMessage(String message) {
+        for (MessageReceiver eventListener : eventListeners) {
+            eventListener.receiveMessage(message);
+        }
     }
 
     public void sendMessage(String message) {
