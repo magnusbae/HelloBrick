@@ -22,27 +22,9 @@ public class WebSocketThread implements Runnable {
         socket = new BrickSocket(url, robotState, this);
         socket.connect();
 
-        while (robotState.shouldRun){
-            while (robotState.shouldRun && robotState.webSocketOpen) {
-                //FIXME Examplecode, robot should send more info than this:
-                //FIXME (And preferably in a better format)
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                //TODO Implement behaviour for what to do with the message received:
-                //TODO NOTE: This does not have to be in this class, RobotState can easily be shared
-                //TODO between threads
-                if(robotState.lastMessage != null){
-                    String message = robotState.lastMessage;
-                    robotState.lastMessage = null;
-                    System.out.println("Last message was: " + message);
-                }
-            }
+        while (robotState.shouldRun) {
         }
+
         socket.close();
         robotState.latch.countDown();
     }
