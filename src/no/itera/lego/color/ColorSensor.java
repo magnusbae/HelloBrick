@@ -21,9 +21,7 @@ public class ColorSensor {
     public Color readColor(){
         int[] rgb = readSensorRgb();
 
-        //TODO Determine color from RGB values
-
-        return BLACK; //TODO //FIXME
+        return valueOf(rgb[0], rgb[1], rgb[2]); //TODO //FIXME
     }
 
     public int[] readSensorRgb() {
