@@ -1,6 +1,7 @@
 package no.itera.lego;
 
 import lejos.hardware.Button;
+import no.itera.lego.color.ColorLoggerThread;
 import no.itera.lego.util.RobotState;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.websocket.WebSocketThread;
@@ -17,10 +18,14 @@ public class MightyMain {
         WebSocketThread webSocketThread = new WebSocketThread(robotState);
         webSocketThread.addEventListener(standardStateReceiver);
 
-        Thread wsThreadRunner;
-        wsThreadRunner = new Thread(webSocketThread);
+        Thread wsThreadRunner = new Thread(webSocketThread);
         wsThreadRunner.start();
-        robotState.latch = new CountDownLatch(1);
+
+        ColorLoggerThread colorLoggerThread = new ColorLoggerThread(robotState);
+        Thread cltThreadRunner = new Thread(colorLoggerThread);
+        cltThreadRunner.start();
+
+        robotState.latch = new CountDownLatch(2);
 
         System.out.println("\nPress enter to exit program");
 

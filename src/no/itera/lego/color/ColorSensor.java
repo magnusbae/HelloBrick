@@ -19,16 +19,25 @@ public class ColorSensor {
     }
 
     public Color readColor(){
-        float[] rgb = readSensorRgb();
+        int[] rgb = readSensorRgb();
 
         //TODO Determine color from RGB values
 
         return BLACK; //TODO //FIXME
     }
 
-    private float[] readSensorRgb() {
+    public int[] readSensorRgb() {
         float[] sample = new float[sampleSize];
         rgbMode.fetchSample(sample, 0);
-        return sample;
+        return normalizeRgb(sample);
+    }
+
+    private int[] normalizeRgb(float[] sample) {
+        int[] intSample = new int[sample.length];
+
+        for (int i = 0; i < sample.length; i++) {
+            intSample[i] = (int) (sample[i] * 100);
+        }
+        return intSample;
     }
 }
