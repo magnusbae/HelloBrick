@@ -1,12 +1,7 @@
 package no.itera.lego.websocket;
 
-import static no.itera.lego.util.EV3Helper.getColorName;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3ColorSensor;
 
 import no.itera.lego.MessageReceiver;
 import no.itera.lego.util.RobotState;
@@ -27,14 +22,10 @@ public class WebSocketThread implements Runnable {
         socket = new BrickSocket(url, robotState);
         socket.connect();
 
-        EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S1);
-
         while (robotState.shouldRun){
             while (robotState.shouldRun && robotState.webSocketOpen) {
                 //FIXME Examplecode, robot should send more info than this:
                 //FIXME (And preferably in a better format)
-                String colorName = getColorName(cs.getColorID());
-                receiveColor(colorName);
 
                 try {
                     Thread.sleep(1000);
@@ -71,23 +62,6 @@ public class WebSocketThread implements Runnable {
     public void sendMessage(String message) {
         if (robotState.webSocketOpen) {
             socket.send(message);
-        }
-    }
-
-    private void receiveColor(String color) {
-        if (color.equals(robotState.lastColor)) {
-          return;
-        }
-        socket.send(color);
-        callEventListeners(color);
-        robotState.lastColor = color;
-    }
-
-    private void callEventListeners(String color) {
-        System.out.println("Got color: " + color);
-
-        for (MessageReceiver eventListener : eventListeners) {
-            eventListener.receiveMessage(color);
         }
     }
 }
