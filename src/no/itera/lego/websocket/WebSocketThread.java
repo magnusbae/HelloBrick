@@ -8,14 +8,14 @@ import java.util.List;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 
-import no.itera.lego.StateReceiver;
+import no.itera.lego.MessageReceiver;
 import no.itera.lego.util.RobotState;
 
 public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
     private BrickSocket socket;
-    private List<StateReceiver> eventListeners = new ArrayList<>();
+    private List<MessageReceiver> eventListeners = new ArrayList<>();
 
     public WebSocketThread(RobotState robotState) {
         this.robotState = robotState;
@@ -60,11 +60,11 @@ public class WebSocketThread implements Runnable {
         robotState.latch.countDown();
     }
 
-    public void addEventListener(StateReceiver eventListener) {
+    public void addEventListener(MessageReceiver eventListener) {
         eventListeners.add(eventListener);
     }
 
-    public void removeEventListener(StateReceiver eventListener) {
+    public void removeEventListener(MessageReceiver eventListener) {
         eventListeners.remove(eventListener);
     }
 
@@ -80,10 +80,8 @@ public class WebSocketThread implements Runnable {
     private void callEventListeners(String color) {
         System.out.println("Got color: " + color);
 
-        if ("BLACK".equals(color)) {
-            for (StateReceiver eventListener : eventListeners) {
-                eventListener.avoidEdge();
-            }
+        for (MessageReceiver eventListener : eventListeners) {
+            eventListener.receiveMessage(color);
         }
     }
 }

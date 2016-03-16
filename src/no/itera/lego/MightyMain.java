@@ -19,19 +19,22 @@ public class MightyMain {
         robotState.latch = new CountDownLatch(2);
 
         WebSocketThread webSocketThread = new WebSocketThread(robotState);
-        webSocketThread.addEventListener(standardStateReceiver);
-
         ColorLoggerThread colorLoggerThread = new ColorLoggerThread(robotState);
+        SensorThread sensorThread = new SensorThread(robotState);
+        ControlThread controlThread = new ControlThread(robotState);
 
-        Thread wsThreadRunner = new Thread(webSocketThread);
-        Thread cltThreadRunner = new Thread(colorLoggerThread);
-        Thread sensorThread = new Thread(new SensorThread(robotState));
-        Thread controlThread = new Thread(new ControlThread(robotState));
+        sensorThread.addEventListener(controlThread);
+        webSocketThread.addEventListener(controlThread);
 
-        wsThreadRunner.start();
-        cltThreadRunner.start();
-        sensorThread.start();
-        controlThread.start();
+        Thread webSocketThreadRunner = new Thread(webSocketThread);
+        Thread colorLoggerThreadRunner = new Thread(colorLoggerThread);
+        Thread sensorThreadRunner = new Thread(sensorThread);
+        Thread controlThreadRunner = new Thread(controlThread);
+
+        webSocketThreadRunner.start();
+        colorLoggerThreadRunner.start();
+        sensorThreadRunner.start();
+        controlThreadRunner.start();
 
         System.out.println("\nPress enter to exit program");
 
