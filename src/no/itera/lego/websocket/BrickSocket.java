@@ -9,10 +9,12 @@ import java.net.URI;
 public class BrickSocket extends WebSocketClient {
 
     private final RobotState state;
+    private final WebSocketThread listener;
 
-    public BrickSocket(String url, RobotState state) {
+    public BrickSocket(String url, RobotState state, WebSocketThread listener) {
         super(URI.create(url));
         this.state = state;
+        this.listener = listener;
     }
 
     @Override
@@ -29,14 +31,20 @@ public class BrickSocket extends WebSocketClient {
     }
 
     @Override
-    public void onMessage(String s) {
-        state.lastMessage = s;
+    public void onMessage(String message) {
+        state.lastMessage = message;
+        listener.onSocketMessage(message);
     }
 
     @Override
     public void onClose(int i, String s, boolean b) {
         System.out.println("Disconnected");
         state.webSocketOpen = false;
+
+        if (state.shouldRun) {
+            System.out.println("Lost connection, reconnecting");
+            connect();
+        }
     }
 
     @Override

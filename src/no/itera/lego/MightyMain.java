@@ -1,12 +1,12 @@
 package no.itera.lego;
 
-import lejos.hardware.Button;
-import no.itera.lego.color.ColorLoggerThread;
-import no.itera.lego.util.RobotState;
-import no.itera.lego.util.EV3Helper;
-import no.itera.lego.websocket.WebSocketThread;
-
 import java.util.concurrent.CountDownLatch;
+
+import lejos.hardware.Button;
+
+import no.itera.lego.util.EV3Helper;
+import no.itera.lego.util.RobotState;
+import no.itera.lego.websocket.WebSocketThread;
 
 public class MightyMain {
 
@@ -15,17 +15,22 @@ public class MightyMain {
     private static StandardStateReceiver standardStateReceiver = new StandardStateReceiver();
 
     public static void main(String[] args) throws InterruptedException {
+        robotState.latch = new CountDownLatch(2);
+
         WebSocketThread webSocketThread = new WebSocketThread(robotState);
-        webSocketThread.addEventListener(standardStateReceiver);
+        SensorThread sensorThread = new SensorThread(robotState);
+        ControlThread controlThread = new ControlThread(robotState, webSocketThread);
 
-        Thread wsThreadRunner = new Thread(webSocketThread);
-//        wsThreadRunner.start();
+        sensorThread.addEventListener(controlThread);
+        webSocketThread.addEventListener(controlThread);
 
-        ColorLoggerThread colorLoggerThread = new ColorLoggerThread(robotState);
-        Thread cltThreadRunner = new Thread(colorLoggerThread);
-        cltThreadRunner.start();
+        Thread webSocketThreadRunner = new Thread(webSocketThread);
+        Thread sensorThreadRunner = new Thread(sensorThread);
+        Thread controlThreadRunner = new Thread(controlThread);
 
-        robotState.latch = new CountDownLatch(1);
+        webSocketThreadRunner.start();
+        sensorThreadRunner.start();
+        controlThreadRunner.start();
 
         System.out.println("\nPress enter to exit program");
 

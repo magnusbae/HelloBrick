@@ -26,8 +26,8 @@ It is recommended to build using Apache Ant instead of Eclipse, you may follow t
 
 ###Killing a stalled process with ant
 
-Sometimes you migth encounter a crashed app that locks your brick. In stead of rebooting your brick you may use the 
-```ant stop``` command. 
+Sometimes you migth encounter a crashed app that locks your brick. In stead of rebooting your brick you may use the
+```ant stop``` command.
 
 
 ## Motors and Sensors connections
