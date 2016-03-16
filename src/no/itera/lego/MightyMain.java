@@ -21,7 +21,7 @@ public class MightyMain {
         WebSocketThread webSocketThread = new WebSocketThread(robotState);
         ColorLoggerThread colorLoggerThread = new ColorLoggerThread(robotState);
         SensorThread sensorThread = new SensorThread(robotState);
-        ControlThread controlThread = new ControlThread(robotState);
+        ControlThread controlThread = new ControlThread(robotState, webSocketThread);
 
         sensorThread.addEventListener(controlThread);
         webSocketThread.addEventListener(controlThread);

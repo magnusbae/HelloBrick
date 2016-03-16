@@ -68,6 +68,12 @@ public class WebSocketThread implements Runnable {
         eventListeners.remove(eventListener);
     }
 
+    public void sendMessage(String message) {
+        if (robotState.webSocketOpen) {
+            socket.send(message);
+        }
+    }
+
     private void receiveColor(String color) {
         if (color.equals(robotState.lastColor)) {
           return;
