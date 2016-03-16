@@ -23,6 +23,7 @@ public class ColorLoggerThread implements Runnable {
         ColorSensor colorSensor = new ColorSensor(SensorPort.S1);
         long currentTimeMillis = System.currentTimeMillis();
         try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("colors-" + currentTimeMillis + ".csv", true)))) {
+            out.println("R;G;B");
             while(robotState.shouldRun){
                 int[] sample = colorSensor.readSensorRgb();
                 out.println(format("%d;%d;%d", sample[0], sample[1], sample[2]));
