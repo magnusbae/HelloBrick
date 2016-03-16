@@ -21,6 +21,7 @@ public class ControlThread implements Runnable, MessageReceiver, SensorReceiver 
     }
 
     public void receiveColor(String color) {
+        System.out.println("Got color: " + color);
     }
 
     public void receiveDistance(float distance) {
