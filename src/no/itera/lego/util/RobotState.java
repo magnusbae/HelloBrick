@@ -1,5 +1,7 @@
 package no.itera.lego.util;
 
+import no.itera.lego.color.Color;
+
 import java.util.concurrent.CountDownLatch;
 
 public class RobotState {
@@ -9,7 +11,7 @@ public class RobotState {
     public boolean shouldRun;
     public CountDownLatch latch;
     public String lastMessage;
-    public String lastColor;
+    public Color lastColor;
     public boolean webSocketOpen;
     public boolean webSocketConnecting;
 
