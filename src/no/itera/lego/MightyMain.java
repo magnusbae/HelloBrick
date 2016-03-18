@@ -28,7 +28,7 @@ public class MightyMain {
         Thread sensorThreadRunner = new Thread(sensorThread);
         Thread controlThreadRunner = new Thread(controlThread);
 
-        webSocketThreadRunner.start();
+//        webSocketThreadRunner.start();
         sensorThreadRunner.start();
         controlThreadRunner.start();
 

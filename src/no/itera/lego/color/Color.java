@@ -9,7 +9,7 @@ public enum Color {
     YELLOW(57, 193, 36, 129, 19, 61), //145, 96, 46
     RED(21, 65, 4, 24, 3, 18), //50, 16, 12
     BLUE(10, 41, 32, 128, 45, 143), //32, 100, 116
-    UNDEFINED;
+    UNDEFINED(-1,-1,-1,-1,-1,-1);
 
     int redLow, redHigh, greenLow, greenHigh, blueLow, blueHigh;
 
