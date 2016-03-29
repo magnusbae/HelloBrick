@@ -11,11 +11,13 @@ public class RobotState {
     public boolean shouldRun;
     public CountDownLatch latch;
     public String lastMessage;
-    public Color lastColor;
+    public Color lastColor = Color.UNDEFINED;
     public boolean webSocketOpen;
     public boolean webSocketConnecting;
+    public final EV3Helper ev3Helper;
 
-    public RobotState() {
+    public RobotState(EV3Helper ev3Helper) {
+        this.ev3Helper = ev3Helper;
         shouldRun = true;
     }
 }

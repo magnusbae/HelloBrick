@@ -3,7 +3,6 @@ package no.itera.lego;
 import java.util.ArrayList;
 import java.util.List;
 
-import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.SensorPort;
 
 import no.itera.lego.color.Color;
@@ -19,19 +18,14 @@ public class SensorThread implements Runnable {
     public SensorThread(RobotState robotState) {
         this.robotState = robotState;
 
-        colorSensor = new ColorSensor(SensorPort.S1);
+        colorSensor = new ColorSensor(SensorPort.S4);
     }
 
     @Override
     public void run() {
-        while(robotState.shouldRun) {
+        while (robotState.shouldRun) {
             readColor();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            robotState.lastColor = colorSensor.readColor();
         }
         robotState.latch.countDown();
     }
@@ -50,9 +44,6 @@ public class SensorThread implements Runnable {
        if (color.equals(robotState.lastColor)) {
            return;
        }
-
-       LCD.clear(0,0,1);
-       LCD.drawString(color.name(), 0, 0);
 
        for (SensorReceiver eventListener : eventListeners) {
            eventListener.receiveColor(color);
