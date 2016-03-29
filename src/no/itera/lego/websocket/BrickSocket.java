@@ -32,7 +32,6 @@ public class BrickSocket extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        state.lastMessage = message;
         listener.onSocketMessage(message);
     }
 
