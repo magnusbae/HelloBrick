@@ -45,6 +45,8 @@ public class SensorThread implements Runnable {
            return;
        }
 
+       System.out.println("Read color: " + color);
+
        for (SensorReceiver eventListener : eventListeners) {
            eventListener.receiveColor(color);
        }
