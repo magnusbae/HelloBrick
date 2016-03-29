@@ -16,18 +16,15 @@ public class ControlThread implements Runnable {
     @Override
     public void run() {
         while (robotState.shouldRun) {
-            switch (robotState.lastColor){
+            switch (robotState.lastColor) {
                 case BLACK:
-                    ev3Helper.turnRight(120);
+                case BLUE:
+                case RED:
+                case YELLOW:
+                    ev3Helper.rotateLeft();
                     break;
                 case GREEN:
-                case RED:
                     ev3Helper.stop();
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     break;
                 default:
                     ev3Helper.forward();
