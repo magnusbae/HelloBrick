@@ -12,7 +12,6 @@ public class MightyMain {
 
     private static EV3Helper ev3Helper = new EV3Helper();
     private static RobotState robotState = new RobotState(ev3Helper);
-    private static StandardStateReceiver standardStateReceiver = new StandardStateReceiver();
 
     public static void main(String[] args) throws InterruptedException {
         robotState.latch = new CountDownLatch(2);
