@@ -25,7 +25,6 @@ public class SensorThread implements Runnable {
     public void run() {
         while (robotState.shouldRun) {
             readColor();
-            robotState.lastColor = colorSensor.readColor();
         }
         robotState.latch.countDown();
     }
