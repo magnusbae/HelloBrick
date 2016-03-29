@@ -1,11 +1,6 @@
 package no.itera.lego.websocket;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import no.itera.lego.message.Message;
-import no.itera.lego.message.MessageReader;
-import no.itera.lego.message.MessageReceiver;
 import no.itera.lego.message.Register;
 import no.itera.lego.util.RobotState;
 
@@ -13,7 +8,6 @@ public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
     private BrickSocket socket;
-    private List<MessageReceiver> eventListeners = new ArrayList<>();
 
     public WebSocketThread(RobotState robotState) {
         this.robotState = robotState;
@@ -35,14 +29,6 @@ public class WebSocketThread implements Runnable {
         robotState.latch.countDown();
     }
 
-    public void addEventListener(MessageReceiver eventListener) {
-        eventListeners.add(eventListener);
-    }
-
-    public void removeEventListener(MessageReceiver eventListener) {
-        eventListeners.remove(eventListener);
-    }
-
     public void onSocketClose() {
         if (robotState.shouldRun) {
             System.out.println("Lost connection, reconnecting");
@@ -52,9 +38,7 @@ public class WebSocketThread implements Runnable {
 
     public void onSocketMessage(String message) {
         System.out.println(String.format("Received: %s", message));
-        for (MessageReceiver eventListener : eventListeners) {
-            eventListener.receiveMessage(MessageReader.readJson(message));
-        }
+        robotState.lastMessage = message;
     }
 
     public void sendMessage(Message message) {

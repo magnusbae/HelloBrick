@@ -1,8 +1,5 @@
 package no.itera.lego;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lejos.hardware.port.SensorPort;
 
 import no.itera.lego.color.Color;
@@ -13,7 +10,6 @@ public class SensorThread implements Runnable {
 
     private final ColorSensor colorSensor;
     private RobotState robotState;
-    private List<SensorReceiver> eventListeners = new ArrayList<>();
 
     public SensorThread(RobotState robotState) {
         this.robotState = robotState;
@@ -29,14 +25,6 @@ public class SensorThread implements Runnable {
         robotState.latch.countDown();
     }
 
-    public void addEventListener(SensorReceiver eventListener) {
-        eventListeners.add(eventListener);
-    }
-
-    public void removeEventListener(SensorReceiver eventListener) {
-        eventListeners.remove(eventListener);
-    }
-
    private void readColor() {
        Color color = colorSensor.readColor();
 
@@ -45,10 +33,6 @@ public class SensorThread implements Runnable {
        }
 
        System.out.println("Read color: " + color);
-
-       for (SensorReceiver eventListener : eventListeners) {
-           eventListener.receiveColor(color);
-       }
 
        robotState.lastColor = color;
    }

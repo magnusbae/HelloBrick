@@ -20,9 +20,6 @@ public class MightyMain {
         SensorThread sensorThread = new SensorThread(robotState);
         ControlThread controlThread = new ControlThread(robotState, webSocketThread);
 
-        sensorThread.addEventListener(controlThread);
-        webSocketThread.addEventListener(controlThread);
-
         Thread webSocketThreadRunner = new Thread(webSocketThread);
         Thread sensorThreadRunner = new Thread(sensorThread);
         Thread controlThreadRunner = new Thread(controlThread);

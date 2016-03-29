@@ -1,14 +1,11 @@
 package no.itera.lego;
 
-import no.itera.lego.color.Color;
-import no.itera.lego.message.Message;
-import no.itera.lego.message.MessageReceiver;
 import no.itera.lego.message.Update;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.RobotState;
 import no.itera.lego.websocket.WebSocketThread;
 
-public class ControlThread implements Runnable, MessageReceiver, SensorReceiver {
+public class ControlThread implements Runnable {
 
     private RobotState robotState;
     private WebSocketThread webSocketThread;
@@ -23,6 +20,8 @@ public class ControlThread implements Runnable, MessageReceiver, SensorReceiver 
     @Override
     public void run() {
         while (robotState.shouldRun) {
+            webSocketThread.sendMessage(new Update(robotState.lastColor));
+
             switch (robotState.lastColor){
                 case BLACK:
                     ev3Helper.turnRight(120);
@@ -44,15 +43,5 @@ public class ControlThread implements Runnable, MessageReceiver, SensorReceiver 
             }
         }
         robotState.latch.countDown();
-    }
-
-    public void receiveMessage(Message message) {
-    }
-
-    public void receiveColor(Color color) {
-        webSocketThread.sendMessage(new Update(color));
-    }
-
-    public void receiveDistance(float distance) {
     }
 }
