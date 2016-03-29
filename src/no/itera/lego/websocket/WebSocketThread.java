@@ -1,13 +1,16 @@
 package no.itera.lego.websocket;
 
+import no.itera.lego.color.Color;
 import no.itera.lego.message.Message;
 import no.itera.lego.message.Register;
+import no.itera.lego.message.Update;
 import no.itera.lego.util.RobotState;
 
 public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
     private BrickSocket socket;
+    private Color lastHandledColor;
 
     public WebSocketThread(RobotState robotState) {
         this.robotState = robotState;
@@ -18,10 +21,9 @@ public class WebSocketThread implements Runnable {
         connectToSocket();
 
         while (robotState.shouldRun) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (robotState.lastColor != lastHandledColor) {
+                sendMessage(new Update(robotState.lastColor));
+                lastHandledColor = robotState.lastColor;
             }
         }
 

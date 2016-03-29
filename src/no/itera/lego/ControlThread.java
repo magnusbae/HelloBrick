@@ -1,27 +1,21 @@
 package no.itera.lego;
 
-import no.itera.lego.message.Update;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.RobotState;
-import no.itera.lego.websocket.WebSocketThread;
 
 public class ControlThread implements Runnable {
 
     private RobotState robotState;
-    private WebSocketThread webSocketThread;
     private EV3Helper ev3Helper;
 
-    public ControlThread(RobotState robotState, WebSocketThread webSocketThread) {
+    public ControlThread(RobotState robotState) {
         this.robotState = robotState;
-        this.webSocketThread = webSocketThread;
         this.ev3Helper = robotState.ev3Helper;
     }
 
     @Override
     public void run() {
         while (robotState.shouldRun) {
-            webSocketThread.sendMessage(new Update(robotState.lastColor));
-
             switch (robotState.lastColor){
                 case BLACK:
                     ev3Helper.turnRight(120);
