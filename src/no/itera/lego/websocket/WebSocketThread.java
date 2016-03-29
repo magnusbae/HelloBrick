@@ -2,7 +2,9 @@ package no.itera.lego.websocket;
 
 import no.itera.lego.color.Color;
 import no.itera.lego.message.Message;
+import no.itera.lego.message.MessageReader;
 import no.itera.lego.message.Register;
+import no.itera.lego.message.Status;
 import no.itera.lego.message.Update;
 import no.itera.lego.util.RobotState;
 
@@ -38,9 +40,12 @@ public class WebSocketThread implements Runnable {
         }
     }
 
-    public void onSocketMessage(String message) {
-        System.out.println(String.format("Received: %s", message));
-        robotState.lastMessage = message;
+    public void onSocketMessage(String receivedString) {
+        Message message = MessageReader.readJson(receivedString);
+
+        if (message.getClass() == Status.class) {
+            robotState.lastStatus = (Status) message;
+        }
     }
 
     public void sendMessage(Message message) {
