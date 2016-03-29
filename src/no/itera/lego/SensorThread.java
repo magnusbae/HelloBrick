@@ -19,7 +19,7 @@ public class SensorThread implements Runnable {
     public SensorThread(RobotState robotState) {
         this.robotState = robotState;
 
-        colorSensor = new ColorSensor(SensorPort.S1);
+        colorSensor = new ColorSensor(SensorPort.S4);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class ControlThread implements Runnable, MessageReceiver, SensorReceiver 
     public ControlThread(RobotState robotState, WebSocketThread webSocketThread) {
         this.robotState = robotState;
         this.webSocketThread = webSocketThread;
-        this.ev3Helper = new EV3Helper(true);
+        this.ev3Helper = robotState.ev3Helper;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ControlThread implements Runnable, MessageReceiver, SensorReceiver 
                     }
                     break;
                 case UNDEFINED:
-                    ev3Helper.backward(2);
+                    ev3Helper.backward(8);
                     //falls through
                 default:
                     ev3Helper.forward();

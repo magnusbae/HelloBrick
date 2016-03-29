@@ -43,21 +43,10 @@ public class EV3Helper {
     }
 
     /**
-     * Instantiates a new helper class and calibrates the cannon.
+     * Instantiates a new helper class.
      * Robot is ready for operation after completion.
-     * If you're not going to use the cannon, you can skip calibration using
-     * {@link #EV3Helper#EV3Helper(boolean)}
      */
     public EV3Helper() {
-        this(false);
-    }
-
-    /**
-     * Instantiates a new helper class and optionally calibrates the cannon.
-     * Robot is ready for operation after completion.
-     * @param skipMotorCannonCalibration Set to true if you don't want to calibrate the cannon
-     */
-    public EV3Helper(boolean skipMotorCannonCalibration) {
         motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
         motorLeft = new EV3LargeRegulatedMotor(MotorPort.D);
 
