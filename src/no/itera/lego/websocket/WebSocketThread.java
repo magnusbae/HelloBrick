@@ -59,7 +59,7 @@ public class WebSocketThread implements Runnable {
 
     public void sendMessage(Message message) {
         if (robotState.webSocketOpen) {
-            System.out.println(String.format("Sending: %s", message));
+            System.out.println(String.format("Sending: %s", message.toJson()));
             socket.send(message.toJson());
         }
     }
