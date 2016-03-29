@@ -24,13 +24,13 @@ The necessary dependencies can be downloaded and installed by running:
 
     ant install
 
-You will then have a directory named `leJOS_EV3_0.9.0-beta` containing some
+You will then have a directory named `leJOS_EV3_0.9.1-beta` containing some
 tools, the leJOS library and docs.
 
 Of the tools, you will most likely find the `ev3control` utility most
 useful. You can run it with:
 
-    ./leJOS_EV3_0.9.0-beta/bin/ev3control
+    ./leJOS_EV3_0.9.1-beta/bin/ev3control
 
 ## Compiling and uploading
 
