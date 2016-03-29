@@ -16,6 +16,11 @@ public class ControlThread implements Runnable {
     @Override
     public void run() {
         while (robotState.shouldRun) {
+
+            if (robotState.lastStatus == null || !robotState.lastStatus.isActive) {
+                continue;
+            }
+
             switch (robotState.lastColor) {
                 case BLACK:
                 case BLUE:
