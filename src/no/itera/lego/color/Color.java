@@ -38,4 +38,8 @@ public enum Color {
 
         return r_contains && g_contains && b_contains;
     }
+
+    public static Color randomColor() {
+        return values()[(int)Math.floor(Math.random() * values().length)];
+    }
 }
