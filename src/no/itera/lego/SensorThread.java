@@ -28,7 +28,7 @@ public class SensorThread implements Runnable {
    private void readColor() {
        Color color = colorSensor.readColor();
 
-       if (color.equals(robotState.lastColor)) {
+       if (color == robotState.lastColor) {
            return;
        }
 
