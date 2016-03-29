@@ -14,13 +14,20 @@ public class Status implements Message {
 
   public static final String TYPE = "status";
 
+  public final boolean isActive;
+  public final Color target;
   public final List<Color> colors;
 
-  public Status(List<Color> colors) {
+  public Status(boolean isActive, Color target, List<Color> colors) {
+    this.isActive = isActive;
+    this.target = target;
     this.colors = colors;
   }
 
   public static Status fromJson(JSONObject object) {
+    boolean isActive = (boolean) object.get("isActive");
+
+    Color target = Color.valueOf((String) object.get("target"));
 
     JSONArray jsonColorsArray = (JSONArray)object.get("status");
 
@@ -29,7 +36,7 @@ public class Status implements Message {
       colors.add(Color.valueOf((String) objColor));
     }
 
-    return new Status(colors);
+    return new Status(isActive, target, colors);
   }
 
   public String toJson() {
