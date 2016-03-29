@@ -29,9 +29,6 @@ public class ControlThread implements Runnable {
                         e.printStackTrace();
                     }
                     break;
-                case UNDEFINED:
-                    ev3Helper.backward(8);
-                    //falls through
                 default:
                     ev3Helper.forward();
             }
