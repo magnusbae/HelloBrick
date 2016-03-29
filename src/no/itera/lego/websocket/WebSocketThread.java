@@ -45,7 +45,6 @@ public class WebSocketThread implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            sendMessage(new Update(Color.randomColor()));
         }
 
         socket.close();
