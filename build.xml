@@ -86,19 +86,20 @@
     <target name="upload" depends="jar">
         <tstamp />
         <echo message="Deploying software onto EV3 Brick."/>
-        <scp todir="${device.user}@${device.host}:${device.dir}" trust="true" password="">
+        <scp todir="${device.user}@${device.host}:${device.dir}" port="${device.port}" trust="true" password="">
             <fileset file="${output.jar}"/>
         </scp>
 
         <echo message="Deploying software dependencies onto EV3 Brick." />
         <!--Make sure lib directory exists-->
         <sshexec host="${device.host}"
+                 port="${device.port}"
                  username="${device.user}"
                  trust="yes"
                  password=""
                  command="mkdir -p ${device.dir}/lib"
         />
-        <scp todir="${device.user}@${device.host}:${device.dir}/lib/" trust="true" password="">
+        <scp todir="${device.user}@${device.host}:${device.dir}/lib/" port="${device.port}" trust="true" password="">
             <fileset dir="${classes.lib}"/>
         </scp>
     </target>
@@ -106,6 +107,7 @@
     <target name="run">
         <sshexec
             host="${device.host}"
+            port="${device.port}"
             username="${device.user}"
             password=""
             trust="true"
@@ -116,6 +118,7 @@
     <target name="stop">
         <sshexec
             host="${device.host}"
+            port="${device.port}"
             username="${device.user}"
             password=""
             trust="true"
