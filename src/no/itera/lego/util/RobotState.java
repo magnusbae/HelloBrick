@@ -13,6 +13,7 @@ public class RobotState {
     public CountDownLatch latch;
     public Status lastStatus;
     public Color lastColor = Color.UNDEFINED;
+    public float lastDistance;
     public boolean webSocketOpen;
     public boolean webSocketConnecting;
     public final EV3Helper ev3Helper;

@@ -4,23 +4,27 @@ import lejos.hardware.port.SensorPort;
 
 import no.itera.lego.color.Color;
 import no.itera.lego.color.ColorSensor;
+import no.itera.lego.util.DistanceSensor;
 import no.itera.lego.util.RobotState;
 
 public class SensorThread implements Runnable {
 
     private final ColorSensor colorSensor;
+    private final DistanceSensor distanceSensor;
     private RobotState robotState;
 
     public SensorThread(RobotState robotState) {
         this.robotState = robotState;
 
         colorSensor = new ColorSensor(SensorPort.S4);
+        distanceSensor = new DistanceSensor(SensorPort.S1);
     }
 
     @Override
     public void run() {
         while (robotState.shouldRun) {
             readColor();
+            robotState.lastDistance = distanceSensor.readDistance();
         }
         robotState.latch.countDown();
     }
