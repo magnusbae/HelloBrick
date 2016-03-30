@@ -24,8 +24,7 @@ public class WebSocketThread implements Runnable {
 
         while (robotState.shouldRun) {
             if (robotState.lastColor != lastHandledColor) {
-                sendMessage(new Update(robotState.lastColor));
-                lastHandledColor = robotState.lastColor;
+                sendColor();
             }
         }
 
@@ -70,5 +69,11 @@ public class WebSocketThread implements Runnable {
 
         Register register = new Register("Robot 1");
         sendMessage(register);
+        sendColor();
+    }
+
+    private void sendColor() {
+        sendMessage(new Update(robotState.lastColor));
+        lastHandledColor = robotState.lastColor;
     }
 }
