@@ -27,7 +27,6 @@ public class BrickSocket extends WebSocketClient {
     public void onOpen(ServerHandshake serverHandshake) {
         this.state.webSocketConnecting = false;
         state.webSocketOpen = true;
-        System.out.println("Connected");
     }
 
     @Override
@@ -37,7 +36,6 @@ public class BrickSocket extends WebSocketClient {
 
     @Override
     public void onClose(int i, String s, boolean b) {
-        System.out.println("Disconnected");
         state.webSocketOpen = false;
         listener.onSocketClose();
     }

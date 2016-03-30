@@ -63,10 +63,10 @@ public class WebSocketThread implements Runnable {
         socket = new BrickSocket(url, robotState, this);
         socket.connect();
 
-        System.out.println("Connected");
-
         while(!robotState.webSocketOpen) {
         }
+
+        System.out.println("Connected");
 
         Register register = new Register("Robot 1");
         sendMessage(register);
