@@ -41,6 +41,7 @@ public class WebSocketThread implements Runnable {
     }
 
     public void onSocketMessage(String receivedString) {
+        System.out.println(String.format("Received: %s", receivedString));
         Message message = MessageReader.readJson(receivedString);
 
         if (message.getClass() == Status.class) {
