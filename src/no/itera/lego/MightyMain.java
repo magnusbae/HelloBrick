@@ -24,8 +24,8 @@ public class MightyMain {
         Thread sensorThreadRunner = new Thread(sensorThread);
         Thread controlThreadRunner = new Thread(controlThread);
 
-        sensorThreadRunner.start();
         webSocketThreadRunner.start();
+        sensorThreadRunner.start();
         controlThreadRunner.start();
 
         System.out.println("\nPress enter to exit program");
