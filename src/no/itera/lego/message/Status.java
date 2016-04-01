@@ -1,21 +1,26 @@
 package no.itera.lego.message;
 
 
-import java.lang.UnsupportedOperationException;
-import java.util.ArrayList;
-import java.util.List;
-
+import no.itera.lego.color.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import no.itera.lego.color.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Status implements Message {
 
   public static final String TYPE = "status";
 
+  // this is set to true when the server activates a match
   public final boolean isActive;
+  // the current color of your robot
   public final Color target;
+  // the current positions on the colored section of the map of all robots
+  // 0: you
+  // 1: your teammate
+  // 2: opponent one
+  // 3: opponent two
   public final List<Color> colors;
 
   public Status(boolean isActive, Color target, List<Color> colors) {
