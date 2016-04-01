@@ -16,10 +16,10 @@ public class RobotState {
     public float lastDistance;
     public boolean webSocketOpen;
     public boolean webSocketConnecting;
-    public final EV3Helper ev3Helper;
+    public final RobotController robotController;
 
-    public RobotState(EV3Helper ev3Helper) {
-        this.ev3Helper = ev3Helper;
+    public RobotState(RobotController robotController) {
+        this.robotController = robotController;
         shouldRun = true;
     }
 }

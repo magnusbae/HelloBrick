@@ -5,13 +5,14 @@ import java.util.concurrent.CountDownLatch;
 import lejos.hardware.Button;
 
 import no.itera.lego.util.EV3Helper;
+import no.itera.lego.util.RobotController;
 import no.itera.lego.util.RobotState;
 import no.itera.lego.websocket.WebSocketThread;
 
 public class MightyMain {
 
-    private static EV3Helper ev3Helper = new EV3Helper();
-    private static RobotState robotState = new RobotState(ev3Helper);
+    private static RobotController robotController = new EV3Helper();
+    private static RobotState robotState = new RobotState(robotController);
 
     public static void main(String[] args) throws InterruptedException {
         robotState.latch = new CountDownLatch(2);
@@ -33,7 +34,7 @@ public class MightyMain {
 
         while (robotState.shouldRun) {
             if (Button.ENTER.isDown()) {
-                ev3Helper.playBeep();
+                robotController.playBeep();
                 robotState.shouldRun = false;
             } else {
                 try {
@@ -47,7 +48,7 @@ public class MightyMain {
         System.out.println("Bye!");
         robotState.latch.await();
 
-        ev3Helper.playBeep();
+        robotController.playBeep();
 
     }
 }

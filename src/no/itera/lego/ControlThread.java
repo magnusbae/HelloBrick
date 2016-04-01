@@ -1,16 +1,16 @@
 package no.itera.lego;
 
-import no.itera.lego.util.EV3Helper;
+import no.itera.lego.util.RobotController;
 import no.itera.lego.util.RobotState;
 
 public class ControlThread implements Runnable {
 
     private RobotState robotState;
-    private EV3Helper ev3Helper;
+    private RobotController robotController;
 
     public ControlThread(RobotState robotState) {
         this.robotState = robotState;
-        this.ev3Helper = robotState.ev3Helper;
+        this.robotController = robotState.robotController;
     }
 
     @Override
@@ -26,13 +26,13 @@ public class ControlThread implements Runnable {
                 case BLUE:
                 case RED:
                 case YELLOW:
-                    ev3Helper.rotateLeft();
+                    robotController.rotateLeft();
                     break;
                 case GREEN:
-                    ev3Helper.stop();
+                    robotController.stop();
                     break;
                 default:
-                    ev3Helper.forward();
+                    robotController.forward();
             }
         }
         robotState.latch.countDown();
