@@ -179,7 +179,7 @@ public class EV3Helper implements RobotController {
      * @param cm How many centimeters to drive
      * @param direction Which direction to drive in
      */
-    public void drive(int cm, Direction direction) {
+    private void drive(int cm, Direction direction) {
         if (direction == Direction.BACKWARD) {
             cm *= -1;
         }
