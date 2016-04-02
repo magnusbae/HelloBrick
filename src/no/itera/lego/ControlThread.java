@@ -1,10 +1,9 @@
 package no.itera.lego;
 
+import javafx.geometry.Pos;
 import no.itera.lego.color.Color;
-import no.itera.lego.util.Speed;
+import no.itera.lego.util.*;
 import no.itera.lego.message.Status;
-import no.itera.lego.util.RobotController;
-import no.itera.lego.util.RobotState;
 
 public class ControlThread implements Runnable, WebSocketListener {
 
@@ -52,21 +51,20 @@ public class ControlThread implements Runnable, WebSocketListener {
             return;
         }
 
-        Color oldColor = oldStatus.colors.get(0);
-        Color newColor = newStatus.colors.get(0);
+        Position oldPosition = PositionHelper.currentPosition(oldStatus);
+        Position newPosition = PositionHelper.currentPosition(newStatus);
 
-        if (newColor == Color.RED) {
+        if (newPosition == Position.TARGET) {
             robot.stop();
         }
 
-        if (newColor == Color.BLACK) {
+        if (newPosition == Position.OUT_OF_MAP) {
             robot.backward();
         }
 
-        if (oldColor == Color.WHITE && newColor == Color.BLUE) {
+        if (oldPosition == Position.LOWER_RIGHT && newPosition == Position.UPPER_RIGHT) {
             robot.forward(Speed.SLOW, Speed.FASTEST);
         }
-
     }
 
     private boolean serverHasNotYetStartedTheGame() {
