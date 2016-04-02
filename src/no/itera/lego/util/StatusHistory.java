@@ -36,11 +36,16 @@ public class StatusHistory {
             public void run() {
                 if (statusHistory.size() == 1) {
                     for (WebSocketListener listener : listeners) {
-                        listener.initialStatusFired(statusHistory.peek());
+                        Status initial = statusHistory.peek();
+                        System.out.println(String.format("Status: initial=%s", initial));
+                        listener.initialStatusFired(initial);
                     }
                 } else if (statusHistory.size() >= 2){
                     for (WebSocketListener listener : listeners) {
-                        listener.newStatusFired(statusHistory.get(statusHistory.size() - 2), statusHistory.peek());
+                        Status oldStatus = statusHistory.get(statusHistory.size() - 2);
+                        Status newStatus = statusHistory.peek();
+                        System.out.println(String.format("Status: old=%s, new=%s", oldStatus, newStatus));
+                        listener.newStatusFired(oldStatus, newStatus);
                     }
                 }
             }

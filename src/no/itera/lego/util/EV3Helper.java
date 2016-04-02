@@ -96,7 +96,7 @@ public class EV3Helper implements RobotController {
     }
 
     @Override
-    public void leftForward() {
+    public void forwardLeft() {
         motorLeft.forward();
         motorRight.forward();
         motorLeft.setSpeed(SLOW_MOTOR_SPEED);
@@ -104,7 +104,7 @@ public class EV3Helper implements RobotController {
     }
 
     @Override
-    public void rightForward() {
+    public void forwardRight() {
         motorLeft.forward();
         motorRight.forward();
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);

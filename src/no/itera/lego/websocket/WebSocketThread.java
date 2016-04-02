@@ -1,13 +1,9 @@
 package no.itera.lego.websocket;
 
-import no.itera.lego.util.StatusHistory;
 import no.itera.lego.color.Color;
-import no.itera.lego.message.Message;
-import no.itera.lego.message.MessageReader;
-import no.itera.lego.message.Register;
-import no.itera.lego.message.Status;
-import no.itera.lego.message.Update;
+import no.itera.lego.message.*;
 import no.itera.lego.util.RobotState;
+import no.itera.lego.util.StatusHistory;
 
 public class WebSocketThread implements Runnable {
 
@@ -48,7 +44,18 @@ public class WebSocketThread implements Runnable {
 
         if (message.getClass() == Status.class) {
             robotState.lastStatus = (Status) message;
-            statusHistory.addNewStatus(robotState.lastStatus);
+
+            notifyStatusListenersOrStopIfRoundIsOver();
+        }
+    }
+
+    private void notifyStatusListenersOrStopIfRoundIsOver() {
+        if (robotState.lastStatus != null) {
+            if (robotState.lastStatus.isActive) {
+                statusHistory.addNewStatus(robotState.lastStatus);
+            } else {
+                robotState.robotController.stop();
+            }
         }
     }
 

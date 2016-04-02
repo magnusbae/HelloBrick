@@ -12,15 +12,21 @@ public class Status implements Message {
 
     public static final String TYPE = "status";
 
-    // this is set to true when the server activates a match
+    /**
+     * this is set to true when the server activates a match
+     */
     public final boolean isActive;
-    // the current color of your robot
+    /**
+     * the current color of your robot
+     */
     public final Color target;
-    // the current positions on the colored section of the map of all robots
-    // 0: you
-    // 1: your teammate
-    // 2: opponent one
-    // 3: opponent two
+    /**
+     * the current positions on the colored section of the map of all robots
+     * 0: you
+     * 1: your teammate
+     * 2: opponent one
+     * 3: opponent two
+     */
     public final List<Color> colors;
 
     public Status(boolean isActive, Color target, List<Color> colors) {
@@ -36,7 +42,7 @@ public class Status implements Message {
 
         JSONArray jsonColorsArray = (JSONArray)object.get("status");
 
-        List<Color> colors = new ArrayList<Color>();
+        List<Color> colors = new ArrayList<>();
         for (Object objColor : jsonColorsArray) {
             colors.add(Color.valueOf((String) objColor));
         }
