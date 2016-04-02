@@ -1,5 +1,6 @@
 package no.itera.lego.websocket;
 
+import no.itera.lego.util.StatusHistory;
 import no.itera.lego.color.Color;
 import no.itera.lego.message.Message;
 import no.itera.lego.message.MessageReader;
@@ -11,11 +12,13 @@ import no.itera.lego.util.RobotState;
 public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
+    private StatusHistory statusHistory;
     private BrickSocket socket;
     private Color lastHandledColor;
 
-    public WebSocketThread(RobotState robotState) {
+    public WebSocketThread(RobotState robotState, StatusHistory statusHistory) {
         this.robotState = robotState;
+        this.statusHistory = statusHistory;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class WebSocketThread implements Runnable {
 
         if (message.getClass() == Status.class) {
             robotState.lastStatus = (Status) message;
+            statusHistory.addNewStatus(robotState.lastStatus);
         }
     }
 

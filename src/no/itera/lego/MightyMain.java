@@ -7,19 +7,23 @@ import lejos.hardware.Button;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.RobotController;
 import no.itera.lego.util.RobotState;
+import no.itera.lego.util.StatusHistory;
 import no.itera.lego.websocket.WebSocketThread;
 
 public class MightyMain {
 
     private static RobotController robotController = new EV3Helper();
     private static RobotState robotState = new RobotState(robotController);
+    private static StatusHistory statusHistory = new StatusHistory();
 
     public static void main(String[] args) throws InterruptedException {
         robotState.latch = new CountDownLatch(2);
 
-        WebSocketThread webSocketThread = new WebSocketThread(robotState);
+        WebSocketThread webSocketThread = new WebSocketThread(robotState, statusHistory);
         SensorThread sensorThread = new SensorThread(robotState);
         ControlThread controlThread = new ControlThread(robotState);
+
+        statusHistory.addListener(controlThread);
 
         Thread webSocketThreadRunner = new Thread(webSocketThread);
         Thread sensorThreadRunner = new Thread(sensorThread);
@@ -47,6 +51,8 @@ public class MightyMain {
 
         System.out.println("Bye!");
         robotState.latch.await();
+
+        statusHistory.clearListeners();
 
         robotController.playBeep();
 
