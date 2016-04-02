@@ -71,13 +71,15 @@ public class WebSocketThread implements Runnable {
 
         System.out.println("Connected");
 
-        Register register = new Register("Robot 1");
+        Register register = new Register(robotState.name);
         sendMessage(register);
         sendColor();
     }
 
     private void sendColor() {
-        sendMessage(new Update(robotState.lastColor));
-        lastHandledColor = robotState.lastColor;
+        if (!robotState.simulation) {
+            sendMessage(new Update(robotState.lastColor));
+            lastHandledColor = robotState.lastColor;
+        }
     }
 }

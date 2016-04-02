@@ -34,13 +34,13 @@ public class StatusHistory {
         executorService.submit(new Runnable() {
             @Override
             public void run() {
-                if (statusHistory.size() <= 1) {
+                if (statusHistory.size() == 1) {
                     for (WebSocketListener listener : listeners) {
                         listener.initialStatusFired(statusHistory.peek());
                     }
-                } else {
+                } else if (statusHistory.size() >= 2){
                     for (WebSocketListener listener : listeners) {
-                        listener.newStatusFired(statusHistory.get(1), statusHistory.peek());
+                        listener.newStatusFired(statusHistory.get(statusHistory.size() - 2), statusHistory.peek());
                     }
                 }
             }

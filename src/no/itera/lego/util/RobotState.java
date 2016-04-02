@@ -10,6 +10,10 @@ public class RobotState {
     // enter the server address:port that the robot should connect to
     public static final String HOST = "192.168.43.168";
     public static final int PORT = 3004;
+    public final String name = "YOUR ROBOT NAME";
+    // set this to false when you are playing the real game
+    public boolean simulation = true;
+
     // the server will set this to true when your round starts
     public boolean shouldRun;
     // this is the last status received by the server
