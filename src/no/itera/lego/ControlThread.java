@@ -1,14 +1,15 @@
 package no.itera.lego;
 
-import no.itera.lego.util.RobotState;
+import no.itera.lego.robot.Robot;
+import no.itera.lego.robot.RobotState;
 
 public class ControlThread implements Runnable {
 
-    private final Controller controller;
+    private final Robot robot;
     private final RobotState robotState;
 
-    public ControlThread(Controller controller, RobotState robotState) {
-        this.controller = controller;
+    public ControlThread(Robot robot, RobotState robotState) {
+        this.robot = robot;
         this.robotState = robotState;
     }
 
@@ -18,7 +19,7 @@ public class ControlThread implements Runnable {
             if (theGameIsNotActive()) {
                 continue;
             } else {
-                controller.loop();
+                robot.loop();
             }
         }
         robotState.latch.countDown();

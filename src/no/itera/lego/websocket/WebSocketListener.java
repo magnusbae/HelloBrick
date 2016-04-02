@@ -1,4 +1,4 @@
-package no.itera.lego;
+package no.itera.lego.websocket;
 
 import no.itera.lego.message.Status;
 

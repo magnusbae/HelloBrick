@@ -1,16 +1,17 @@
-package no.itera.lego;
+package no.itera.lego.robot;
 
+import no.itera.lego.websocket.WebSocketListener;
 import no.itera.lego.message.Status;
 import no.itera.lego.util.*;
 
-public class Controller implements WebSocketListener {
+public class Robot implements WebSocketListener {
 
     public static final int LOOP_SLEEP_TIME = 1000;
 
     private RobotState robotState;
     private RobotController robot;
 
-    public Controller(RobotState robotState) {
+    public Robot(RobotState robotState) {
         this.robotState = robotState;
         this.robot = robotState.robotController;
     }

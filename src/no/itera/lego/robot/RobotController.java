@@ -1,13 +1,14 @@
-package no.itera.lego.util;
+package no.itera.lego.robot;
 
 import lejos.robotics.RegulatedMotor;
+import no.itera.lego.util.Speed;
 
 /**
  * This interface is implemented and further documented in the EV3Controller.
  *
  * You can use the functions found in this interface to control the robot, any
  * additional (more advanced) helper functions can be implemented directly in
- * the ControlThread. See the backupAndTurnAround() function for an example.
+ * the Robot. See the backupAndTurnAround() function for an example.
  */
 public interface RobotController {
 

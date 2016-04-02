@@ -1,9 +1,9 @@
-package no.itera.lego.util;
-
-import java.util.concurrent.CountDownLatch;
+package no.itera.lego.robot;
 
 import no.itera.lego.color.Color;
 import no.itera.lego.message.Status;
+
+import java.util.concurrent.CountDownLatch;
 
 public class RobotState {
 

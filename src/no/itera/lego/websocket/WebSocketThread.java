@@ -2,7 +2,7 @@ package no.itera.lego.websocket;
 
 import no.itera.lego.color.Color;
 import no.itera.lego.message.*;
-import no.itera.lego.util.RobotState;
+import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.StatusHistory;
 
 public class WebSocketThread implements Runnable {

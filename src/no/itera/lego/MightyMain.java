@@ -1,14 +1,14 @@
 package no.itera.lego;
 
-import java.util.concurrent.CountDownLatch;
-
 import lejos.hardware.Button;
-
+import no.itera.lego.robot.Robot;
+import no.itera.lego.robot.RobotController;
+import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.EV3Helper;
-import no.itera.lego.util.RobotController;
-import no.itera.lego.util.RobotState;
 import no.itera.lego.util.StatusHistory;
 import no.itera.lego.websocket.WebSocketThread;
+
+import java.util.concurrent.CountDownLatch;
 
 public class MightyMain {
 
@@ -21,10 +21,10 @@ public class MightyMain {
 
         WebSocketThread webSocketThread = new WebSocketThread(robotState, statusHistory);
         SensorThread sensorThread = new SensorThread(robotState);
-        Controller controller = new Controller(robotState);
-        ControlThread controlThread = new ControlThread(controller, robotState);
+        Robot robot = new Robot(robotState);
+        ControlThread controlThread = new ControlThread(robot, robotState);
 
-        statusHistory.addListener(controller);
+        statusHistory.addListener(robot);
 
         Thread webSocketThreadRunner = new Thread(webSocketThread);
         Thread sensorThreadRunner = new Thread(sensorThread);

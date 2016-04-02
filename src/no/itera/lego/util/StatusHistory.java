@@ -1,7 +1,7 @@
 package no.itera.lego.util;
 
-import no.itera.lego.WebSocketListener;
 import no.itera.lego.message.Status;
+import no.itera.lego.websocket.WebSocketListener;
 
 import java.util.HashSet;
 import java.util.Set;

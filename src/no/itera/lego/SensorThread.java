@@ -1,11 +1,10 @@
 package no.itera.lego;
 
 import lejos.hardware.port.SensorPort;
-
 import no.itera.lego.color.Color;
 import no.itera.lego.color.ColorSensor;
+import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.DistanceSensor;
-import no.itera.lego.util.RobotState;
 
 public class SensorThread implements Runnable {
 
