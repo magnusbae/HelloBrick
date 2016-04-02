@@ -8,11 +8,11 @@ public class Robot implements WebSocketListener {
 
     public static final int LOOP_SLEEP_TIME = 1000;
 
-    private RobotState robotState;
+    private RobotState state;
     private RobotController robot;
 
     public Robot(RobotState robotState) {
-        this.robotState = robotState;
+        this.state = robotState;
         this.robot = robotState.robotController;
     }
 
@@ -34,11 +34,16 @@ public class Robot implements WebSocketListener {
                 robot.isGoingLeft(),
                 robot.isGoingRight()));
 
-        // example 1: This function gets executed once every second, and ensures that
+        // EXAMPLE: This function gets executed once every second, and ensures that
         // the robot starts moving forward if it is not already on the target
-        Position position = PositionHelper.currentPosition(robotState.lastStatus);
+        Position position = PositionHelper.currentPosition(state.lastStatus);
         if (position != Position.TARGET && !robotIsMoving()) {
             robot.forward();
+        }
+
+        // EXAMPLE: turn around if there's someone very close ahead of you
+        if (state.lastDistance < 12) {
+            backupAndTurnAround();
         }
 
         blockExecutionFor(LOOP_SLEEP_TIME);
@@ -54,7 +59,7 @@ public class Robot implements WebSocketListener {
         Position oldPosition = PositionHelper.currentPosition(oldStatus);
         Position newPosition = PositionHelper.currentPosition(newStatus);
 
-        // example 2: make a decision based only upon the new position
+        // EXAMPLE: make a decision based only upon the new position
         switch (newPosition) {
             case TARGET:
                 robot.stop();
@@ -64,7 +69,7 @@ public class Robot implements WebSocketListener {
                 return;
         }
 
-        // example 3: if the robot is in the upper right corner of the map, _after_
+        // EXAMPLE: if the robot is in the upper right corner of the map, _after_
         // having been in the lower left corner _and_ it is moving forward (i.e. not
         // backing up), we make an educated guess at going left, because the TARGET
         // is probably going to be in that direction.
