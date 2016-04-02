@@ -72,6 +72,14 @@ public class EV3Helper implements RobotController {
     }
 
     @Override
+    public void forward(Speed left, Speed right) {
+        motorLeft.forward();
+        motorRight.forward();
+        motorLeft.setSpeed(left.getSpeed());
+        motorRight.setSpeed(right.getSpeed());
+    }
+
+    @Override
     public void rotateLeft() {
         motorLeft.backward();
         motorRight.forward();
@@ -123,6 +131,29 @@ public class EV3Helper implements RobotController {
         motorRight.stop(true);
     }
 
+    @Override
+    public boolean isGoingBackward() {
+        return getMotorLeft().getRotationSpeed() < 0 &&
+                getMotorRight().getRotationSpeed() < 0;
+    }
+
+    @Override
+    public boolean isGoingForward() {
+        return getMotorLeft().getRotationSpeed() > 0 &&
+                getMotorRight().getRotationSpeed() > 0;
+    }
+
+    @Override
+    public boolean isGoingLeft() {
+        return getMotorLeft().getRotationSpeed() <
+                getMotorRight().getRotationSpeed();
+    }
+
+    @Override
+    public boolean isGoingRight() {
+        return getMotorLeft().getRotationSpeed() >
+                getMotorRight().getRotationSpeed();
+    }
 
     /**
      * Drives forward the given centimeters and stops when complete
