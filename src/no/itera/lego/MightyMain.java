@@ -21,9 +21,10 @@ public class MightyMain {
 
         WebSocketThread webSocketThread = new WebSocketThread(robotState, statusHistory);
         SensorThread sensorThread = new SensorThread(robotState);
-        ControlThread controlThread = new ControlThread(robotState);
+        Controller controller = new Controller(robotState);
+        ControlThread controlThread = new ControlThread(controller, robotState);
 
-        statusHistory.addListener(controlThread);
+        statusHistory.addListener(controller);
 
         Thread webSocketThreadRunner = new Thread(webSocketThread);
         Thread sensorThreadRunner = new Thread(sensorThread);
