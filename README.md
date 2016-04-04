@@ -73,6 +73,7 @@ _You may reconfigure this, but it requires you to alter the corresponding code a
 
 ### Dependencies and libraries
 
+#### Java and Ant
 You need to have [Java Development Kit 7][jdk7] (or [higher][jdk8]) and [Ant][ant] installed on
 your system.
 
@@ -82,7 +83,7 @@ your system.
 
 If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
 
-### WebSockets
+#### WebSockets
 The robots use WebSockets to communicate with the server. The WebSocket implementation used is the [Java-WebSocket][java-websocket]
 library.
 
