@@ -93,7 +93,13 @@ library.
 Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server is configured in the file
 [RobotState.java][robotstate].
 
+#### Other:
+
+* [JSON-simple][json-simple]
+
+
 [lejos]: http://www.lejos.org/ev3/docs/
 [java-websocket]: http://java-websocket.org/
+[json-simple]: https://code.google.com/archive/p/json-simple/
 [robotstate]: src/no/itera/lego/robot/RobotState.java
 [build-properties]: build.properties
