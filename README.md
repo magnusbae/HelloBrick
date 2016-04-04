@@ -58,7 +58,7 @@ _See the below chapters for how to compile the code and upload it to your robot_
 
 ## Building
 
-It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
+It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in [README-ANT.md][readme-ant].
 The handout computers are already pre-configured with `ant`.
 
 ### Killing a stalled process with ant
@@ -86,7 +86,7 @@ your system.
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 [ant]: http://ant.apache.org/
 
-If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
+If you want to use IntelliJ, you may follow the guide in [README-INTELLIJ.md][readme-intellij].
 
 #### WebSockets
 The robots use WebSockets to communicate with the server. The WebSocket implementation used is the [Java-WebSocket][java-websocket]
@@ -105,3 +105,5 @@ Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server 
 [json-simple]: https://code.google.com/archive/p/json-simple/
 [robotstate]: src/no/itera/lego/robot/RobotState.java
 [build-properties]: build.properties
+[readme-ant]: README-ANT.md
+[readme-intellij]: README-INTELLIJ.md
