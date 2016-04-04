@@ -6,7 +6,7 @@ download the leJOS library, compile the code, upload, and run it on the device.
 ## Requirements
 
 To build with Ant you need to have [Java Development Kit 7][jdk] and
-[Apache Ant][ant-download] installed on your system.
+[Apache Ant][ant-download] installed on your system. These have already been set up on the hand-out machines.
 
 [ant]: http://ant.apache.org/
 [jdk7]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
@@ -14,7 +14,7 @@ To build with Ant you need to have [Java Development Kit 7][jdk] and
 
 ## TL;DR
 
-First time, run: `ant install`
+First time, run: `ant install` *(Not necessary on the hand-out machines)*
 To compile and run: `ant upload run`
 To stop: `ant stop`
 
@@ -22,7 +22,7 @@ To stop: `ant stop`
 
 The necessary dependencies can be downloaded and installed by running:
 
-    ant install
+    ant install *(Not necessary on the hand-out machines)*
 
 You will then have a directory named `leJOS_EV3_0.9.1-beta` containing some
 tools, the leJOS library and docs.
@@ -31,6 +31,8 @@ Of the tools, you will most likely find the `ev3control` utility most
 useful. You can run it with:
 
     ./leJOS_EV3_0.9.1-beta/bin/ev3control
+
+_ev3control doesn't work well when the robot has multiple network interfaces. Sorry._
 
 ## Compiling and uploading
 
