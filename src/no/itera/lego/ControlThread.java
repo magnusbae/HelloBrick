@@ -1,40 +1,32 @@
 package no.itera.lego;
 
-import no.itera.lego.util.EV3Helper;
-import no.itera.lego.util.RobotState;
+import no.itera.lego.robot.Robot;
+import no.itera.lego.robot.RobotState;
 
 public class ControlThread implements Runnable {
 
-    private RobotState robotState;
-    private EV3Helper ev3Helper;
+    private final Robot robot;
+    private final RobotState robotState;
 
-    public ControlThread(RobotState robotState) {
+    public ControlThread(Robot robot, RobotState robotState) {
+        this.robot = robot;
         this.robotState = robotState;
-        this.ev3Helper = robotState.ev3Helper;
     }
 
     @Override
     public void run() {
         while (robotState.shouldRun) {
-
-            if (robotState.lastStatus == null || !robotState.lastStatus.isActive) {
+            if (theGameIsNotActive()) {
                 continue;
-            }
-
-            switch (robotState.lastColor) {
-                case BLACK:
-                case BLUE:
-                case RED:
-                case YELLOW:
-                    ev3Helper.rotateLeft();
-                    break;
-                case GREEN:
-                    ev3Helper.stop();
-                    break;
-                default:
-                    ev3Helper.forward();
+            } else {
+                robot.loop();
             }
         }
         robotState.latch.countDown();
     }
+
+    private boolean theGameIsNotActive() {
+        return robotState.lastStatus == null || !robotState.lastStatus.isActive;
+    }
+
 }

@@ -4,6 +4,7 @@ import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
+import no.itera.lego.robot.RobotController;
 
 /**
  * Helper functions for basic operation of our pre-configured robot.
@@ -13,7 +14,7 @@ import lejos.robotics.RegulatedMotor;
  * For the complete Lejos API take a look at:
  * http://www.lejos.org/ev3/docs/
  */
-public class EV3Helper {
+public class EV3Helper implements RobotController {
 
     private static final int DISTANCE_DEGREES_FACTOR = 36; //How many degrees the motors have to rotate for the robot to travel 1cm
     private static final double ROTATE_DEGREES_FACTOR = 11.3; //How many degrees one motor has to rotate for the robot to rotate 1 degree (while the other motor is stopped)
@@ -41,10 +42,12 @@ public class EV3Helper {
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
     }
 
+    @Override
     public RegulatedMotor getMotorRight() {
         return motorRight;
     }
 
+    @Override
     public RegulatedMotor getMotorLeft() {
         return motorLeft;
     }
@@ -52,6 +55,7 @@ public class EV3Helper {
     /**
      * Plays a beep with the speaker.
      */
+    @Override
     public void playBeep() {
         Sound.beep();
     }
@@ -60,6 +64,7 @@ public class EV3Helper {
      * Drives forward until stop is called.
      * Returns immediately
      */
+    @Override
     public void forward(){
         motorLeft.forward();
         motorRight.forward();
@@ -67,6 +72,15 @@ public class EV3Helper {
         motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     }
 
+    @Override
+    public void forward(Speed left, Speed right) {
+        motorLeft.forward();
+        motorRight.forward();
+        motorLeft.setSpeed(left.getSpeed());
+        motorRight.setSpeed(right.getSpeed());
+    }
+
+    @Override
     public void rotateLeft() {
         motorLeft.backward();
         motorRight.forward();
@@ -74,6 +88,7 @@ public class EV3Helper {
         motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     }
 
+    @Override
     public void rotateRight(){
         motorLeft.forward();
         motorRight.backward();
@@ -81,14 +96,16 @@ public class EV3Helper {
         motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     }
 
-    public void leftForward() {
+    @Override
+    public void forwardLeft() {
         motorLeft.forward();
         motorRight.forward();
         motorLeft.setSpeed(SLOW_MOTOR_SPEED);
         motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
     }
 
-    public void rightForward() {
+    @Override
+    public void forwardRight() {
         motorLeft.forward();
         motorRight.forward();
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
@@ -99,6 +116,7 @@ public class EV3Helper {
      * Drives backward until stop is called.
      * Returns immediately
      */
+    @Override
     public void backward(){
         motorLeft.backward();
         motorRight.backward();
@@ -108,11 +126,35 @@ public class EV3Helper {
     /**
      * Stops both motors immediately
      */
+    @Override
     public void stop(){
         motorLeft.stop(true);
         motorRight.stop(true);
     }
 
+    @Override
+    public boolean isGoingBackward() {
+        return getMotorLeft().getRotationSpeed() < 0 &&
+                getMotorRight().getRotationSpeed() < 0;
+    }
+
+    @Override
+    public boolean isGoingForward() {
+        return getMotorLeft().getRotationSpeed() > 0 &&
+                getMotorRight().getRotationSpeed() > 0;
+    }
+
+    @Override
+    public boolean isGoingLeft() {
+        return getMotorLeft().getRotationSpeed() <
+                getMotorRight().getRotationSpeed();
+    }
+
+    @Override
+    public boolean isGoingRight() {
+        return getMotorLeft().getRotationSpeed() >
+                getMotorRight().getRotationSpeed();
+    }
 
     /**
      * Drives forward the given centimeters and stops when complete

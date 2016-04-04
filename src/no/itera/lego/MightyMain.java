@@ -1,24 +1,30 @@
 package no.itera.lego;
 
-import java.util.concurrent.CountDownLatch;
-
 import lejos.hardware.Button;
-
+import no.itera.lego.robot.Robot;
+import no.itera.lego.robot.RobotController;
+import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.EV3Helper;
-import no.itera.lego.util.RobotState;
+import no.itera.lego.util.StatusHistory;
 import no.itera.lego.websocket.WebSocketThread;
+
+import java.util.concurrent.CountDownLatch;
 
 public class MightyMain {
 
-    private static EV3Helper ev3Helper = new EV3Helper();
-    private static RobotState robotState = new RobotState(ev3Helper);
+    private static RobotController robotController = new EV3Helper();
+    private static RobotState robotState = new RobotState(robotController);
+    private static StatusHistory statusHistory = new StatusHistory();
 
     public static void main(String[] args) throws InterruptedException {
         robotState.latch = new CountDownLatch(2);
 
-        WebSocketThread webSocketThread = new WebSocketThread(robotState);
+        WebSocketThread webSocketThread = new WebSocketThread(robotState, statusHistory);
         SensorThread sensorThread = new SensorThread(robotState);
-        ControlThread controlThread = new ControlThread(robotState);
+        Robot robot = new Robot(robotState);
+        ControlThread controlThread = new ControlThread(robot, robotState);
+
+        statusHistory.addListener(robot);
 
         Thread webSocketThreadRunner = new Thread(webSocketThread);
         Thread sensorThreadRunner = new Thread(sensorThread);
@@ -33,7 +39,7 @@ public class MightyMain {
 
         while (robotState.shouldRun) {
             if (Button.ENTER.isDown()) {
-                ev3Helper.playBeep();
+                robotController.playBeep();
                 robotState.shouldRun = false;
             } else {
                 try {
@@ -47,7 +53,9 @@ public class MightyMain {
         System.out.println("Bye!");
         robotState.latch.await();
 
-        ev3Helper.playBeep();
+        statusHistory.clearListeners();
+
+        robotController.playBeep();
 
     }
 }

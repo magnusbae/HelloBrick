@@ -1,21 +1,20 @@
 package no.itera.lego.websocket;
 
 import no.itera.lego.color.Color;
-import no.itera.lego.message.Message;
-import no.itera.lego.message.MessageReader;
-import no.itera.lego.message.Register;
-import no.itera.lego.message.Status;
-import no.itera.lego.message.Update;
-import no.itera.lego.util.RobotState;
+import no.itera.lego.message.*;
+import no.itera.lego.robot.RobotState;
+import no.itera.lego.util.StatusHistory;
 
 public class WebSocketThread implements Runnable {
 
     private RobotState robotState;
+    private StatusHistory statusHistory;
     private BrickSocket socket;
     private Color lastHandledColor;
 
-    public WebSocketThread(RobotState robotState) {
+    public WebSocketThread(RobotState robotState, StatusHistory statusHistory) {
         this.robotState = robotState;
+        this.statusHistory = statusHistory;
     }
 
     @Override
@@ -45,6 +44,18 @@ public class WebSocketThread implements Runnable {
 
         if (message.getClass() == Status.class) {
             robotState.lastStatus = (Status) message;
+
+            notifyStatusListenersOrStopIfRoundIsOver();
+        }
+    }
+
+    private void notifyStatusListenersOrStopIfRoundIsOver() {
+        if (robotState.lastStatus != null) {
+            if (robotState.lastStatus.isActive) {
+                statusHistory.addNewStatus(robotState.lastStatus);
+            } else {
+                robotState.robotController.stop();
+            }
         }
     }
 
@@ -67,13 +78,15 @@ public class WebSocketThread implements Runnable {
 
         System.out.println("Connected");
 
-        Register register = new Register("Robot 1");
+        Register register = new Register(robotState.name);
         sendMessage(register);
         sendColor();
     }
 
     private void sendColor() {
-        sendMessage(new Update(robotState.lastColor));
-        lastHandledColor = robotState.lastColor;
+        if (!robotState.simulation) {
+            sendMessage(new Update(robotState.lastColor));
+            lastHandledColor = robotState.lastColor;
+        }
     }
 }

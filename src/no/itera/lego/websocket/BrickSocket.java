@@ -1,6 +1,6 @@
 package no.itera.lego.websocket;
 
-import no.itera.lego.util.RobotState;
+import no.itera.lego.robot.RobotState;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
