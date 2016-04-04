@@ -68,9 +68,9 @@ Sometimes you migth encounter a crashed app that locks your brick. In stead of r
 
 ### Motors and Sensors connections
 
-EV3 Large regulated motors connected to `A` and `D`
-EV3 Distance sensor (IR) connected to `S1`
-EV3 Color Sensor connected to `S4`
+* EV3 Large regulated motors connected to `A` and `D`
+* EV3 Distance sensor (IR) connected to `S1`
+* EV3 Color Sensor connected to `S4`
 
 _You may reconfigure this, but it requires you to alter the corresponding code as well_
 
