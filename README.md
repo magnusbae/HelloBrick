@@ -54,6 +54,8 @@ Remember to configure the following properties correctly:
 
 _See the below chapters for how to compile the code and upload it to your robot_
 
+---
+
 ## Building
 
 It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
