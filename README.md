@@ -23,6 +23,7 @@ For game rules - see [RULES.md][rules].
 # Programming
 
 The program starts in the main method found in `MightyMain`, it sets up and initialized three threads:
+
 1. the WebSocketThread, it communicates with the server (sending its position and receiving the game state)
 2. the SensorThread, it reads the color under your robot and the distance to the object in front of the robot
 3. the ControlThread, this thread runs the main loop in the `Robot` class - _this is the only place where 
@@ -30,6 +31,7 @@ you need to make changes to the code!_
 
 The `no.itera.lego.robot` package contains three important classes where you should read the documentation and implement
 the robot AI:
+
 1. `RobotState` - this class contains most of data that you interact with within the application, this includes the state
 of the game board, as well as the last read color and distance obtained by the sensor thread.
 2. `RobotController` - this interface shows you a handful of useful functions that can be used to control the robot. All
@@ -39,12 +41,13 @@ boilerplate implementation of a simple robot. Read the comments and the examples
 understanding of how it works to control the robots.
 
 Remember to configure the following properties correctly:
-1. `RobotState.java`
-    * `HOST` and `PORT` - address to the server
-    * `name` - set the name of your robot
-    * `simulation` - set this to false before starting a real match
-2. `build.properties`
-    * `device.host` - enter the IP address of your robot here. After you have connected both your robot and your machine to
+
+1. [RobotState.java][robotstate]
+  * `HOST` and `PORT` - address to the server
+  * `name` - set the name of your robot
+  * `simulation` - set this to false before starting a real match
+2. [build.properties][build-properties]
+  * `device.host` - enter the IP address of your robot here. After you have connected both your robot and your machine to
     the network, you'll be able to upload your code to the robot by running the `ant upload`.
 
 *Good luck and have fun! :)*
@@ -88,8 +91,9 @@ The robots use WebSockets to communicate with the server. The WebSocket implemen
 library.
 
 Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server is configured in the file
-`RobotState.java`.
+[RobotState.java][robotstate].
 
 [lejos]: http://www.lejos.org/ev3/docs/
 [java-websocket]: http://java-websocket.org/
-
+[robotstate]: src/no/itera/lego/robot/RobotState.java
+[build-properties]: build.properties
