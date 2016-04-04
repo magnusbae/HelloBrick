@@ -1,15 +1,26 @@
-# EV3 WebSocket client example with Color Sensor
+# 'Capture the Flag' base robot
 
-This [leJOS][lejos] application allows one EV3 to talk to a WebSocket server using the [Java-WebSocket][java-websocket]
-library.
+This code contains the functions needed for basic operation. It is your goal to improve on this code to
+create the best robots for taking points from your opponent, and stopping them in taking points from you!
 
-Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server is configured in the file
-`RobotState.java`.
+For game rules - see [RULES.md][rules].
 
-[lejos]: http://www.lejos.org/ev3/docs/
-[java-websocket]: http://java-websocket.org/
+[rules]: RULES.md
 
-## Programming
+## Do's
+* Test color detection early! Your robots' color sensor might need to have some custom calibration tweaks
+* Use multi-threading and clever state handling to make a better performing robot.
+* Fine-tune your robots' navigation to create a near optimum navigation algorithm.
+* Detect the other teams robot and push it out of your circle.
+* Detect being pushed
+* Customize your robot - maybe you can use a bumper and a switch to do some collision detection?
+* More power - can you do something clever with another motor?
+
+## Don'ts
+* Use blocking code; your robot will miss-behave (and most likely put you at a disadvantage)
+* Cheat. You will be disqualified
+
+# Programming
 
 The program starts in the main method found in `MightyMain`, it sets up and initialized three threads:
 1. the WebSocketThread, it communicates with the server (sending its position and receiving the game state)
@@ -40,7 +51,27 @@ Remember to configure the following properties correctly:
 
 _See the below chapters for how to compile the code and upload it to your robot_
 
+## Building
+
+It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
+The handout computers are already pre-configured with `ant`.
+
+### Killing a stalled process with ant
+
+Sometimes you migth encounter a crashed app that locks your brick. In stead of rebooting your brick you may use the
+```ant stop``` command.
+
 ## Requirements
+
+### Motors and Sensors connections
+
+EV3 Large regulated motors connected to `A` and `D`
+EV3 Distance sensor (IR) connected to `S1`
+EV3 Color Sensor connected to `S4`
+
+_You may reconfigure this, but it requires you to alter the corresponding code as well_
+
+### Dependencies and libraries
 
 You need to have [Java Development Kit 7][jdk7] (or [higher][jdk8]) and [Ant][ant] installed on
 your system.
@@ -51,15 +82,13 @@ your system.
 
 If you want to use IntelliJ, you may follow the guide in `README-INTELLIJ.md`.
 
-##Building
+### WebSockets
+The robots use WebSockets to communicate with the server. The WebSocket implementation used is the [Java-WebSocket][java-websocket]
+library.
 
-It is recommended to build using Apache Ant instead of Eclipse, you may follow the guide in `README-ANT.md`.
+Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server is configured in the file
+`RobotState.java`.
 
-###Killing a stalled process with ant
+[lejos]: http://www.lejos.org/ev3/docs/
+[java-websocket]: http://java-websocket.org/
 
-Sometimes you might encounter a crashed app that locks your brick. Instead of rebooting your brick you may use the
-```ant stop``` command.
-
-## Motors and Sensors connections
-
-EV3 Color Sensor connected to `S1`
