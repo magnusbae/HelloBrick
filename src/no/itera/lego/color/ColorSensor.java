@@ -1,10 +1,14 @@
 package no.itera.lego.color;
 
+import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.SensorMode;
 
-import static no.itera.lego.color.Color.*;
+import java.util.Arrays;
+
+import static no.itera.lego.color.Color.valueOf;
+import static no.itera.lego.util.ColorCalibrationPropertiesReader.readColorCalibrationProperties;
 
 public class ColorSensor {
 
@@ -12,6 +16,15 @@ public class ColorSensor {
     private final EV3ColorSensor ev3ColorSensor;
     private final SensorMode rgbMode;
     private final int sampleSize;
+    private static final float[] COLOR_CHANNEL_CALIBRATION_VALUES;
+
+
+    static {
+        float[] values = readColorCalibrationProperties();
+        LCD.drawString(Arrays.toString(values), 0, 0);
+        COLOR_CHANNEL_CALIBRATION_VALUES = values;
+    }
+
 
     public ColorSensor(Port port) {
         ev3ColorSensor = new EV3ColorSensor(port);
@@ -19,17 +32,29 @@ public class ColorSensor {
         sampleSize = rgbMode.sampleSize();
     }
 
-    public Color readColor(){
+    public Color readColor() {
         int[] rgb = readSensorRgb();
 
-        return valueOf(rgb[0], rgb[1], rgb[2]); //TODO //FIXME
+
+        return valueOf(rgb[0], rgb[1], rgb[2]);
     }
 
     public int[] readSensorRgb() {
         float[] sample = new float[sampleSize];
         rgbMode.fetchSample(sample, 0);
-        return normalizeRgb(sample);
+        return calibrateChannels(normalizeRgb(sample));
     }
+
+
+    private int[] calibrateChannels(int[] rgb) {
+        int[] calibrated = new int[rgb.length];
+
+        for (int i = 0; i < rgb.length; i++) {
+            calibrated[i] = (int) (rgb[i] * COLOR_CHANNEL_CALIBRATION_VALUES[i]);
+        }
+        return calibrated;
+    }
+
 
     private int[] normalizeRgb(float[] sample) {
         int[] intSample = new int[sample.length];

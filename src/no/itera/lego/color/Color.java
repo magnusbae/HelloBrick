@@ -1,7 +1,7 @@
 package no.itera.lego.color;
 
 public enum Color {
-         
+
     GREY(18, 49, 25, 50, 19, 39), // Avrg: 42, 43, 28
     WHITE(77, 208, 75, 216, 71, 181), //171, 176, 150
     BLACK(0, 17, 0, 27, 0, 17), //11, 14, 10
@@ -37,9 +37,5 @@ public enum Color {
         boolean b_contains = this.blueLow < b && this.blueHigh >= b;
 
         return r_contains && g_contains && b_contains;
-    }
-
-    public static Color randomColor() {
-        return values()[(int)Math.floor(Math.random() * values().length)];
     }
 }
