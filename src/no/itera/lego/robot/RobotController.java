@@ -37,8 +37,8 @@ public interface RobotController {
     void stop();
 
     /**
-     * These functions will only move one of the robot's engines, resulting
-     * in the robot rotating in-place
+     * These functions will run both of the robot's engines at the same speed,
+     * but in opposite directions, resulting in the robot rotating in-place.
      */
     void rotateLeft();
     void rotateRight();
