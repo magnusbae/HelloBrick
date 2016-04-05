@@ -1,8 +1,10 @@
 package no.itera.lego.robot;
 
-import no.itera.lego.websocket.WebSocketListener;
 import no.itera.lego.message.Status;
-import no.itera.lego.util.*;
+import no.itera.lego.util.Position;
+import no.itera.lego.util.PositionHelper;
+import no.itera.lego.util.Speed;
+import no.itera.lego.websocket.WebSocketListener;
 
 public class Robot implements WebSocketListener {
 

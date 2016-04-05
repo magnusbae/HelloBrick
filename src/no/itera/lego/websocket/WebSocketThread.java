@@ -1,7 +1,11 @@
 package no.itera.lego.websocket;
 
 import no.itera.lego.color.Color;
-import no.itera.lego.message.*;
+import no.itera.lego.message.Message;
+import no.itera.lego.message.MessageReader;
+import no.itera.lego.message.Register;
+import no.itera.lego.message.Status;
+import no.itera.lego.message.Update;
 import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.StatusHistory;
 

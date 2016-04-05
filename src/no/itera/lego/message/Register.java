@@ -1,8 +1,7 @@
 package no.itera.lego.message;
 
-import java.lang.UnsupportedOperationException;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 

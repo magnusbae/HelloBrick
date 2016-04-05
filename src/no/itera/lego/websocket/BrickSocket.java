@@ -1,10 +1,11 @@
 package no.itera.lego.websocket;
 
-import no.itera.lego.robot.RobotState;
+import java.net.URI;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.net.URI;
+import no.itera.lego.robot.RobotState;
 
 public class BrickSocket extends WebSocketClient {
 

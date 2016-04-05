@@ -1,14 +1,15 @@
 package no.itera.lego;
 
+import java.util.concurrent.CountDownLatch;
+
 import lejos.hardware.Button;
+
 import no.itera.lego.robot.Robot;
 import no.itera.lego.robot.RobotController;
 import no.itera.lego.robot.RobotState;
 import no.itera.lego.util.EV3Helper;
 import no.itera.lego.util.StatusHistory;
 import no.itera.lego.websocket.WebSocketThread;
-
-import java.util.concurrent.CountDownLatch;
 
 public class MightyMain {
 

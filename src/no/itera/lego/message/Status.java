@@ -1,12 +1,13 @@
 package no.itera.lego.message;
 
 
-import no.itera.lego.color.Color;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import no.itera.lego.color.Color;
 
 public class Status implements Message {
 

@@ -1,14 +1,14 @@
 package no.itera.lego.color;
 
+import static no.itera.lego.color.Color.valueOf;
+import static no.itera.lego.util.ColorCalibrationPropertiesReader.readColorCalibrationProperties;
+
+import java.util.Arrays;
+
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.SensorMode;
-
-import java.util.Arrays;
-
-import static no.itera.lego.color.Color.valueOf;
-import static no.itera.lego.util.ColorCalibrationPropertiesReader.readColorCalibrationProperties;
 
 public class ColorSensor {
 

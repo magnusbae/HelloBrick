@@ -1,13 +1,13 @@
 package no.itera.lego.util;
 
-import no.itera.lego.message.Status;
-import no.itera.lego.websocket.WebSocketListener;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import no.itera.lego.message.Status;
+import no.itera.lego.websocket.WebSocketListener;
 
 public class StatusHistory {
 

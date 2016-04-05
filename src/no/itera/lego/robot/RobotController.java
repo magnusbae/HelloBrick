@@ -1,6 +1,7 @@
 package no.itera.lego.robot;
 
 import lejos.robotics.RegulatedMotor;
+
 import no.itera.lego.util.Speed;
 
 /**

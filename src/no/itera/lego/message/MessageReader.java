@@ -1,8 +1,5 @@
 package no.itera.lego.message;
 
-import java.io.StringReader;
-import java.lang.UnsupportedOperationException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
