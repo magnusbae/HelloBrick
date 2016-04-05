@@ -3,7 +3,7 @@
 ## TLDR:
 
 Two teams, four robots (each team gets two). Defend your own circle, "capture" the other teams'.
-*Points are awarded only when you are on the other teams while also not having a robot on your own circle.*
+*Points are awarded only when 1) atleast one of your robots are in the other teams circle, 2) no robots are in your own circle, and 3) none of the other teams robots are in their own circle.*
 
 ## Teams & Robots
 
@@ -21,4 +21,10 @@ The robots talk to a server using WebSockets.
 * Every time your color sensor reads a new color that color is sent to the server. The color is your position.
 
 ## Scoring points
+When the game state on the server has the following state your team is awarded 1 point each second.
+* One or more robots on your team is on the other teams circle
+* No robots are on your own circle
+* No robots from the other team are on their circle. 
 
+## Winning
+The team with the highest score when the round is over wins the round. 
