@@ -12,8 +12,8 @@ public class ColorCalibrationPropertiesReader {
         float[] values = new float[] { 1, 1, 1 };
 
         try {
-            // load color calibration values
-            prop.load(new FileInputStream("ColorCalibration.properties"));
+            //load color calibration values
+            prop.load(new FileInputStream("/home/lejos/programs/ColorCalibration.properties"));
 
             String red = prop.getProperty("red");
             String green = prop.getProperty("green");
