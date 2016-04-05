@@ -81,6 +81,7 @@ it to your robot (make sure you don't accidentally change build.properties). The
 RGB-values (after calibration) on the display. To read raw values, set the calibration properties to `1`.
 
 *Steps*
+
 1. Checkout colorReader branch: `git checkout colorReader`
 2. Check robot IP-address in build.properties
 3. `ant upload`
