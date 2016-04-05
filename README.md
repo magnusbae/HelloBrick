@@ -9,6 +9,8 @@ For game rules - see [RULES.md][rules].
 
 ## Do's
 * Test color detection early! Your robots' color sensor might need to have some custom calibration tweaks
+(all robots have a calibration-file stored in /home/lejos/programs/ColorCalibration.properties).
+Edit this file to adjust your color calibration. See the chapter about Color Calibration.
 * Use multi-threading and clever state handling to make a better performing robot.
 * Fine-tune your robots' navigation to create a near optimum navigation algorithm.
 * Detect the other teams robot and push it out of your circle.
@@ -66,6 +68,29 @@ The handout computers are already pre-configured with `ant`.
 Sometimes you migth encounter a crashed app that locks your brick. In stead of rebooting your brick you may use the
 ```ant stop``` command.
 
+## Color Sensor calibration
+
+Due to the color sensors being _wildly inaccurate_ we have put in place a calibration system.
+On each robot we set red, green, and blue color channel calibration values.
+See `/home/lejos/programs/ColorCalibration.properties`. The calibration value is multiplied with
+the reported RGB-values from the color sensor before the values are interpreted
+(see [ColorSensor.java][colorsensor]).
+
+If for any reason you think you need to recalibrate, checkout the branch `colorReader` and compile and upload
+it to your robot (make sure you don't accidentally change build.properties). Then you can read the
+RGB-values (after calibration) on the display. To read raw values, set the calibration properties to `1`.
+
+*Steps*
+1. Checkout colorReader branch: `git checkout colorReader`
+2. Check robot IP-address in build.properties
+3. `ant upload`
+4. SSH into your robot: `ssh root@xx.xx.xx.xx`
+5. Edit the calibration file: `vi /home/lejos/programs/ColorCalibration.properties`
+6. Run `MightyBot.jar`.
+7. Make changes and save the calibration file.
+8. Restart MightyBot and confirm that colors are read correctly.
+9. Switch back to the master branch when done.
+
 ## Requirements
 
 ### Motors and Sensors connections
@@ -104,6 +129,7 @@ Communication can be over USB, Bluetooth or Wi-Fi. The IP address of the server 
 [java-websocket]: http://java-websocket.org/
 [json-simple]: https://code.google.com/archive/p/json-simple/
 [robotstate]: src/no/itera/lego/robot/RobotState.java
+[colorsenser]: src/no/itera/lego/color/ColorSensor.java
 [build-properties]: build.properties
 [readme-ant]: README-ANT.md
 [readme-intellij]: README-INTELLIJ.md
