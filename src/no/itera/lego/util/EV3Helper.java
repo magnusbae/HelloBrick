@@ -12,8 +12,7 @@ import no.itera.lego.robot.RobotController;
  * This class provides useful wrappers around Lejos code and examples for you to build on.
  * This code is by design not optimized. You will have to figure out where to improve this code, and how.
  *
- * For the complete Lejos API take a look at:
- * http://www.lejos.org/ev3/docs/
+ * For the complete Lejos API take a look at: http://www.lejos.org/ev3/docs/
  */
 public class EV3Helper implements RobotController {
 
@@ -38,7 +37,7 @@ public class EV3Helper implements RobotController {
         motorRight = new EV3LargeRegulatedMotor(MotorPort.A);
         motorLeft = new EV3LargeRegulatedMotor(MotorPort.D);
 
-        //Sets default motor speed for driving motors
+        // Sets default motor speed for driving motors
         motorRight.setSpeed(DEFAULT_MOTOR_SPEED);
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
     }
@@ -66,7 +65,7 @@ public class EV3Helper implements RobotController {
      * Returns immediately
      */
     @Override
-    public void forward(){
+    public void forward() {
         motorLeft.forward();
         motorRight.forward();
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
@@ -90,7 +89,7 @@ public class EV3Helper implements RobotController {
     }
 
     @Override
-    public void rotateRight(){
+    public void rotateRight() {
         motorLeft.forward();
         motorRight.backward();
         motorLeft.setSpeed(DEFAULT_MOTOR_SPEED);
@@ -118,62 +117,57 @@ public class EV3Helper implements RobotController {
      * Returns immediately
      */
     @Override
-    public void backward(){
+    public void backward() {
         motorLeft.backward();
         motorRight.backward();
     }
-
 
     /**
      * Stops both motors immediately
      */
     @Override
-    public void stop(){
+    public void stop() {
         motorLeft.stop(true);
         motorRight.stop(true);
     }
 
     @Override
     public boolean isGoingBackward() {
-        return getMotorLeft().getRotationSpeed() < 0 &&
-                getMotorRight().getRotationSpeed() < 0;
+        return getMotorLeft().getRotationSpeed() < 0 && getMotorRight().getRotationSpeed() < 0;
     }
 
     @Override
     public boolean isGoingForward() {
-        return getMotorLeft().getRotationSpeed() > 0 &&
-                getMotorRight().getRotationSpeed() > 0;
+        return getMotorLeft().getRotationSpeed() > 0 && getMotorRight().getRotationSpeed() > 0;
     }
 
     @Override
     public boolean isGoingLeft() {
-        return getMotorLeft().getRotationSpeed() <
-                getMotorRight().getRotationSpeed();
+        return getMotorLeft().getRotationSpeed() < getMotorRight().getRotationSpeed();
     }
 
     @Override
     public boolean isGoingRight() {
-        return getMotorLeft().getRotationSpeed() >
-                getMotorRight().getRotationSpeed();
+        return getMotorLeft().getRotationSpeed() > getMotorRight().getRotationSpeed();
     }
 
     /**
      * Drives forward the given centimeters and stops when complete
+     *
      * @param cm
      */
     public void forward(int cm) {
         drive(cm, Direction.FORWARD);
     }
 
-
     /**
      * Drives forward the given centimeters and stops when complete
+     *
      * @param cm
      */
     public void backward(int cm) {
         drive(cm, Direction.BACKWARD);
     }
-
 
     /**
      * Drives in the given direction (forward/backward)
@@ -188,9 +182,9 @@ public class EV3Helper implements RobotController {
         motorRight.rotate(cm * DISTANCE_DEGREES_FACTOR); //Waits for method to complete
     }
 
-
     /**
      * Turns left the given number of degrees
+     *
      * @param degrees
      */
     public void turnLeft(int degrees) {
@@ -198,9 +192,9 @@ public class EV3Helper implements RobotController {
         motorRight.rotate((int) (ROTATE_DEGREES_FACTOR * degrees));
     }
 
-
     /**
      * Turns right the given number of degrees
+     *
      * @param degrees
      */
     public void turnRight(int degrees) {

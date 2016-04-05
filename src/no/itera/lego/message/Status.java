@@ -1,6 +1,5 @@
 package no.itera.lego.message;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class Status implements Message {
 
         Color target = Color.valueOf((String) object.get("target"));
 
-        JSONArray jsonColorsArray = (JSONArray)object.get("status");
+        JSONArray jsonColorsArray = (JSONArray) object.get("status");
 
         List<Color> colors = new ArrayList<>();
         for (Object objColor : jsonColorsArray) {

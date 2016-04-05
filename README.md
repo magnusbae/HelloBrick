@@ -28,7 +28,7 @@ The program starts in the main method found in `MightyMain`, it sets up and init
 
 1. the WebSocketThread, it communicates with the server (sending its position and receiving the game state)
 2. the SensorThread, it reads the color under your robot and the distance to the object in front of the robot
-3. the ControlThread, this thread runs the main loop in the `Robot` class - _this is the only place where 
+3. the ControlThread, this thread runs the main loop in the `Robot` class - _this is the only place where
 you need to make changes to the code!_
 
 The `no.itera.lego.robot` package contains three important classes where you should read the documentation and implement
@@ -39,7 +39,7 @@ of the game board, as well as the last read color and distance obtained by the s
 2. `RobotController` - this interface shows you a handful of useful functions that can be used to control the robot. All
 move functions are non-blocking.
 3. `Robot` - this class is _the_ implementation of the logic that controls your robot. It already contains a simple
-boilerplate implementation of a simple robot. Read the comments and the examples included in this class to get an 
+boilerplate implementation of a simple robot. Read the comments and the examples included in this class to get an
 understanding of how it works to control the robots.
 
 Remember to configure the following properties correctly:

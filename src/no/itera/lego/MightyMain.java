@@ -37,7 +37,6 @@ public class MightyMain {
 
         System.out.println("\nPress enter to exit program");
 
-
         while (robotState.shouldRun) {
             if (Button.ENTER.isDown()) {
                 robotController.playBeep();

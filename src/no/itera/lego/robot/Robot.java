@@ -63,12 +63,12 @@ public class Robot implements WebSocketListener {
 
         // EXAMPLE: make a decision based only upon the new position
         switch (newPosition) {
-            case TARGET:
-                robot.stop();
-                return;
-            case OUT_OF_MAP:
-                backupAndTurnAround();
-                return;
+        case TARGET:
+            robot.stop();
+            return;
+        case OUT_OF_MAP:
+            backupAndTurnAround();
+            return;
         }
 
         // EXAMPLE: if the robot is in the upper right corner of the map, _after_
@@ -111,7 +111,7 @@ public class Robot implements WebSocketListener {
      * However, if you call this function from within one of the event listeners, you will
      * block the execution of the separate thread that are executing these functions.
      */
-     public static void blockExecutionFor(int millis) {
+    public static void blockExecutionFor(int millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {

@@ -29,15 +29,15 @@ public class SensorThread implements Runnable {
         robotState.latch.countDown();
     }
 
-   private void readColor() {
-       Color color = colorSensor.readColor();
+    private void readColor() {
+        Color color = colorSensor.readColor();
 
-       if (color == robotState.lastColor || color == Color.UNDEFINED) {
-           return;
-       }
+        if (color == robotState.lastColor || color == Color.UNDEFINED) {
+            return;
+        }
 
-       System.out.println("Read color: " + color);
+        System.out.println("Read color: " + color);
 
-       robotState.lastColor = color;
-   }
+        robotState.lastColor = color;
+    }
 }

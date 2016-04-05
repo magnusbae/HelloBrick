@@ -19,7 +19,7 @@ public class BrickSocket extends WebSocketClient {
     }
 
     @Override
-    public void connect(){
+    public void connect() {
         this.state.webSocketConnecting = true;
         super.connect();
     }

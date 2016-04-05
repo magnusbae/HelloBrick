@@ -77,7 +77,7 @@ public class WebSocketThread implements Runnable {
         socket = new BrickSocket(url, robotState, this);
         socket.connect();
 
-        while(!robotState.webSocketOpen) {
+        while (!robotState.webSocketOpen) {
         }
 
         System.out.println("Connected");

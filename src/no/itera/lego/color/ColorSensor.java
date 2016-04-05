@@ -18,13 +18,11 @@ public class ColorSensor {
     private final int sampleSize;
     private static final float[] COLOR_CHANNEL_CALIBRATION_VALUES;
 
-
     static {
         float[] values = readColorCalibrationProperties();
         LCD.drawString(Arrays.toString(values), 0, 0);
         COLOR_CHANNEL_CALIBRATION_VALUES = values;
     }
-
 
     public ColorSensor(Port port) {
         ev3ColorSensor = new EV3ColorSensor(port);
@@ -35,7 +33,6 @@ public class ColorSensor {
     public Color readColor() {
         int[] rgb = readSensorRgb();
 
-
         return valueOf(rgb[0], rgb[1], rgb[2]);
     }
 
@@ -45,7 +42,6 @@ public class ColorSensor {
         return calibrateChannels(normalizeRgb(sample));
     }
 
-
     private int[] calibrateChannels(int[] rgb) {
         int[] calibrated = new int[rgb.length];
 
@@ -54,7 +50,6 @@ public class ColorSensor {
         }
         return calibrated;
     }
-
 
     private int[] normalizeRgb(float[] sample) {
         int[] intSample = new int[sample.length];

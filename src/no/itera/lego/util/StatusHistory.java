@@ -40,7 +40,7 @@ public class StatusHistory {
                         System.out.println(String.format("Status: initial=%s", initial));
                         listener.initialStatusFired(initial);
                     }
-                } else if (statusHistory.size() >= 2){
+                } else if (statusHistory.size() >= 2) {
                     for (WebSocketListener listener : listeners) {
                         Status oldStatus = statusHistory.get(statusHistory.size() - 2);
                         Status newStatus = statusHistory.peek();

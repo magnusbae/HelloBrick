@@ -24,7 +24,7 @@ The robots talk to a server using WebSockets.
 When the game state on the server has the following state your team is awarded 1 point each second.
 * One or more robots on your team is on the other teams circle
 * No robots are on your own circle
-* No robots from the other team are on their circle. 
+* No robots from the other team are on their circle.
 
 ## Winning
-The team with the highest score when the round is over wins the round. 
+The team with the highest score when the round is over wins the round.

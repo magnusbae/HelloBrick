@@ -24,28 +24,22 @@ public final class PositionHelper {
         Color currentColor = status.colors.get(0);
 
         switch (currentColor) {
-            case GREY:
-                return target == Color.RED ?
-                        Position.LOWER_LEFT : Position.UPPER_RIGHT;
-            case WHITE:
-                return target == Color.RED ?
-                        Position.LOWER_RIGHT : Position.UPPER_LEFT;
-            case BLUE:
-                return target == Color.GREEN ?
-                        Position.LOWER_LEFT : Position.UPPER_RIGHT;
-            case YELLOW:
-                return target == Color.GREEN ?
-                        Position.LOWER_RIGHT : Position.UPPER_LEFT;
-            case RED:
-                return target == Color.RED ?
-                        Position.TARGET : Position.ENEMY_TARGET;
-            case GREEN:
-                return target == Color.GREEN ?
-                        Position.TARGET : Position.ENEMY_TARGET;
-            case BLACK:
-                return Position.OUT_OF_MAP;
-            default:
-                return Position.OUT_OF_MAP;
+        case GREY:
+            return target == Color.RED ? Position.LOWER_LEFT : Position.UPPER_RIGHT;
+        case WHITE:
+            return target == Color.RED ? Position.LOWER_RIGHT : Position.UPPER_LEFT;
+        case BLUE:
+            return target == Color.GREEN ? Position.LOWER_LEFT : Position.UPPER_RIGHT;
+        case YELLOW:
+            return target == Color.GREEN ? Position.LOWER_RIGHT : Position.UPPER_LEFT;
+        case RED:
+            return target == Color.RED ? Position.TARGET : Position.ENEMY_TARGET;
+        case GREEN:
+            return target == Color.GREEN ? Position.TARGET : Position.ENEMY_TARGET;
+        case BLACK:
+            return Position.OUT_OF_MAP;
+        default:
+            return Position.OUT_OF_MAP;
         }
     }
 
