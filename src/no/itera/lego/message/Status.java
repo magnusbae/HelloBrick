@@ -47,6 +47,10 @@ public class Status implements Message {
         };
     }
 
+    public static Status createTestingStatus(boolean isActive, Color target, final Color currentColor){
+        return new Status(isActive, target, currentColor);
+    }
+
     public static Status fromJson(JSONObject object) {
         boolean isActive = (boolean) object.get("isActive");
 

@@ -80,8 +80,8 @@ public class MightyMain {
         }
         if (userOverrideTarget != null && lastColorIsAColor()) { //will wait for color-reading after thread init
             webSocketThread.stopThread();
-			robotState.lastStatus = new Status(true, userOverrideTarget, robotState.lastColor);
-		}
+            robotState.lastStatus = Status.createTestingStatus(true, userOverrideTarget, robotState.lastColor);
+        }
     }
 
     private static boolean lastColorIsAColor() {
