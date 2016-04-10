@@ -1,15 +1,15 @@
 # IntelliJ
 
 If you want, you may develop this project using IntelliJ. This will give you
-code completion and documentation, but you will still need to build and deploy using Ant. 
+code completion and documentation, but you will still need to build and deploy using Ant.
 
 ## Import project
 
-In IntelliJ choose 
+In IntelliJ choose
 
-1. File 
-2. Import Project 
-3. Choose folder 
+1. File
+2. Import Project
+3. Choose folder
 4. Choose "Create project from existing sources"
 
 - Choose source location

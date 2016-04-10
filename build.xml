@@ -7,6 +7,9 @@
         <fileset dir="${lejos.dir}/lib">
             <include name="**/*.jar"/>
         </fileset>
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
     </path>
 
     <condition property="isUnixOrMac">
@@ -24,19 +27,19 @@
     </target>
 
     <target name="install-unixmac" if="isUnixOrMac">
-        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta.tar.gz" dest="."/>
-        <untar src="leJOS_EV3_0.9.0-beta.tar.gz" dest="." compression="gzip"/>
+        <get src="http://netcologne.dl.sourceforge.net/project/ev3.lejos.p/0.9.1-beta/leJOS_EV3_0.9.1-beta.tar.gz" dest="."/>
+        <untar src="leJOS_EV3_0.9.1-beta.tar.gz" dest="." compression="gzip"/>
     </target>
 
     <target name="install-windows" if="isWindows">
-        <get src="http://sourceforge.net/projects/lejos/files/lejos-EV3/0.9.0-beta/leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
-        <unzip src="leJOS_EV3_0.9.0-beta_win32.zip" dest="."/>
-        <move file="leJOS_EV3_0.9.0-beta_win32" toFile="leJOS_EV3_0.9.0-beta"/>
+        <get src="http://netcologne.dl.sourceforge.net/project/ev3.lejos.p/0.9.1-beta/leJOS_EV3_0.9.1-beta_win32.zip" dest="."/>
+        <unzip src="leJOS_EV3_0.9.1-beta_win32.zip" dest="."/>
+        <move file="leJOS_EV3_0.9.1-beta_win32" toFile="leJOS_EV3_0.9.1-beta"/>
     </target>
 
     <target name="install" depends="install-unixmac, install-windows" description="install dependencies">
         <mkdir dir="${user.home}/.ant/lib"/>
-        <get src="http://sourceforge.net/projects/jsch/files/jsch.jar/0.1.51/jsch-0.1.51.jar" dest="${user.home}/.ant/lib"/>
+        <get src="http://downloads.sourceforge.net/project/jsch/jsch.jar/0.1.51/jsch-0.1.51.jar" dest="${user.home}/.ant/lib"/>
     </target>
 
     <target name="compile" depends="clean" description="compile the source ">
@@ -55,30 +58,56 @@
             includeJavaRuntime="false"
             verbose="false"
         >
-            <classpath refid="libraries.path"/>
+            <classpath refid="libraries.path" />
+
             <!-- enable warnings -->
             <compilerarg value="-Xlint:${source.warn}"/>
         </javac>
     </target>
 
+    <manifestclasspath property="manifest.classpath" jarfile="${output.jar}">
+        <classpath refid="libraries.path"/>
+    </manifestclasspath>
+
     <target name="jar" depends="compile">
         <jar destfile="${output.jar}" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
-                <attribute name="Class-Path" value="${class.path}"/>
+                <attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>
         </jar>
+
+        <echo message="Packaging dependencies (classpath)." />
+        <copy todir="${classes.lib}">
+            <fileset dir="${class.path}" />
+        </copy>
     </target>
 
     <target name="upload" depends="jar">
-        <scp todir="${device.user}@${device.host}:${device.dir}" trust="true" password="">
+        <tstamp />
+        <echo message="Deploying software onto EV3 Brick."/>
+        <scp todir="${device.user}@${device.host}:${device.dir}" port="${device.port}" trust="true" password="">
             <fileset file="${output.jar}"/>
+        </scp>
+
+        <echo message="Deploying software dependencies onto EV3 Brick." />
+        <!--Make sure lib directory exists-->
+        <sshexec host="${device.host}"
+                 port="${device.port}"
+                 username="${device.user}"
+                 trust="yes"
+                 password=""
+                 command="mkdir -p ${device.dir}/lib"
+        />
+        <scp todir="${device.user}@${device.host}:${device.dir}/lib/" port="${device.port}" trust="true" password="">
+            <fileset dir="${classes.lib}"/>
         </scp>
     </target>
 
     <target name="run">
         <sshexec
             host="${device.host}"
+            port="${device.port}"
             username="${device.user}"
             password=""
             trust="true"
@@ -89,10 +118,11 @@
     <target name="stop">
         <sshexec
             host="${device.host}"
+            port="${device.port}"
             username="${device.user}"
             password=""
             trust="true"
-            command="kill $(ps -w | grep '[j]ava.*${output.jar}' | awk '{print $1}')"
+            command="grep -l '[j]ava' /proc/*/cmdline | xargs -rn1 grep -L EV3Menu | cut -d/ -f3 | xargs -rn1 kill"
         />
     </target>
 
