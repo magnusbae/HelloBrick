@@ -40,6 +40,7 @@ public class MightyMain {
         controlThreadRunner.start();
 
         System.out.println("\nPress enter to exit program");
+        System.out.println("\nTesting: \nLeft = RED target. \nRight = GREEN");
 
         while (robotState.shouldRun) {
             if (robotState.lastStatus.isActive){ //If server hasn't started game, give user option to start game manually
