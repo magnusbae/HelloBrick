@@ -47,10 +47,21 @@ Remember to configure the following properties correctly:
 1. [RobotState.java][robotstate]
   * `HOST` and `PORT` - address to the server
   * `name` - set the name of your robot
-  * `simulation` - set this to false before starting a real match
+  * `simulation` - set this to false before starting a real match, set to true if you want to test robot using simulations in web interface (colors read from color sensor gets ignored)
 2. [build.properties][build-properties]
   * `device.host` - enter the IP address of your robot here. After you have connected both your robot and your machine to
     the network, you'll be able to upload your code to the robot by running the `ant upload`.
+
+## Testing
+
+To test your robot on the course you can fire up the main program _from the menu interface on the robot_ and click either 
+the left or right arrows when prompted. After choosing color the robot will wait until the color sensor reads one of the defined colors before starting.
+
+* Left: Target is the red circle
+* Right: Target is the green circle
+
+!Note: When you start the program using the left or right button on the robot, the robot disconnects from the websocket 
+server. This is to avoid the server telling the robot that it should not be moving and causing the robot to stop.
 
 *Good luck and have fun! :)*
 
