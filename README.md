@@ -55,7 +55,7 @@ Remember to configure the following properties correctly:
 ## Testing
 
 To test your robot on the course you can fire up the main program _from the menu interface on the robot_ and click either 
-the left or right arrows when prompted. After choosing color the robot will wait until the color sensor reads one of the defined colors before starting.
+the left or the right arrow when prompted. After choosing color the robot will wait until the color sensor reads one of the defined colors before starting.
 
 * Left: Target is the red circle
 * Right: Target is the green circle
