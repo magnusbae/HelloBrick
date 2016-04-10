@@ -1,12 +1,11 @@
 package no.itera.lego.message;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import no.itera.lego.color.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import no.itera.lego.color.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Status implements Message {
 
@@ -35,17 +34,10 @@ public class Status implements Message {
         this.colors = colors;
     }
 
-	/**
-     * This constructor is only intended for local simulation (server independent simulation)
-     * Do not use this for messages actually received from the server.
-     * @param isActive
-     * @param target
-     * @param currentColor
-     */
-    public Status(boolean isActive, Color target, final Color currentColor) {
+    private Status(boolean isActive, Color target, final Color currentColor) {
         this.isActive = isActive;
         this.target = target;
-        this.colors = new ArrayList<Color>(){
+        this.colors = new ArrayList<Color>() {
             {
                 add(currentColor);
                 add(Color.BLUE);
