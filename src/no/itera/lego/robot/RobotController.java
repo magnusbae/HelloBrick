@@ -14,7 +14,7 @@ import no.itera.lego.util.Speed;
 public interface RobotController {
 
     /**
-     * You know how this works :)
+     * It beeps :)
      */
     void playBeep();
 

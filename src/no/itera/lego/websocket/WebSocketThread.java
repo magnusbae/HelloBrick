@@ -15,6 +15,7 @@ public class WebSocketThread implements Runnable {
     private StatusHistory statusHistory;
     private BrickSocket socket;
     private Color lastHandledColor;
+    private boolean stop;
 
     public WebSocketThread(RobotState robotState, StatusHistory statusHistory) {
         this.robotState = robotState;
@@ -25,7 +26,7 @@ public class WebSocketThread implements Runnable {
     public void run() {
         connectToSocket();
 
-        while (robotState.shouldRun) {
+        while (robotState.shouldRun && !stop) {
             if (robotState.lastColor != lastHandledColor) {
                 sendColor();
             }
@@ -92,5 +93,9 @@ public class WebSocketThread implements Runnable {
             sendMessage(new Update(robotState.lastColor));
             lastHandledColor = robotState.lastColor;
         }
+    }
+
+    public void stopThread(){
+        stop = true;
     }
 }
